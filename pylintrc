@@ -1,0 +1,3 @@
+[MASTER]
+
+pylint: disable-msg=C0103

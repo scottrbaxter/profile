@@ -1,0 +1,28 @@
+" disable any plugins (internal to janus or external from ~/.janus folder)
+" call janus#disable_plugin('supertab')
+call janus#disable_plugin('nerdtree')
+call janus#disable_plugin('syntastic') " testing w0rp/ale linter
+call janus#disable_plugin('supertab') " tab after an IP error: Keyword completion (^N^P) Pattern not found
+
+" NERDCommenter stuf
+let g:NERDSpaceDelims = 1 " adds # of spaces default for all filetypes
+let g:NERDDefaultAlign = 'left' " always to far left
+let g:NERDAltDelims_python = 1 " without this python double spaces
+let g:NERDCustomDelimiters = { 'arduino': { 'left': '//','right': '' } } " required for proper .ino file comments
+let g:NERDCustomDelimiters = { 'ansible_template': { 'left': '#','right': '' } } " required for proper ansible file comments
+let g:NERDCustomDelimiters = { '': { 'left': '#','right': '' } } " use # for unspecified file comments
+let g:NERDTrimTrailingWhitespace = 1 " Enable trimming of trailing whitespace when uncommenting
+" let g:NERDCommentEmptyLines = 1 " Allow commenting and inverting empty lines
+
+" powerline fancy stuff
+" let g:Powerline_symbols = 'fancy'
+
+" airline theme set here
+let g:airline_theme='distinguished'
+" let g:airline_powerline_fonts = 1
+" let g:Powerline_symbols = 'unicode'
+if !exists('g:airline_symbols')
+  let g:airline_symbols = {}
+endif
+let g:airline_symbols.space = "\ua0"
+set encoding=utf-8

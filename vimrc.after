@@ -1,0 +1,295 @@
+" personal custom shortcuts
+nmap <silent> <space>j <Plug>(ale_next_wrap)
+nmap <silent> <space>J <Plug>(ale_previous_wrap)
+nmap <space> \
+nmap <space>a \cA
+nmap <space>d :Gdiff<CR>
+nmap <space>f :FixWhitespace<CR>
+nmap <space>r \c<space>
+nmap <space>g \gb
+nmap <space>q :q<CR>
+nmap <space>Q :q!<CR>
+nmap <space>w :w<CR>
+nmap <space><tab> :%s/\t/    /g<CR>
+nmap ` v~
+nmap t :TagbarOpen fj<CR>
+nnoremap q :q<CR>
+vmap <space>r \c<space>
+
+" set nonumber
+" set nolist " list disables linebreak
+" set lbr " without lbr the line can be split on a word
+set nocompatible
+" end of line has $, tab has ▸
+set list lcs=eol:¬,tab:▸\-
+" set list lcs=tab:\▸\
+
+" au == autocmd
+" autocmd VimEnter *.py nested :TagbarOpen
+" autocmd VimEnter *.sh nested :TagbarOpen
+" autocmd VimEnter * if &ft!='ansible.yaml' | nested :TagbarOpen | endif
+
+" quit help with 'q'
+au FileType help noremap <buffer> q :q<cr>
+
+" disable 'recording @p'
+" map q <Nop>
+" disable 'Entering Ex mode'
+map Q <Nop>
+
+" search down into subfolders
+" provides tab-completion for all file-related tasks
+set path+=** " '**' recursively searches through subdirectories
+set wildmenu " Display all matching files when we tab-complete
+
+" se mouse=c "
+" se mouse=a " mouse copy turns into visual mode and provides smooth scroll all nice like, i prefer this one
+se mouse+=a " mouse copy turns into visual mode
+" se mouse=nicr " mouse scroll is nicer, and click puts you where the mouse is, but click select doesn't enable visual mode
+" let g:wheel#scroll_on_wrap = 1      " 0=disable, 1=enable (default)
+
+
+if !has('nvim')
+  set clipboard=autoselect " yank to osx clipboard, but doesn't put vim's change/delete stuff in clipboard
+" set clipboard=unnamedplus,unnamed,autoselect " yank to osx clipboard
+"set clipboard=unnamed,autoselect " yank to osx clipboard including change/delete in vim
+endif
+
+" move to 1st character on line when changing lines
+nmap <Up> <Up>^
+nmap <Down> <Down>^
+" hold shift to highlight text in visual mode.
+nmap <S-Up> V<Up>^
+nmap <S-Down> V<Down>^
+vmap <S-Up> <Up>
+vmap <S-Down> <Down>
+vmap <S-Left> <
+vmap <S-Right> >
+" vmap <S-Left> <Left>
+" vmap <S-Right> <Right>
+" change indent while in normal mode
+nmap <S-Left> <<
+nmap <S-Right> >>
+
+" leaves cursor after end of yank while in visual mode, not needed with 'se mouse+=a'
+" vmap y y`]
+
+" NerdTree on vim start
+" au StdinReadPre * let s:std_in=1
+" au VimEnter * if argc() == 0 && !exists("s:std_in") | NERDTree | endif
+
+" powerline fancy stuff
+let g:Powerline_symbols = 'fancy'
+
+" Make vim searches case insensitive
+" set ignorecase " won't find insensitive searches if using capital letter in search
+set smartcase " will change to case sensitive if typing capital letters
+
+" vim-indentwise remappings
+map <S-C-Up> <Plug>(IndentWisePreviousEqualIndent)
+map <S-C-Down> <Plug>(IndentWiseNextEqualIndent)
+
+"map [- <Plug>(IndentWisePreviousLesserIndent)
+"map [= <Plug>(IndentWisePreviousEqualIndent)
+"map [+ <Plug>(IndentWisePreviousGreaterIndent)
+"map ]- <Plug>(IndentWiseNextLesserIndent)
+"map ]= <Plug>(IndentWiseNextEqualIndent)
+"map ]+ <Plug>(IndentWiseNextGreaterIndent)
+"map [_ <Plug>(IndentWisePreviousAbsoluteIndent)
+"map ]_ <Plug>(IndentWiseNextAbsoluteIndent)
+"map [% <Plug>(IndentWiseBlockScopeBoundaryBegin)
+"map ]% <Plug>(IndentWiseBlockScopeBoundaryEnd)
+
+" http://vimdoc.sourceforge.net/htmldoc/filetype.html
+" needed both of these for nerdcommenter to play nice
+filetype plugin on " detect: on, plugin: on, indent: unchanged
+" filetype indent off " detect: unchanged, plugin: unchanged, indent: off
+
+" insert new line in normal mode by pressing enter without using insert mode
+" leaves cursor on initial line
+nmap <CR> o<Esc>
+
+" change U to redo
+" http://vim.wikia.com/wiki/Undo_and_Redo
+map <S-u> <C-r>
+
+
+" toggle highlight
+nnoremap <silent> <F2> :set hlsearch!<CR>
+
+" highlight whole word on click-drag
+" nmap <S-LeftMouse> viw
+" nmap <S-LeftDrag> viw
+" nmap <S-LeftRelease> w
+
+" add single quote around text until next white space
+nnoremap " lBcE""<Esc>Pw
+nnoremap ' lBcE''<Esc>Pw
+nnoremap [ lBcE[]<Esc>Pw
+" nnoremap { lBcE"{{  }}"<Esc>3hPw
+" add single quote around word
+" nnoremap " ciw""<Esc>P
+" nnoremap ' ciw''<Esc>P
+" nnoremap [ ciw[]<Esc>Pw
+" nnoremap { ciw{}<Esc>Pw
+
+nmap <Leader>' ds'
+nmap <Leader>" ds"
+nmap <Leader>[ ds[
+" nmap <Leader>{ ds{ds{ds"
+nmap <Leader>( ds(
+
+" stay in visual mode when changing indent level with < or >
+vmap < <gv
+vmap > >gv
+
+" shortcuts in normal mode
+nmap ge G$
+nmap ; :
+nmap ;q :q<CR>
+nmap ;Q :q!<CR>
+nmap v ve
+nnoremap <bs> i<bs><esc>w
+nnoremap <tab> >>
+nnoremap <S-tab> <<
+
+" don't add newline character if the file didn't already have one
+set nofixeol
+
+" colorscheme default " reverts colorscheme
+let g:space_vim_dark_background = 234 " (233 = darkest, 235 = default, 238 = lightest)
+colorscheme space-vim-dark " submodule in profile repo
+" autocmd FileType yaml colorscheme getafe " makes vim colors (expecially highlight) tolerant
+" colorscheme getafe " makes vim colors (expecially highlight) tolerant
+
+" highlighting (colors)
+" You can see all the groups currently active with this command: >
+    " :so $VIMRUNTIME/syntax/hitest.vim
+highlight LineNr ctermfg=grey ctermbg=235
+highlight Comment ctermfg=Grey
+highlight Normal ctermfg=White
+highlight Visual cterm=NONE ctermbg=052
+highlight IncSearch cterm=NONE ctermbg=20 ctermfg=250
+highlight Search cterm=NONE ctermbg=20 ctermfg=250
+highlight SpellBad ctermbg=235
+highlight SpellCap ctermbg=DarkRed
+" highlight Search cterm=NONE ctermbg=237
+" highlight Search cterm=NONE ctermfg=white ctermbg=blue
+" highlight Search cterm=NONE ctermbg=103
+" set colorcolumn=80 " vertical line at 80 characters
+
+
+" let g:indentLine_setColors = 0 " highlight conceal color with your colorscheme
+let g:indentLine_color_term = 239 " indent marker color
+let g:indentLine_char = '|' " indent marker character (options: ¦┆│⎸▏)
+let g:indentLine_concealcursor = 'inc'
+let g:indentLine_conceallevel = 2
+
+" fix tab for proper indenting, except for ft-plugin file types that have this set elsewhere
+" tabstop is the number of spaces pressing tab enters, softtapstop is the number of spaces deleted with the delete key
+" expandtab changes tabs to spaces set tabstop=2 softtabstop=2 expandtab " global
+
+" only needed if global tabstop is defined differently above
+au FileType dockerfile setlocal tabstop=2 shiftwidth=2 softtabstop=2
+au FileType gitconfig setlocal tabstop=4 shiftwidth=4 softtabstop=4 expandtab " conform to bashate (pep8) standards
+au FileType python setlocal tabstop=4 shiftwidth=4
+au FileType ruby setlocal tabstop=2 shiftwidth=2 expandtab
+au FileType sh setlocal tabstop=4 shiftwidth=4 softtabstop=4 expandtab " conform to bashate (pep8) standards
+au FileType yaml setlocal tabstop=2 shiftwidth=2 softtabstop=2
+au FileType yaml.ansible setlocal tabstop=2 shiftwidth=2 softtabstop=2
+au FileType zsh setlocal tabstop=4 shiftwidth=4 softtabstop=4 expandtab " conform to bashate (pep8) standards
+
+" ansible formatting for yaml files
+" au BufNewFile,BufRead *.ini set filetype=ansible_hosts
+" au BufEnter * if &filetype == "" | setlocal ft=sh | endif
+au BufNewFile,BufRead *.yaml set filetype=ansible.yaml
+au BufNewFile,BufRead *.yml set filetype=ansible.yaml
+au BufNewFile,BufRead *.yaml setlocal indentkeys=0{,0},:,0#,!^F,o,0,e
+let g:ansible_unindent_after_newline = 1
+let g:ansible_extra_syntaxes = "sh.vim ruby.vim"
+let g:ansible_attribute_highlight = "a"
+
+" FKey Reference
+" F1 help
+" F3 set/unset line wrap (janus shortcut = \tw)
+" F4 nopaste/paste
+" F5 open Gundo
+" F6 pretty print json (.json files only)
+" F7 toggle line break
+" F8 set autoindent
+" F9 flake8 linter (python files only), toggle conceal level (json files only)
+" F10 vim display highlight group
+" F11 toggle vertical line at 80 characters
+
+" :set inv{thing} sets the inverted, and :set {thing}? shows what the value is set to
+" set paste " handles pasting with additional comment or tabs, indentation is a pita here
+" set autoindent " newline adds indents, toggle with F9
+" au FileType python :set nopaste " keep jedi but also not new comment on new line after commented line
+" nmap <silent> <F2> :set cursorline! cursorcolumn!<CR>
+
+" From :help fo-table
+" letter  meaning when present in 'formatoptions'
+" t       Auto-wrap text using textwidth
+" c       Auto-wrap comments using textwidth, inserting the current comment
+"         leader automatically.
+" r       Automatically insert the current comment leader after hitting
+"         <Enter> in Insert mode.
+" o       Automatically insert the current comment leader after hitting 'o' or
+"         'O' in Normal mode.
+" q       Allow formatting of comments with "gq".
+"	        Note that formatting will not change blank lines or lines containing
+"	        only the comment leader.  A new paragraph starts after such a line,
+" l       Long lines are not broken in insert mode: When a line was longer than
+"         'textwidth' when the insert command started, Vim does not
+"         automatically format it.
+
+function! ConcealLevelToggle()
+    if &conceallevel
+        setlocal conceallevel=0
+    else
+        setlocal conceallevel=2
+    endif
+endfunction
+
+function! ColorColumnToggle()
+    if &colorcolumn
+        setlocal colorcolumn=0
+    else
+        setlocal colorcolumn=80
+    endif
+endfunction
+
+au BufNewFile,BufRead * setlocal formatoptions-=cro " default: croql
+nmap <silent> H :set cursorcolumn!<CR>
+nmap <silent> <F3> :set invwrap<CR>:set wrap?<CR>
+nmap <silent> <F7> :set invlbr<CR>:set lbr?<CR>
+nmap <silent> <F8> :set invautoindent<CR>:set autoindent?<CR>
+au FileType gitcommit set tw=99
+au FileType json nnoremap <silent> <F6> :%!python -m json.tool<CR>
+au FileType json nnoremap <silent> <F9> :call ConcealLevelToggle()<CR>
+au FileType python map <buffer> <F9> :call Flake8()<CR>
+au FileType markdown nnoremap <silent> <F9> :call ConcealLevelToggle()<CR>
+au FileType markdown set tw=120
+nmap <F10> :echo "hi<" . synIDattr(synID(line("."),col("."),1),"name") . '> trans<' . synIDattr(synID(line("."),col("."),0),"name") . "> lo<" . synIDattr(synIDtrans(synID(line("."),col("."),1)),"name") . ">"<CR>
+nmap <silent> <F11> :call ColorColumnToggle()<CR>
+
+" crosshair colors
+hi CursorColumn cterm=NONE ctermbg=darkgrey ctermfg=grey guibg=darkred guifg=white
+
+if has('persistent_undo')      "check if your vim version supports it
+    set undofile                 "turn on the feature
+    set undodir=$HOME/.vim/_temp  "directory where the undo files will be stored
+endif
+
+" signs to use for w0rp/ale linters
+let g:ale_sign_error = '>>'
+let g:ale_sign_warning = '--'
+" how to use only specific linters
+" let g:ale_linters = {
+" \   'python': ['pylint', 'flake8'],
+" \}
+" vim-markdown-preview https://github.com/JamshedVesuna/vim-markdown-preview#mac-os-x
+let vim_markdown_preview_github=1
+let vim_markdown_preview_toggle=1
+" let vim_markdown_preview_hotkey='<C-p>'
+let vim_markdown_preview_browser='Google Chrome'

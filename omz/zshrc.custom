@@ -1,0 +1,373 @@
+#!/usr/bin/env zsh
+# macos doesn't do nanoseconds; can't use $(date +%s)
+# start=$(perl -MTime::HiRes -e 'printf("%.0f\n",Time::HiRes::time()*1000)')
+
+# oh-my-zsh args
+CASE_SENSITIVE="true"
+COMPLETION_WAITING_DOTS="true"
+# DISABLE_AUTO_TITLE="true"
+HIST_STAMPS="yyyy-mm-dd"
+HYPHEN_INSENSITIVE="true"
+
+### custom settings
+
+# oh-my-zsh theme
+ZSH_CUSTOM="$PROFILE_PATH/omz/custom"
+ZSH_THEME="crunch_custom"
+
+# determine Mac or Linux OS
+OS_TYPE=$(uname -s)
+# linux specific
+if [ ${OS_TYPE} = Linux ]; then
+    alias apt='sudo apt'
+    alias apts='apt search'
+    alias ls='ls --color=always'
+# mac specific
+elif [ "$OS_TYPE" = Darwin ]; then
+    alias ls='/usr/local/bin/gls --color=always'
+    HOMEBREW_OPENSSL="/usr/local/opt/openssl" # cause "$(brew --prefix openssl)" is super slow
+    export CFLAGS="-I$HOMEBREW_OPENSSL/include"
+    export LDFLAGS="-L$HOMEBREW_OPENSSL/lib"
+fi
+
+# skip_global_compinit=1
+export TERM="xterm-256color"
+
+# Which plugins would you like to load? (plugins can be found in ~/.oh-my-zsh/plugins/*)
+# Custom plugins may be added to ~/.oh-my-zsh/custom/plugins/
+# Example format: plugins=(rails git textmate ruby lighthouse)
+# Add wisely, as too many plugins slow down shell startup.
+
+# add plugins=(osx) for the tab command, to command-click a vim file in new tab
+# also need to add 'tab' in iterm2 profile/advanced semantic history
+# plugins=(hub docker zsh-syntax-highlighting) # zsh-syntax-highlighting turns the word green or red, but breaks forward-word stopping at wordchar
+plugins=(hub docker zsh-autosuggestions)
+
+source $ZSH/oh-my-zsh.sh
+
+####################################
+
+# custom profile settings
+
+# colors
+export RED="\033[0;31m"
+export WHITE="\033[0m"
+
+# custom dir function path
+fpath=($fpath /usr/local/share/zsh-completions)
+
+# Bash-like navigation (alt left/right forward-word like bash)
+# http://stackoverflow.com/questions/10847255/how-to-make-zsh-forward-word-behaviour-same-as-in-bash-emacs
+autoload -U select-word-style
+select-word-style bash
+
+# custom PATH stuff
+export PATH_DEFAULT="$PATH" # needed for reloadZsh
+
+# ruby stuff, make sure /.rbenv/bin is in $PATH
+export RBENV_ROOT="$HOME/.rbenv"
+export PATH="$RBENV_ROOT/bin:$PATH"
+# eval "$(rbenv init -)"
+# eval "$(rbenv init - --no-rehash)"
+
+# bindkey mappings for zsh
+# bindkey -v # vim mode
+bindkey "^[OF" end-of-line
+bindkey "^[OH" beginning-of-line
+bindkey "^[OA" up-line-or-beginning-search
+bindkey "^[OB" down-line-or-beginning-search
+bindkey "^?" backward-delete-char
+bindkey "^[[3~" delete-char
+bindkey "^W" backward-kill-word
+bindkey "^[^H" backward-kill-word
+bindkey "^[B" backward-word
+bindkey "^[F" forward-word
+bindkey "^[[1;5C" forward-word
+bindkey "^[[1;5D" backward-word
+bindkey "^[b" backward-word
+bindkey "^[d" kill-word
+bindkey "^[f" forward-word
+bindkey "^[^?" backward-kill-word
+bindkey "^[D" kill-word
+bindkey "^[d" kill-word
+bindkey "^[w" kill-region
+bindkey "^[^[OA" up-line-or-beginning-search # fix for escape/up arrow annoyance
+bindkey "^R" history-incremental-search-backward
+
+# python environment
+export PYENV_ROOT="$HOME/.pyenv"
+export PATH="$PYENV_ROOT/bin:$PATH"
+eval "$(pyenv init -)"
+
+# go environment
+# export GOPATH=$HOME/development/gocode
+# PATH="$GOPATH/bin:$PATH"
+
+# needs to go after pyenv, to make ~/.local/bin work correctly (because pip install --user)
+export PATH="$PATH:$HOME/.local/bin:/usr/local/sbin:/usr/libexec:$HOME/scripts"
+
+# shellcheck linter
+export SHELLCHECK_OPTS="-e SC2129 -e SC2059"
+
+# homebrew stuff
+export HOMEBREW_CASK_OPTS="--appdir=~/Applications"
+
+export LANG="en_US.UTF-8"
+export LC_ALL="en_US.UTF-8"
+export LC_CTYPE="UTF-8"
+export EDITOR="vim"
+
+# aws tab completion # source /usr/local/share/zsh/site-functions/_aws # if installed via brew
+# pyenv's built in which command to check for installed aws completer
+if pyenv which aws_zsh_completer.sh 1>/dev/null 2>&1; then
+  source "$(pyenv which aws_zsh_completer.sh)"
+fi
+
+# Vagrant / VirtualBox
+# https://www.vagrantup.com/docs/other/environmental-variables.html
+export VAGRANT_HOME='~/Vagrant/vagrant_home' # (default location: ~/.vagrant.d)
+
+# functions
+whichAwsAccount ()
+{
+    AWS_ACCOUNT_NAME=$(aws iam list-account-aliases --query 'AccountAliases[]' --output text)
+    echo "${AWS_ACCOUNT_NAME}"
+}
+
+whichAwsStsUser ()
+{
+    aws sts get-caller-identity --output text --query '[Account, Arn]'
+}
+
+whichAwsAccess ()
+{
+    if [[ -n $AWS_STS_EXPIRATION ]]; then
+        echo $(whichAwsAccount) $(whichAwsStsUser) $(( $((${AWS_STS_TIMEOUT} - $(date +%s))) / 60 )) Minutes Remaining
+    else
+        echo $(whichAwsAccount) $(whichAwsStsUser)
+    fi
+}
+
+peruseHistory ()
+{
+    if [ ! $1 ]; then
+        fc -il 1
+    elif [ $1 = '-l' ]; then
+        fc -il 1 | grep "$2" | less
+    else
+        fc -il 1 | grep "$1"
+    fi
+}
+
+bundleIdentifier (){mdls -name kMDItemCFBundleIdentifier -raw "$1"}
+
+# Wrap git. On errors, print an additional line in red.
+git(){
+    command git "$@"
+    local exitCode=$?
+    if [ $exitCode -eq 141 ]; then
+        : # do nothing (hides 141 error on git log 'less' quit)
+    elif [ $exitCode -ne 0 ]; then
+        printf "${RED}ERROR: git exited with code $exitCode${WHITE}\n"
+        return $exitCode
+    fi
+}
+
+gitBlameSort(){
+if [ ${1} ]; then
+    git blame ${1} | sort -rbk 3 | less
+else
+    echo "e.g. $0 /path/to/file"
+fi
+}
+
+reloadZsh(){
+    if alias ack > /dev/null 2>&1; then # else 'which' breaks these if reloading aliases
+        # this is me being lazy with the oh-my-zsh git aliases function
+        # echo -e "unaliasing: ack & omz git defaults"
+        unalias ack
+    fi
+    export PATH=$PATH_DEFAULT
+    source "$PROFILE_PATH/omz/zshrc.custom"
+}
+
+awkp(){
+    # search returns paragraph around line with search value
+    if [ $2 ]; then
+        awk -v RS= "/$1/" $2
+    else
+        echo "use: awkp <thing_to_search> </path/to/file>"
+    fi
+}
+
+# aliases
+alias l.='ls -dh .*'
+# alias l="ls_grep"
+alias ll.='ls -ldh .*'
+alias llt='ll -tr'
+alias clr='clear'
+alias cl='clear;ls -h'
+alias cl.='clear;ls -dh .*'
+alias cll='clear;ls -lh'
+alias cla='clear;ls -lah'
+alias bz='bunzip2'
+alias rar='unrar'
+alias scr='screen -dr'
+alias df='df -h'
+alias dud='du -d 1 -h'
+alias digs='dig $1 +short'
+alias D='cd ~/Downloads'
+alias grep='grep -i --color=always' # (case insensitive, color output)
+alias preview='open /Applications/Preview.app '
+alias rm='rm -i'
+alias rr='rsync -avhP --delete'
+alias top='top -u'
+alias top='htop'
+alias h='peruseHistory'
+alias hl='peruseHistory -l'
+# alias vim=/usr/local/bin/nvim
+alias vi='vim'
+alias vvv='vim ~/.vimrc'
+alias vva='vim ~/.vimrc.after'
+alias vvb='vim ~/.vimrc.before'
+alias hh='sudo vim /etc/hosts'
+alias zz="vim $PROFILE_PATH/omz/zshrc.custom"
+alias zedit='vim $ZSH_CUSTOM/themes/crunch_custom.zsh-theme'
+alias fixaudio='sudo launchctl stop com.apple.audio.coreaudiod'
+alias iCloudStatus='brctl log --wait --shorten'
+alias python-http-server='python -m SimpleHTTPServer'
+alias fixAppStoreApps='killall -KILL storeaccountd'
+alias publicip='dig +short myip.opendns.com @resolver1.opendns.com'
+alias gb='git rev-parse --abbrev-ref HEAD'
+alias gbl='git branch --list --sort=creatordate'
+alias gblame=gitBlameSort
+alias gcfg='vim ~/.gitconfig'
+alias gl='git --no-pager log --oneline -25'
+# alias gp='git push origin $(git rev-parse --abbrev-ref HEAD)'
+# alias gpf='git push origin $(git rev-parse --abbrev-ref HEAD) --force-with-lease'
+alias gpf='gp -f'
+alias glo='git log --oneline --decorate'
+alias gss='git show --summary'
+alias accounts='head -9 ~/projects/civis-accounts'
+alias iftop='sudo /usr/local/sbin/iftop -P'
+alias ips='curl http://ipinfo.io/ip; ifconfig| grep -w inet'
+alias ack='ack --ackrc $PROFILE_PATH/ackrc'
+alias ackg='ack -g' # check filenames for pattern
+alias ackgw='ackg -w' # words mode, pattern can't be in another word
+alias ackp=awkp # [FUNC] search returns paragraph around line with search value
+alias acks='ack --noignore-dir=is:submodules/,tmp/,scott/' # will search submodules
+alias acksg='acks -g' # filenames only, will search submodules
+alias ackw='ack -w' # words mode, pattern can't be in another word
+alias serial=serialNumber
+alias check-admin=~/scripts/check-admin.sh
+alias bundleid=bundleIdentifier
+# alias bb-push='git push origin master --force-with-lease' # only for personal bitbucket stuff
+alias vg='vagrant global-status'
+alias vs='vagrant status'
+alias vup='vagrant up && vagrant ssh'
+alias youtube-dl-mp4="youtube-dl -f 'bestvideo[ext=mp4]+bestaudio[ext=m4a]/mp4'"
+alias pep8="$(which pep8) -v"
+alias bep8="$(which bashate)"
+alias pms-log='tail -f /var/lib/plexmediaserver/Library/Application\ Support/Plex\ Media\ Server/Logs/Plex\ Media\ Server.log'
+alias sb-log='tail -f /usr/local/bin/Sick-Beard/Logs/sickbeard.log'
+alias D='cd ~/development'
+alias N='cd ~/notes'
+alias P='cd $PROFILE_PATH'
+alias S='cd ~/scripts'
+alias V='cd ~/vagrant'
+alias zupdate='upgrade_oh_my_zsh'
+alias zloadtest='/usr/bin/time /bin/zsh $PROFILE_PATH/omz/zshrc.custom -i -c exit' # speed test load zsh profile
+alias update-janus='JANUS=$HOME/.vim; echo "updating vim-janus in $JANUS"; cd $JANUS && rake && cd -'
+alias ansible-playbook='ANSIBLE_STDOUT_CALLBACK="debug" ansible-playbook -vv'
+alias ansible-playbook-dense='ANSIBLE_STDOUT_CALLBACK="dense" \ansible-playbook -v'
+alias fix-spotlight='sudo mdutil -E /'
+# alias rg="command rg --color always --colors 'match:fg:blue' --colors 'line:fg:blue' --colors 'path:style:bold' --colors 'path:fg:green' -S"
+# alias rgg="rg --files -g '*cfn*'"
+# alias rgf='rg -lS' # file path only
+# alias rgu='rg -u' # unrestricted
+# alias rgfu='rg -lu' # only file path, unrestricted
+
+# docker stuff (may not be necessary with zsh 'docker' plugin)
+# eval "$(docker-machine env dockervm)"
+
+# Civis Aliases
+alias A='cd ~/projects/ansiblesite/'
+alias C='cd ~/projects/console/'
+# alias list-instances-puma="ack puma ~/projects/ansiblesite/inventories"
+# alias list-instances-dj="ack dj ~/projects/ansiblesite/inventories"
+alias whichrole=whichAwsAccess
+alias jadmin='sudo /usr/local/bin/jamf policy -id 2'
+# alias ssh-vpn-gateway='ssh gateway.internal.civisanalytics.com -p 10022' # on vpn only
+# alias ssh-vpn-client='ssh ubuntu@client-openvpn.internal.civisanalytics.com' # on vpn only
+# alias ssh-vpn-civis='ssh ubuntu@legacy-openvpn.internal.civisanalytics.com' # on vpn only
+# alias ssh-staging-web-puma08="ssh console@puma08.staging.civisanalytics.com" # on vpn only
+# alias role-civis-orgs="source ~/assume_role.sh 943976103640 sbaxter 494246847414 superuser" # civis-orgs
+# alias role-civis-orgs-staging="source ~/assume_role.sh 943976103640 sbaxter 631627684437 superuser" # civis-orgs-staging
+# alias role-civis-orgs-staging-boccedeployer="source ~/assume_role.sh 943976103640 sbaxter 631627684437 BocceDeployer" # civis-orgs-staging
+# alias role-civis-legacy="source ~/assume_role.sh 943976103640 sbaxter 644468813057 superuser" # civis-legacy
+# alias role-civis-legacy-it-support="source ~/assume_role.sh 943976103640 sbaxter 644468813057 it-support" # create vpn user
+# alias role-civis-test="source ~/assume_role.sh 943976103640 sbaxter 826697897825 superuser" # civis-test
+# alias role-civis-rd="source ~/assume_role.sh 943976103640 sbaxter 906322163900 superuser" # civis-rd
+# alias role-civis-secure="source ~/assume_role.sh 943976103640 sbaxter 943976103640 superuser" # civis-secure
+# alias role-civis-unassume="unset AWS_SECRET_ACCESS_KEY \
+#                             AWS_SECURITY_TOKEN \
+#                             AWS_SESSION_TOKEN AWS_ACCESS_KEY_ID \
+#                             AWS_STS_EXPIRATION \
+#                             AWS_STS_TIMEOUT \
+#                             AWS_ACCOUNT_NAME; \
+#                             whichrole"
+# Civis Accounts
+CIVISORGS='494246847414'
+CIVISORGSSTAGING='631627684437'
+CIVISLEGACY='644468813057'
+CIVISTEST='826697897825'
+CIVISRD='906322163900'
+CIVISSECURE='943976103640'
+CIVISPUBLIC='020948172395'
+
+alias vpn-connect="gtb --name civis-legacy-20161214"
+alias kube-context='kubectl config current-context'
+
+# API keys
+for k in ~/.keyfile-*(N); do source $k; done
+
+# permits custom window/tab title to be set in iterm2
+# export DISABLE_AUTO_TITLE="true"
+
+# Ansible - dense == rich output, debug == cleaner verbose (-v) output
+# http://docs.ansible.com/ansible/latest/dev_guide/developing_plugins.html#callback-plugins
+if [ $ANSIBLE_STDOUT_CALLBACK ] || [ $ANSIBLE_CALLBACK_WHITELIST ]; then
+    # echo -e "removing vars:\nANSIBLE_STDOUT_CALLBACK\nANSIBLE_CALLBACK_WHITELIST"
+    unset ANSIBLE_STDOUT_CALLBACK \
+            ANSIBLE_CALLBACK_WHITELIST \
+            ANSIBLE_LOAD_CALLBACK_PLUGINS
+fi
+
+export ANSIBLE_STDOUT_CALLBACK="dense"
+# export ANSIBLE_STDOUT_CALLBACK="debug" # pretty print verbose output
+export ANSIBLE_CALLBACK_WHITELIST="profile_tasks, profile_roles"
+# export ANSIBLE_CALLBACK_WHITELIST="context_demo, profile_tasks, profile_roles"
+# export ANSIBLE_LOAD_CALLBACK_PLUGINS=1 # ansible adhoc
+
+# https://superuser.com/questions/578359/how-can-i-enable-colored-output-for-osx-diff
+# source "`brew --prefix`/etc/grc.bashrc"
+
+# exercism completion
+# if [ -f ~/.config/exercism/exercism_completion.zsh ]; then
+#     . ~/.config/exercism/exercism_completion.zsh
+# fi
+
+# color stderr (e.g. in ~/.vim run 'rake')
+# https://github.com/sickill/stderred
+# export DYLD_INSERT_LIBRARIES=~/development/stderred/build/libstderred.dylib${DYLD_INSERT_LIBRARIES:+:$DYLD_INSERT_LIBRARIES}
+alias stderred="LD_PRELOAD=~/development/stderred/build/libstderred.dylib\${LD_PRELOAD:+:\$LD_PRELOAD}"
+# STDERRED_ESC_CODE=$(echo -e '\e[;92m') ruby -e 'puts "Yo!"; warn "Jola"' # green Jola
+# STDERRED_ESC_CODE=$(echo -e '\e[;31m') ruby -e 'puts "Yo!"; warn "Jola"' # red Jola
+
+# end=$(perl -MTime::HiRes -e 'printf("%.0f\n",Time::HiRes::time()*1000)')
+# echo "Sourcing \"$0\" completed in \"$((end-start))\" nanoseconds"
+
+# specifically for shellcheck linting, set this file to sh
+# vim: ft=zsh:
+
+test -e "${HOME}/.iterm2_shell_integration.zsh" && source "${HOME}/.iterm2_shell_integration.zsh"

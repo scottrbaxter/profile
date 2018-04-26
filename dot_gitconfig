@@ -1,0 +1,37 @@
+; vim: set ft=gitconfig:
+[user]
+    email = scottrbaxter@gmail.com
+    name = Scott Baxter
+[core]
+    editor = vim
+    pager = less
+    excludesfile = ~/.gitignore_global
+[merge]
+    tool = opendiff
+[alias]
+    addp = add --patch
+    amend = commit -a --amend
+    delete = branch -d
+    delete-without-merge = branch -D
+    diffw = diff --word-diff
+    graph = log --graph --all --decorate --stat --date=iso
+    head-branch = !git remote show origin | grep HEAD | awk '{print $3}'
+    local = log --oneline --no-merges
+    newbranch = checkout -b
+    pf = push --force-with-lease
+    pushf = push --force-with-lease
+    renamebranch = branch -m
+    staged = diff --staged
+    switch = "!f() { git checkout $1 2>/dev/null || git checkout -b $1 origin/$1 2>/dev/null || git checkout -b $1; }; f"
+    undo = reset HEAD~1 --mixed
+    url = remote -v
+    wip = commit -am "WIP"
+    wipe = !git add -A && git commit -qm 'WIPE SAVEPOINT' && git reset HEAD~1 --hard
+[pager]
+    branch = false
+    config = false
+    diff = false
+    show = false
+    stash = false
+[color "diff"]
+    meta = cyan normal bold
