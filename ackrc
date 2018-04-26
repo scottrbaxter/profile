@@ -1,0 +1,42 @@
+# ack run commands file
+
+# Print a break between results from different files. On by default when used interactively.
+# --break
+
+# Always color, even if piping to a another program
+--color
+
+# Sets the color to be used for matches.
+--color-filename=underline bold green
+--color-lineno=underline blue
+--color-match=bold blue
+# The recognized attributes are:
+# clear, reset, dark, bold, underline, underscore, blink, reverse, concealed black
+# red, green, yellow, blue, magenta
+# on_black, on_red, on_green, on_yellow, on_magenta, on_cyan, on_white
+
+# Ignore case distinctions in PATTERN
+--ignore-case
+
+# Ignore directory (as CVS, .svn, etc are ignored). May be used multiple times to ignore multiple directories.
+# For example, mason users may wish to include --ignore-dir=data.
+# The --noignore-dir option allows users to search directories which would normally be ignored
+# (perhaps to research the contents of .svn/props directories)
+--ignore-directory=is:submodules/
+--ignore-directory=is:tmp/
+--ignore-directory=is:scott/
+
+
+# list current filters with this:
+# ack --help-types
+# use filter to ignore all files that match (starts with) tst
+--ignore-file=match:^tst
+
+# Always sort the files
+--sort-files
+
+# Use "less -r" as my pager
+# --pager=less -r
+
+# always show filename and line numbers, even specifying single file
+--with-filename

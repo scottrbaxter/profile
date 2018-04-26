@@ -1,0 +1,42 @@
+[submodule "submodules/dot_janus/ale"]
+	path = submodules/dot_janus/ale
+	url = https://github.com/w0rp/ale.git
+[submodule "submodules/dot_janus/ansible-vim"]
+	path = submodules/dot_janus/ansible-vim
+	url = https://github.com/pearofducks/ansible-vim.git
+[submodule "submodules/dot_janus/indentLine"]
+	path = submodules/dot_janus/indentLine
+	url = https://github.com/Yggdroot/indentLine.git
+[submodule "submodules/dot_janus/vim-ipython"]
+	path = submodules/dot_janus/vim-ipython
+	url = https://github.com/ivanov/vim-ipython.git
+[submodule "submodules/dot_janus/swift.vim"]
+	path = submodules/dot_janus/swift.vim
+	url = https://github.com/keith/swift.vim.git
+[submodule "submodules/dot_janus/vim-airline"]
+	path = submodules/dot_janus/vim-airline
+	url = https://github.com/vim-airline/vim-airline.git
+[submodule "submodules/dot_janus/vim-airline-themes"]
+	path = submodules/dot_janus/vim-airline-themes
+	url = https://github.com/vim-airline/vim-airline-themes.git
+[submodule "submodules/dot_janus/vim-crosshairs"]
+	path = submodules/dot_janus/vim-crosshairs
+	url = https://github.com/bronson/vim-crosshairs.git
+[submodule "submodules/dot_janus/vim-flake8"]
+	path = submodules/dot_janus/vim-flake8
+	url = https://github.com/nvie/vim-flake8.git
+[submodule "submodules/dot_janus/vim-indentwise"]
+	path = submodules/dot_janus/vim-indentwise
+	url = https://github.com/jeetsukumaran/vim-indentwise.git
+[submodule "submodules/dot_janus/vim-better-whitespace"]
+	path = submodules/dot_janus/vim-better-whitespace
+	url = https://github.com/ntpeters/vim-better-whitespace.git
+[submodule "submodules/dot_janus/ansible-lint"]
+	path = submodules/dot_janus/ansible-lint
+	url = https://github.com/willthames/ansible-lint.git
+[submodule "submodules/dot_janus/space-vim-dark"]
+	path = submodules/dot_janus/space-vim-dark
+	url = https://github.com/liuchengxu/space-vim-dark.git
+[submodule "omz/custom/plugins/zsh-autosuggestions"]
+	path = omz/custom/plugins/zsh-autosuggestions
+	url = https://github.com/zsh-users/zsh-autosuggestions.git

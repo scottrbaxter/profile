@@ -1,17 +1,17 @@
 # Custom developer profile for various utilities
 
-- macos
-- iterm
+- ~~macos~~
+- ~~iterm~~
 - oh-my-zsh
 - vim
 - git
 - python
-- virtualbox
-- vagrant
-- docker
+- ~~virtualbox~~
+- ~~vagrant~~
+- ~~docker~~
 - linux (ubuntu/centos)
-- aws
-- ansible
-- ssh
+- ~~aws~~
+- ~~ansible~~
+- ~~ssh~~
 - ack
 - linters
