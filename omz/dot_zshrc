@@ -53,7 +53,7 @@ export ZSH=${HOME}/.oh-my-zsh
 # User configuration
 
 # functions and aliases
-export PROFILE_PATH="$HOME/development/profile-bb"
+export PROFILE_PATH="$HOME/development/profile"
 source "$PROFILE_PATH/omz/zshrc.custom"
 
 # specifically for shellcheck linting, set this file to sh
