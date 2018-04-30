@@ -70,12 +70,18 @@ export PATH="$RBENV_ROOT/bin:$PATH"
 # eval "$(rbenv init -)"
 # eval "$(rbenv init - --no-rehash)"
 
+# Bash-like navigation (alt left/right forward-word like bash)
+# http://stackoverflow.com/questions/10847255/how-to-make-zsh-forward-word-behaviour-same-as-in-bash-emacs (man zshall)
+autoload -U select-word-style
+select-word-style bash
 # bindkey mappings for zsh
 # bindkey -v # vim mode
 bindkey "^[OF" end-of-line
 bindkey "^[OH" beginning-of-line
 bindkey "^[OA" up-line-or-beginning-search
 bindkey "^[OB" down-line-or-beginning-search
+# bindkey "^[OC" emacs-forward-word # arrow key jumps word by default
+# bindkey "^[OD" emacs-backward-word # arrow key jumps word by default
 bindkey "^?" backward-delete-char
 bindkey "^[[3~" delete-char
 bindkey "^W" backward-kill-word
@@ -84,9 +90,11 @@ bindkey "^[B" backward-word
 bindkey "^[F" forward-word
 bindkey "^[[1;5C" forward-word
 bindkey "^[[1;5D" backward-word
-bindkey "^[b" backward-word
+# bindkey "^[b" backward-char
+bindkey "^[b" emacs-backward-word
 bindkey "^[d" kill-word
-bindkey "^[f" forward-word
+# bindkey "^[f" forward-char
+bindkey "^[f" emacs-forward-word
 bindkey "^[^?" backward-kill-word
 bindkey "^[D" kill-word
 bindkey "^[d" kill-word
@@ -104,7 +112,7 @@ eval "$(pyenv init -)"
 # PATH="$GOPATH/bin:$PATH"
 
 # needs to go after pyenv, to make ~/.local/bin work correctly (because pip install --user)
-export PATH="$PATH:$HOME/.local/bin:/usr/local/sbin:/usr/libexec:$HOME/scripts"
+export PATH="$PATH:$HOME/.local/bin:/usr/local/sbin:/usr/libexec:$HOME/scripts:$HOME/development/scripts"
 
 # shellcheck linter
 export SHELLCHECK_OPTS="-e SC2129 -e SC2059"
@@ -125,7 +133,9 @@ fi
 
 # Vagrant / VirtualBox
 # https://www.vagrantup.com/docs/other/environmental-variables.html
-export VAGRANT_HOME='~/Vagrant/vagrant_home' # (default location: ~/.vagrant.d)
+export VAGRANT_HOME="$HOME/.Vagrant" # (default location: ~/.vagrant.d)
+# export VAGRANT_DEBUG_LAUNCHER="1" # outputs debugging
+# export VAGRANT_DEFAULT_PROVIDER="virtualbox"
 
 # functions
 whichAwsAccount ()

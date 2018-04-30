@@ -93,6 +93,9 @@ elif [[ $(hostname -s) == macpro ]]; then
 elif [[ $(hostname -s) == euclid ]]; then
     CRUNCH_HOST_COLOR="%{$fg[yellow]%}"
     CRUNCH_HOST="${CRUNCH_HOST_COLOR}"'$(hostname -s)'
+elif [[ $(hostname -s) =~ [test] ]]; then
+    CRUNCH_HOST_COLOR="%{$fg[green]%}"
+    CRUNCH_HOST="${CRUNCH_HOST_COLOR}"'$(hostname -s)'
 else
     CRUNCH_HOST_COLOR="%{$fg[red]%}"
     CRUNCH_HOST="${CRUNCH_HOST_COLOR}"'$(hostname -s)'

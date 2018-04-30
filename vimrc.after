@@ -11,6 +11,8 @@ nmap <space>q :q<CR>
 nmap <space>Q :q!<CR>
 nmap <space>w :w<CR>
 nmap <space><tab> :%s/\t/    /g<CR>
+nmap <space>' cs"'
+nmap <space>" cs'"
 nmap ` v~
 nmap t :TagbarOpen fj<CR>
 nnoremap q :q<CR>
@@ -205,6 +207,7 @@ au FileType zsh setlocal tabstop=4 shiftwidth=4 softtabstop=4 expandtab " confor
 au BufNewFile,BufRead *.yaml set filetype=ansible.yaml
 au BufNewFile,BufRead *.yml set filetype=ansible.yaml
 au BufNewFile,BufRead *.yaml setlocal indentkeys=0{,0},:,0#,!^F,o,0,e
+au BufEnter * if &filetype == "" | setlocal ft=text | endif
 let g:ansible_unindent_after_newline = 1
 let g:ansible_extra_syntaxes = "sh.vim ruby.vim"
 let g:ansible_attribute_highlight = "a"

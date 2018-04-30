@@ -10,7 +10,7 @@ let g:NERDDefaultAlign = 'left' " always to far left
 let g:NERDAltDelims_python = 1 " without this python double spaces
 let g:NERDCustomDelimiters = { 'arduino': { 'left': '//','right': '' } } " required for proper .ino file comments
 let g:NERDCustomDelimiters = { 'ansible_template': { 'left': '#','right': '' } } " required for proper ansible file comments
-let g:NERDCustomDelimiters = { '': { 'left': '#','right': '' } } " use # for unspecified file comments
+let g:NERDCustomDelimiters = { 'text': { 'left': '#','right': '' } } " use # for unspecified file comments
 let g:NERDTrimTrailingWhitespace = 1 " Enable trimming of trailing whitespace when uncommenting
 " let g:NERDCommentEmptyLines = 1 " Allow commenting and inverting empty lines
 
