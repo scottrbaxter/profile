@@ -33,7 +33,8 @@
     diff = false
     show = false
     stash = false
+    submodule = false
 [color "diff"]
     meta = cyan normal bold
 [status]
-	submoduleSummary = true
+    submoduleSummary = true
