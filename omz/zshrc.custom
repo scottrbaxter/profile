@@ -210,6 +210,9 @@ awkp(){
     fi
 }
 
+start_op(){eval $(op signin "$OP_CLOUD_ACCOUNT")}
+c_2fa(){op get totp 2fa}
+
 # aliases
 alias l.='ls -dh .*'
 # alias l="ls_grep"
@@ -280,11 +283,11 @@ alias pep8="$(which pep8) -v"
 alias bep8="$(which bashate)"
 alias pms-log='tail -f /var/lib/plexmediaserver/Library/Application\ Support/Plex\ Media\ Server/Logs/Plex\ Media\ Server.log'
 alias sb-log='tail -f /usr/local/bin/Sick-Beard/Logs/sickbeard.log'
-alias D='cd ~/development'
+alias D='cd ~/development/docker'
 alias N='cd ~/notes'
 alias P='cd $PROFILE_PATH'
 alias S='cd ~/scripts'
-alias V='cd ~/vagrant'
+alias V='cd ~/development/vagrant'
 alias zupdate='upgrade_oh_my_zsh'
 alias zloadtest='/usr/bin/time /bin/zsh $PROFILE_PATH/omz/zshrc.custom -i -c exit' # speed test load zsh profile
 alias update-janus='JANUS=$HOME/.vim; echo "updating vim-janus in $JANUS"; cd $JANUS && rake && cd -'
@@ -307,33 +310,6 @@ alias C='cd ~/projects/console/'
 # alias list-instances-dj="ack dj ~/projects/ansiblesite/inventories"
 alias whichrole=whichAwsAccess
 alias jadmin='sudo /usr/local/bin/jamf policy -id 2'
-# alias ssh-vpn-gateway='ssh gateway.internal.civisanalytics.com -p 10022' # on vpn only
-# alias ssh-vpn-client='ssh ubuntu@client-openvpn.internal.civisanalytics.com' # on vpn only
-# alias ssh-vpn-civis='ssh ubuntu@legacy-openvpn.internal.civisanalytics.com' # on vpn only
-# alias ssh-staging-web-puma08="ssh console@puma08.staging.civisanalytics.com" # on vpn only
-# alias role-civis-orgs="source ~/assume_role.sh 943976103640 sbaxter 494246847414 superuser" # civis-orgs
-# alias role-civis-orgs-staging="source ~/assume_role.sh 943976103640 sbaxter 631627684437 superuser" # civis-orgs-staging
-# alias role-civis-orgs-staging-boccedeployer="source ~/assume_role.sh 943976103640 sbaxter 631627684437 BocceDeployer" # civis-orgs-staging
-# alias role-civis-legacy="source ~/assume_role.sh 943976103640 sbaxter 644468813057 superuser" # civis-legacy
-# alias role-civis-legacy-it-support="source ~/assume_role.sh 943976103640 sbaxter 644468813057 it-support" # create vpn user
-# alias role-civis-test="source ~/assume_role.sh 943976103640 sbaxter 826697897825 superuser" # civis-test
-# alias role-civis-rd="source ~/assume_role.sh 943976103640 sbaxter 906322163900 superuser" # civis-rd
-# alias role-civis-secure="source ~/assume_role.sh 943976103640 sbaxter 943976103640 superuser" # civis-secure
-# alias role-civis-unassume="unset AWS_SECRET_ACCESS_KEY \
-#                             AWS_SECURITY_TOKEN \
-#                             AWS_SESSION_TOKEN AWS_ACCESS_KEY_ID \
-#                             AWS_STS_EXPIRATION \
-#                             AWS_STS_TIMEOUT \
-#                             AWS_ACCOUNT_NAME; \
-#                             whichrole"
-# Civis Accounts
-CIVISORGS='494246847414'
-CIVISORGSSTAGING='631627684437'
-CIVISLEGACY='644468813057'
-CIVISTEST='826697897825'
-CIVISRD='906322163900'
-CIVISSECURE='943976103640'
-CIVISPUBLIC='020948172395'
 
 alias vpn-connect="gtb --name civis-legacy-20161214"
 alias kube-context='kubectl config current-context'
