@@ -1,0 +1,50 @@
+#!/usr/bin/env bash
+
+set -e
+
+# git info
+# diff, staged, status, show
+
+PURPLE="\033[0;35m"
+WHITE="\033[0m"
+PORCELAIN=$(git status --porcelain 2>/dev/null)
+
+
+header(){
+    echo -e "[${PURPLE}${1}${WHITE}]"
+}
+
+gitcheck(){
+    git -c color."$1"=always --no-pager "$@"
+}
+
+# check if branch is remote HEAD (e.g. master), maybe not needed
+# if clean branch do this:
+# git diff HEAD^ HEAD
+
+fullstatus(){
+    if [ "$PORCELAIN" ]; then
+        diffhead=$(gitcheck diff HEAD 2>/dev/null)
+        [ "$diffhead" ] && { \
+            header "Git Diff/Staged"; \
+            echo "$diffhead"; \
+            echo; }
+        diffstat=$(gitcheck diff --stat HEAD 2>/dev/null)
+        [ "$diffstat" ] && {\
+            header "Git Diff Stat"; \
+            echo "$diffstat"; \
+            echo; }
+            header "Porcelain Status"
+            echo -e "$PORCELAIN"
+            echo
+    else
+        header "Git Show - Latest Commit"
+        gitcheck show
+        echo
+    fi
+    header "Git Status"
+    gitcheck status
+}
+
+
+fullstatus

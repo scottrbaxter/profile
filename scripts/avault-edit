@@ -1,0 +1,21 @@
+#!/usr/bin/env bash
+
+set -e
+
+vaults=$(find . -type f -iname 'vault')
+vault_file="$1"
+
+if [ -z "$vault_file" ]; then
+    echo "Vaults available:"
+    echo "$vaults" | awk -F'/' '{print $(NF-1)}'
+    echo
+    read -rp "enter vault to edit: " file
+    # <<< == here string, allows grep to search a variable
+    vault_file=$(grep -w "$file" <<< "$vaults" | head -1)
+else
+    vault_file=$(grep -w "$1" <<< "$vaults" | head -1)
+fi
+
+echo "Access granted: $vault_file"
+
+ansible-vault edit --vault-pass ~/.vault_pass "$vault_file"

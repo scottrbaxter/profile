@@ -1,0 +1,99 @@
+#!/usr/bin/env bash
+
+set -e
+
+PURPLE="\033[0;35m"
+WHITE="\033[0m"
+PORCELAIN=$(git status --porcelain 2>/dev/null)
+PORCELAINLIST=$(awk '{print $2}' <<< "$PORCELAIN")
+
+header(){
+    echo -e "[${PURPLE}${1}${WHITE}]"
+}
+
+fullstatus(){
+    if [ -z "$PORCELAIN" ]; then
+        header "Git Show - Latest Commit"
+        gitcheck show
+        echo
+    else
+        header "Git Diff/Staged"
+        gitcheck diff HEAD
+    fi
+    header "Git Status"
+    gitcheck status
+    echo
+    [ "$PORCELAIN" ] \
+    && header "Porcelain Status" \
+    && echo -e "$PORCELAIN"
+}
+
+gitcheck(){
+    git -c color."$1"=always --no-pager "$@"
+}
+
+checkStaged(){
+    unstaged=$(echo -e "$PORCELAIN" | grep "^ \|^MM")
+    if [ "$unstaged" ]; then
+        header "Staging Modified"
+        echo -e "$PORCELAINLIST\n"
+        git add --patch "$1" 2>/dev/null # without sending error to null,
+        # i get this before running the add:
+        # warning: empty strings as pathspecs will be made invalid in upcoming releases.
+        # please use . instead if you meant to match all paths
+    fi
+}
+
+checkTracked(){
+    untracked=$(echo -e "$PORCELAIN" | grep "^??")
+    if [ "$untracked" ]; then
+        header "Staging Untracked: $1"
+        git add "$1"
+    fi
+}
+
+main(){
+    if [ "$PORCELAIN" ]; then
+        # echo "$PORCELAINLIST"
+        if [ ! "$1" ]; then # stage all files if none specified
+            checkStaged .
+            checkTracked .
+        elif [[ $PORCELAINLIST =~ $1 ]]; then
+            filename=$(echo "${PORCELAINLIST/$'\n'/ }" | grep "$1")
+            checkStaged $filename # must be without quotes
+            checkTracked $filename # must be without quotes
+            exit 0 # testing
+        else
+            echo "[WARN] invalid file: \"$1\""
+            exit 1
+        fi
+        # break this out to an if check
+            header "Porcelain Status"
+            # newstatus=git status --porcelain 2>/dev/null
+            git status --porcelain
+        echo
+        header "Previous Git Commit"
+        # git show @~
+        git --no-pager log -1 --oneline --decorate
+        read -rp "$(header 'Commit changes? [Y/n/a]mend to previous commit') " yna
+        echo
+        if [ -z "$yna" ]; then # default option if no argument is passed
+            git commit -v
+        else
+            case "${yna}" in
+                [Yy]*)  git commit -v ;;
+                [Aa]*)  git commit --amend ;;
+                [Nn]*)  return 0 ;;
+                *)  echo "invalid entry, try again"; main ;;
+            esac
+        fi
+    else
+        header "No unstaged or untracked files, showing latest commit on branch"
+        git --no-pager log -1 --oneline --decorate
+        echo
+    fi
+}
+
+
+# make $PORCELAIN a function
+main "${@}" && [ "$PORCELAIN" ] # && fullstatus
