@@ -1,42 +1,42 @@
-[submodule "submodules/dot_janus/ale"]
-	path = submodules/ale
-	url = https://github.com/w0rp/ale.git
-[submodule "submodules/dot_janus/ansible-vim"]
-	path = submodules/ansible-vim
-	url = https://github.com/pearofducks/ansible-vim.git
-[submodule "submodules/dot_janus/indentLine"]
-	path = submodules/indentLine
-	url = https://github.com/Yggdroot/indentLine.git
-[submodule "submodules/dot_janus/vim-ipython"]
-	path = submodules/vim-ipython
-	url = https://github.com/ivanov/vim-ipython.git
-[submodule "submodules/dot_janus/swift.vim"]
-	path = submodules/swift.vim
-	url = https://github.com/keith/swift.vim.git
-[submodule "submodules/dot_janus/vim-airline"]
-	path = submodules/vim-airline
-	url = https://github.com/vim-airline/vim-airline.git
-[submodule "submodules/dot_janus/vim-airline-themes"]
-	path = submodules/vim-airline-themes
-	url = https://github.com/vim-airline/vim-airline-themes.git
-[submodule "submodules/dot_janus/vim-crosshairs"]
-	path = submodules/vim-crosshairs
-	url = https://github.com/bronson/vim-crosshairs.git
-[submodule "submodules/dot_janus/vim-flake8"]
-	path = submodules/vim-flake8
-	url = https://github.com/nvie/vim-flake8.git
-[submodule "submodules/dot_janus/vim-indentwise"]
-	path = submodules/vim-indentwise
-	url = https://github.com/jeetsukumaran/vim-indentwise.git
-[submodule "submodules/dot_janus/vim-better-whitespace"]
-	path = submodules/vim-better-whitespace
-	url = https://github.com/ntpeters/vim-better-whitespace.git
-[submodule "submodules/dot_janus/ansible-lint"]
-	path = submodules/ansible-lint
-	url = https://github.com/willthames/ansible-lint.git
-[submodule "submodules/dot_janus/space-vim-dark"]
-	path = submodules/space-vim-dark
-	url = https://github.com/liuchengxu/space-vim-dark.git
 [submodule "omz/custom/plugins/zsh-autosuggestions"]
-	path = submodules/zsh-autosuggestions
+	path = omz/custom/plugins/zsh-autosuggestions
 	url = https://github.com/zsh-users/zsh-autosuggestions.git
+[submodule "dot_janus/ale"]
+	path = dot_janus/ale
+	url = https://github.com/w0rp/ale.git
+[submodule "dot_janus/ansible-vim"]
+	path = dot_janus/ansible-vim
+	url = https://github.com/pearofducks/ansible-vim.git
+[submodule "dot_janus/indentLine"]
+	path = dot_janus/indentLine
+	url = https://github.com/Yggdroot/indentLine.git
+[submodule "vim-ipython"]
+	path = dot_janus/vim-ipython
+	url = https://github.com/ivanov/vim-ipython.git
+[submodule "dot_janus/swift.vim"]
+	path = dot_janus/swift.vim
+	url = https://github.com/keith/swift.vim.git
+[submodule "dot_janus/vim-airline"]
+	path = dot_janus/vim-airline
+	url = https://github.com/vim-airline/vim-airline.git
+[submodule "dot_janus/vim-airline-themes"]
+	path = dot_janus/vim-airline-themes
+	url = https://github.com/vim-airline/vim-airline-themes.git
+[submodule "dot_janus/vim-crosshair"]
+	path = dot_janus/vim-crosshair
+	url = https://github.com/bronson/vim-crosshairs.git
+[submodule "dot_janus/vim-flake8"]
+	path = dot_janus/vim-flake8
+	url = https://github.com/nvie/vim-flake8.git
+[submodule "dot_janus/vim-indentwise"]
+	path = dot_janus/vim-indentwise
+	url = https://github.com/jeetsukumaran/vim-indentwise.git
+[submodule "dot_janus/vim-better-whitespace"]
+	path = dot_janus/vim-better-whitespace
+	url = https://github.com/ntpeters/vim-better-whitespace.git
+[submodule "dot_janus/ansible-lint"]
+	path = dot_janus/ansible-lint
+	url = https://github.com/willthames/ansible-lint.git
+[submodule "dot_janus/space-vim-dark"]
+	path = dot_janus/space-vim-dark
+	url = https://github.com/liuchengxu/space-vim-dark.git
