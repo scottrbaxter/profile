@@ -7,6 +7,7 @@
 **/tmp
 **/*.retry
 **/docker.tst.*
+**/*.vagrant
 
 # ansible
 .vault_pass
