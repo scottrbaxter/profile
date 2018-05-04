@@ -112,7 +112,7 @@ eval "$(pyenv init -)"
 # PATH="$GOPATH/bin:$PATH"
 
 # needs to go after pyenv, to make ~/.local/bin work correctly (because pip install --user)
-export PATH="$PATH:$HOME/.local/bin:/usr/local/sbin:/usr/libexec:$HOME/scripts:$HOME/development/scripts"
+export PATH="$PATH:$HOME/.local/bin:/usr/local/sbin:/usr/libexec:$HOME/scripts:$PROFILE_PATH/scripts"
 
 # shellcheck linter
 export SHELLCHECK_OPTS="-e SC2129 -e SC2059"
