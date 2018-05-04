@@ -1,0 +1,34 @@
+#!/usr/bin/env bash
+
+set -e
+
+# git change to master and pull from remote
+
+PURPLE="\033[0;35m"
+WHITE="\033[0m"
+currentbranch=$(git rev-parse --abbrev-ref HEAD)
+
+
+header(){
+    echo -e "[${PURPLE}${1}${WHITE}]"
+}
+
+gitColor(){
+    git -c color."${1}"=always "${@}"
+}
+
+masterpull(){
+    if [ "${currentbranch}" != master ]; then
+        header "Swithing to Master Branch"
+        gitColor checkout master
+    fi
+    # gitColor pull origin master:master
+    header "Git Pull"
+    gitColor pull --rebase --prune
+    header "Git Submodule Update"
+    gitColor submodule sync --recursive && \
+        gitColor submodule update --init --recursive
+}
+
+
+masterpull

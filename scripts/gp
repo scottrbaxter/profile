@@ -1,0 +1,55 @@
+#!/usr/bin/env bash
+
+set -e
+
+# push branch to origin except HEAD
+
+CURRENT=$(git rev-parse --abbrev-ref HEAD)
+BASE=$(basename "$0")
+GREEN="\033[0;32m"
+PURPLE="\033[0;35m"
+RED="\033[0;31m"
+WHITE="\033[0m"
+
+
+main(){
+    case "$1" in
+    "")
+        header "Git Push: $GREEN$CURRENT"
+        # denyheadbranch
+        git push origin "$CURRENT"
+        ;;
+    -f|--force-with-lease)
+        header "Git Push: $GREEN$CURRENT (force-with-lease)"
+        # denyheadbranch
+        git push origin "$CURRENT" --force-with-lease
+        ;;
+    -h|--help)
+        header "Help"
+        echo "$BASE = git push"
+        echo "$BASE -f = --force-with-lease"
+        ;;
+    esac
+}
+
+# denyheadbranch(){
+#     HEAD=$(git remote show origin | grep HEAD | awk '{print $3}')
+#     if [ "$CURRENT" = "$HEAD" ]; then # we don't wanna push to remote HEAD
+#         errorheader "Git Error: attempted push to master"
+#         exit 1
+#     fi
+# }
+
+errorheader(){
+    echo -e "[${RED}${1}${WHITE}]"
+}
+
+gitColor(){
+    git -c color."$1"=always "$@"
+}
+
+header(){
+    echo -e "[${PURPLE}${1}${WHITE}]"
+}
+
+main "$@"

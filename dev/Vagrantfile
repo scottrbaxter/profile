@@ -1,0 +1,41 @@
+BOX = 'bento/ubuntu-16.04'.freeze
+CUSTOM_HOST_PORT = 3333
+FOLDER = '/Vagrant'.freeze
+INSECURE_KEY = '~/.vagrant.d/insecure_private_key'.freeze
+HOSTNAME = 'profile'.freeze
+PRIVATE_KEY = '~/.ssh/id_rsa-vagrant'.freeze
+PUBLIC_KEY = '~/.ssh/id_rsa-vagrant.pub'.freeze
+
+Vagrant.configure('2') do |config|
+  config.ssh.keys_only = true
+  config.ssh.insert_key = false
+  config.ssh.private_key_path = [
+    PRIVATE_KEY, INSECURE_KEY
+  ]
+  # config.vbguest.auto_update = false # do not install guest additions
+  config.vm.box = BOX
+  config.vm.define HOSTNAME
+  config.vm.hostname = HOSTNAME
+  config.vm.network :forwarded_port, # define specific ssh port
+                    guest: 22,
+                    host: CUSTOM_HOST_PORT,
+                    auto_correct: true
+  config.vm.network :forwarded_port,
+                    guest: 22,
+                    host: 2222,
+                    id: 'ssh',
+                    disabled: true
+  config.vm.provider :virtualbox do |vb|
+    vb.name = HOSTNAME # clean label in VirtualBox app
+  end
+  config.vm.provision 'file',
+                      source: PUBLIC_KEY,
+                      destination: '~/.ssh/authorized_keys'
+  config.vm.provision 'ansible' do |ansible|
+    ansible.verbose = 'v'
+    ansible.playbook = 'playbook.yaml'
+    # manually run playbook after launch:
+    # ansible-playbook -i .vagrant/provisioners/ansible/inventory/vagrant_ansible_inventory playbook.yaml
+  end
+  config.vm.synced_folder '.', FOLDER, type: 'virtualbox'
+end

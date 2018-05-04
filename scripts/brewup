@@ -1,0 +1,97 @@
+#!/usr/bin/env bash
+
+set -e
+
+# update then upgrade homebrew and cask
+# requires tap: cask-upgrade
+# check with: brew tap
+# Tap (add tap) with: brew tap bou/cask-upgrade
+# add these two lines to /etc/sudoers (sudo visudo)
+# Cmnd_Alias PROCESSES = /usr/local/bin/brew cask upgrade --yes
+# [username] ALL=(root) NOPASSWD: PROCESSES
+
+# colors
+# RED="\033[31m"
+PURPLE="\033[35m"
+WHITE="\033[0m"
+DAYS=14
+NAME=$(basename "${0}")
+
+
+header(){
+    echo -e "[${PURPLE}${1}${WHITE}]"
+}
+
+brewCleanup(){
+    if [ "$1" == noprompt ]; then
+        header "Cleaning: homebrew formulas > $DAYS days old"
+        brew cask outdated
+        brew cleanup --prune="$DAYS"
+        exit 0
+    fi
+    read -rp "$(header 'Cleanup brew formulas older than 14 days? [y/n]') " yn
+    case "$yn" in
+        [Yy]*)  brew cleanup --prune="$DAYS"; echo ;;
+        [Nn]*)  ;;
+        *)      echo -e "Please choose [y/n]"; brewCleanup ;;
+    esac
+}
+
+brewUpdate(){
+    header "Updating all homebrew taps"; brew update; echo
+}
+
+brewUpgrade(){
+    header "Brew outdated"; brew outdated; echo
+    header "Brew upgrade"; brew upgrade --ignore-pinned; echo
+}
+
+caskUpgrade(){
+    header "Brew cask upgrade"; brew cu -a --cleanup --yes; echo
+}
+
+caskForceUpgrade(){
+    header "Brew cask force upgrade"; brew cu -af --cleanup --yes; echo
+}
+
+main(){
+    if [ -z "$1" ] || [ "$1" == "-h*" ]; then
+        read -rp "Update all? [Y/n] " yn
+        echo
+        case "$yn" in
+            [Nn]*)      main -h ;;
+            ""|[Yya]*)   main -a ;;
+        esac
+    fi
+    case "$1" in
+        -a|--all )
+            brewUpdate
+            brewUpgrade
+            caskUpgrade
+            brewCleanup noprompt
+            ;;
+        -b|--brew )
+            brewUpdate
+            header "Updating all homebrew taps"; brew update
+            brewUpgrade
+            brewCleanup
+            ;;
+        -c|--cask )
+            brewUpdate
+            header "Updating all homebrew taps"; brew update
+            caskUpgrade
+            ;;
+        -f|--cask-latest )
+            brewUpdate
+            header "Reinstalling all 'latest' cask apps"; brew update
+            caskForceUpgrade
+            ;;
+        -[h]*|* )
+            echo "Options are: $NAME -[a]ll, -[b]rew, -[c]ask, -[h]elp"
+            exit 0
+            ;;
+    esac
+}
+
+
+main "$1"

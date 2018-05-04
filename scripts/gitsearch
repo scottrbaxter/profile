@@ -1,0 +1,25 @@
+#!/usr/bin/env bash
+
+set -e
+
+COUNT=3
+GITSEARCH="gitColor log -S ${*} -n $COUNT --pretty=format:%H"
+
+
+header(){
+    COLOR="\033[0;35m"
+    RESET="\033[0m"
+    echo -e "[${COLOR}${1}${RESET}]"
+}
+
+
+gitColor(){
+    git --no-pager -c color."${1}"=always "${@}"
+}
+
+
+header "Searching for last $COUNT occurrences of \"${*}\""
+echo -e "$(${GITSEARCH})\n"
+for response in $(${GITSEARCH}); do
+    gitColor show "$response"
+done

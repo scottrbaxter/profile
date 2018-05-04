@@ -1,0 +1,28 @@
+#!/usr/bin/env bash
+
+# use ack to search for a pattern, second value specifies pattern in filename to search through
+# e.g. 'ackf stuff-in-file lettersinfilename'
+# real example: 'ackf SubnetId staging'
+# will search for 'SubnetId' in all files that include the word 'staging''
+
+ackSpecificFiles(){
+    if [[ $2 == '*' ]]; then
+        ack $1
+    elif [ $2 ]; then
+        ack $1 $(ack -g $2)
+    else
+        echo -e "[${RED}ERROR${WHITE}] specify a thing and word in files to search through.\nexample: $ ackf SubnetId staging"
+    fi
+    #
+    # alternate version, not 100% working
+    #
+    # case "${2}" in # check 2nd word after script
+    #     "") echo "[${RED}ERROR${WHITE}] specify a thing and word in files to search through";
+    #         echo "e.g. $ ackf stuff-in-file lettersinfilename" ;;
+    #     ^$) ack $1 $(ack -g $2) ;;
+    #     *)  ack $1 ;;
+    # esac
+}
+
+
+ackSpecificFiles $1 $2

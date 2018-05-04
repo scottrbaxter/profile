@@ -1,0 +1,22 @@
+#!/usr/bin/env bash
+
+# update all vagrant boxes on computer
+
+set -e
+
+PROVIDER=virtualbox
+OUTDATED=$(vagrant box outdated --global | grep outdated | awk -F\' '{print $2}')
+
+if [ "$OUTDATED" ]; then
+    for box in $OUTDATED; do
+        vagrant box update \
+            --box "${box}" \
+            --provider "${PROVIDER}"
+    done
+    vagrant box prune -f
+else
+    echo "All locally added vagrant boxes are up2date!"
+fi
+
+# print all local vagrant boxes
+vagrant box outdated --global
