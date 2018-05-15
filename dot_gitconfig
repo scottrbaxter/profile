@@ -1,13 +1,4 @@
 ; vim: set ft=gitconfig:
-[user]
-    email = scottrbaxter@gmail.com
-    name = Scott Baxter
-[core]
-    editor = vim
-    pager = less
-    excludesfile = ~/.gitignore_global
-[merge]
-    tool = opendiff
 [alias]
     addp = add --patch
     amend = commit -a --amend
@@ -27,6 +18,16 @@
     url = remote -v
     wip = commit -am "WIP"
     wipe = !git add -A && git commit -qm 'WIPE SAVEPOINT' && git reset HEAD~1 --hard
+[color "diff"]
+    meta = cyan normal bold
+[core]
+    editor = vim
+    pager = less
+    excludesfile = ~/.gitignore_global
+[github]
+    user = scottrbaxter
+[merge]
+    tool = opendiff
 [pager]
     branch = false
     config = false
@@ -34,7 +35,10 @@
     show = false
     stash = false
     submodule = false
-[color "diff"]
-    meta = cyan normal bold
 [status]
     submoduleSummary = true
+[user]
+    email = scottrbaxter@gmail.com
+    name = Scott Baxter
+[credential]
+    helper = osxkeychain

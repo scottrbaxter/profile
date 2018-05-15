@@ -13,6 +13,10 @@ nmap <space>w :w<CR>
 nmap <space><tab> :%s/\t/    /g<CR>
 nmap <space>' cs"'
 nmap <space>" cs'"
+nmap <space>- :s/-/_/<CR>
+vmap <space>- :s/\%V-/_/<CR>
+nmap <space>_ :s/_/-/<CR>
+vmap <space>_ :s/\%V_/-/<CR>
 nmap ` v~
 nmap t :TagbarOpen fj<CR>
 nnoremap q :q<CR>

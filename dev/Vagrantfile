@@ -1,7 +1,7 @@
 BOX = 'bento/ubuntu-16.04'.freeze
 CUSTOM_HOST_PORT = 3333
 FOLDER = '/Vagrant'.freeze
-INSECURE_KEY = '~/.vagrant.d/insecure_private_key'.freeze
+INSECURE_KEY = '~/.Vagrant/insecure_private_key'.freeze
 HOSTNAME = 'profile'.freeze
 PRIVATE_KEY = '~/.ssh/id_rsa-vagrant'.freeze
 PUBLIC_KEY = '~/.ssh/id_rsa-vagrant.pub'.freeze

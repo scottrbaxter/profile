@@ -13,12 +13,14 @@ HYPHEN_INSENSITIVE="true"
 
 # oh-my-zsh theme
 ZSH_CUSTOM="$PROFILE_PATH/omz/custom"
-ZSH_THEME="crunch_custom"
+ZSH_THEME="crunch_custom"; alias git='checkGit'
+# POWERLEVEL9K_LEFT_PROMPT_ELEMENTS=(os_icon time context history dir vcs)
+# ZSH_THEME="powerlevel9k/powerlevel9k"
 
 # determine Mac or Linux OS
 OS_TYPE=$(uname -s)
 # linux specific
-if [ ${OS_TYPE} = Linux ]; then
+if [ "$OS_TYPE" = Linux ]; then
     alias apt='sudo apt'
     alias apts='apt search'
     alias ls='ls --color=always'
@@ -134,6 +136,7 @@ fi
 # Vagrant / VirtualBox
 # https://www.vagrantup.com/docs/other/environmental-variables.html
 export VAGRANT_HOME="$HOME/.Vagrant" # (default location: ~/.vagrant.d)
+[ -d "$VAGRANT_HOME" ] || mkdir -p "$VAGRANT_HOME" # create if path doesn't exist
 # export VAGRANT_DEBUG_LAUNCHER="1" # outputs debugging
 # export VAGRANT_DEFAULT_PROVIDER="virtualbox"
 
@@ -172,11 +175,13 @@ peruseHistory ()
 bundleIdentifier (){mdls -name kMDItemCFBundleIdentifier -raw "$1"}
 
 # Wrap git. On errors, print an additional line in red.
-git(){
+# not compatbile with powerlevel9k theme
+checkGit(){
     command git "$@"
     local exitCode=$?
     if [ $exitCode -eq 141 ]; then
-        : # do nothing (hides 141 error on git log 'less' quit)
+        # : # do nothing (hides 141 error on git log 'less' quit)
+        return $exitCode
     elif [ $exitCode -ne 0 ]; then
         printf "${RED}ERROR: git exited with code $exitCode${WHITE}\n"
         return $exitCode
@@ -210,8 +215,6 @@ awkp(){
     fi
 }
 
-start_op(){eval $(op signin "$OP_CLOUD_ACCOUNT")}
-c_2fa(){op get totp 2fa}
 
 # aliases
 alias l.='ls -dh .*'
@@ -294,6 +297,7 @@ alias update-janus='JANUS=$HOME/.vim; echo "updating vim-janus in $JANUS"; cd $J
 alias ansible-playbook='ANSIBLE_STDOUT_CALLBACK="debug" ansible-playbook -vv'
 alias ansible-playbook-dense='ANSIBLE_STDOUT_CALLBACK="dense" \ansible-playbook -v'
 alias fix-spotlight='sudo mdutil -E /'
+alias start_op='source ~/scripts/start_op_session'
 # alias rg="command rg --color always --colors 'match:fg:blue' --colors 'line:fg:blue' --colors 'path:style:bold' --colors 'path:fg:green' -S"
 # alias rgg="rg --files -g '*cfn*'"
 # alias rgf='rg -lS' # file path only
