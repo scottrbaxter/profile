@@ -40,3 +40,6 @@
 [submodule "dot_janus/vim-ipython"]
 	path = dot_janus/vim-ipython
 	url = https://github.com/ivanov/vim-ipython.git
+[submodule "omz/custom/themes/powerlevel9k"]
+	path = omz/custom/themes/powerlevel9k
+	url = https://github.com/bhilburn/powerlevel9k.git
