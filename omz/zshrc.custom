@@ -42,8 +42,7 @@ export TERM="xterm-256color"
 
 # add plugins=(osx) for the tab command, to command-click a vim file in new tab
 # also need to add 'tab' in iterm2 profile/advanced semantic history
-# plugins=(hub docker zsh-syntax-highlighting) # zsh-syntax-highlighting turns the word green or red, but breaks forward-word stopping at wordchar
-plugins=(hub docker zsh-autosuggestions)
+plugins=(docker pip zsh-autosuggestions zsh-syntax-highlighting)
 
 source $ZSH/oh-my-zsh.sh
 
@@ -241,6 +240,7 @@ alias top='top -u'
 alias top='htop'
 alias h='peruseHistory'
 alias hl='peruseHistory -l'
+alias git=hub # provides git tab completion
 # alias vim=/usr/local/bin/nvim
 alias vi='vim'
 alias vvv='vim ~/.vimrc'
