@@ -1,4 +1,0 @@
-; this is now antiquated, so remove!
-; vim: set ft=gitconfig:
-[user]
-    email = sbaxter@civisanalytics.com
