@@ -138,8 +138,6 @@ STS_="$STS_COLOR"'$(checkSTS)'
 checkOP() {
     if [[ ! $OP_EXPIRATION ]]; then
         return
-    elif [[ $OP_EXPIRATION -le $(NOW) ]]; then
-        unset OP_EXPIRATION
     else
         OP_MINUTES_REMAINING=$(( $(( OP_EXPIRATION - $(NOW) )) / 60 ))
         echo "P|$OP_MINUTES_REMAINING "

@@ -297,7 +297,7 @@ alias update-janus='JANUS=$HOME/.vim; echo "updating vim-janus in $JANUS"; cd $J
 alias ansible-playbook='ANSIBLE_STDOUT_CALLBACK="debug" ansible-playbook -vv'
 alias ansible-playbook-dense='ANSIBLE_STDOUT_CALLBACK="dense" \ansible-playbook -v'
 alias fix-spotlight='sudo mdutil -E /'
-alias start_op='source ~/scripts/start_op_session'
+alias op_session='source ~/scripts/op_session'
 # alias rg="command rg --color always --colors 'match:fg:blue' --colors 'line:fg:blue' --colors 'path:style:bold' --colors 'path:fg:green' -S"
 # alias rgg="rg --files -g '*cfn*'"
 # alias rgf='rg -lS' # file path only
