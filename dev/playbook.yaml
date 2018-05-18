@@ -19,6 +19,7 @@
         name:
           - build-essential
           - curl
+          - hub
           - libbz2-dev
           - libncurses5-dev
           - libncursesw5-dev

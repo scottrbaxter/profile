@@ -176,7 +176,7 @@ bundleIdentifier (){mdls -name kMDItemCFBundleIdentifier -raw "$1"}
 # Wrap git. On errors, print an additional line in red.
 # not compatbile with powerlevel9k theme
 checkGit(){
-    command git "$@"
+    command hub "$@" # hub provides tab completion
     local exitCode=$?
     if [ $exitCode -eq 141 ]; then
         # : # do nothing (hides 141 error on git log 'less' quit)
@@ -214,8 +214,8 @@ awkp(){
     fi
 }
 
-
 # aliases
+alias 1p='source op_session.sh'
 alias l.='ls -dh .*'
 # alias l="ls_grep"
 alias ll.='ls -ldh .*'
@@ -240,8 +240,6 @@ alias top='top -u'
 alias top='htop'
 alias h='peruseHistory'
 alias hl='peruseHistory -l'
-alias git=hub # provides git tab completion
-# alias vim=/usr/local/bin/nvim
 alias vi='vim'
 alias vvv='vim ~/.vimrc'
 alias vva='vim ~/.vimrc.after'
@@ -297,7 +295,6 @@ alias update-janus='JANUS=$HOME/.vim; echo "updating vim-janus in $JANUS"; cd $J
 alias ansible-playbook='ANSIBLE_STDOUT_CALLBACK="debug" ansible-playbook -vv'
 alias ansible-playbook-dense='ANSIBLE_STDOUT_CALLBACK="dense" \ansible-playbook -v'
 alias fix-spotlight='sudo mdutil -E /'
-alias op_session='source ~/scripts/op_session'
 # alias rg="command rg --color always --colors 'match:fg:blue' --colors 'line:fg:blue' --colors 'path:style:bold' --colors 'path:fg:green' -S"
 # alias rgg="rg --files -g '*cfn*'"
 # alias rgf='rg -lS' # file path only
