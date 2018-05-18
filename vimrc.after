@@ -213,6 +213,7 @@ au FileType zsh setlocal tabstop=4 shiftwidth=4 softtabstop=4 expandtab " confor
 " au BufEnter * if &filetype == "" | setlocal ft=sh | endif
 " au BufNewFile,BufRead *.yaml set filetype=ansible.yaml
 " au BufNewFile,BufRead *.yml set filetype=ansible.yaml
+au BufRead,BufNewFile */playbooks/*.y*ml set filetype=ansible.yaml
 au BufNewFile,BufRead *.yaml setlocal indentkeys=0{,0},:,0#,!^F,o,0,e
 au BufEnter * if &filetype == "" | setlocal ft=text | endif " any unknown filetype will be known as 'text'
 let g:ansible_unindent_after_newline = 1
