@@ -1,0 +1,10 @@
+#!/usr/bin/env bash
+
+set -e
+
+bundleIdentifier(){
+    echo -e "$(mdls -name kMDItemCFBundleIdentifier -raw "$1")"
+}
+
+
+bundleIdentifier "$@"

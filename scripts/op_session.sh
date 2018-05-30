@@ -18,17 +18,16 @@ main(){
     # directly pass inactive session args
     case "$*" in
         "" )
-            op;;
+            op ;;
         --help )
-            op --help;;
+            op --help ;;
         --version )
-            op --version;;
+            op --version ;;
         signin )
-            op signin;;
+            op signin ;;
         signout )
             op signout
             unset OP_EXPIRATION OP_SESSION_"$OP_CLOUD_ACCOUNT"
-            reset_timeout
             ;;
         update )
             op update;;
@@ -57,6 +56,7 @@ signin(){
         awk -F\" '{print $2}'
     )
     export OP_SESSION_"$OP_CLOUD_ACCOUNT"="$token"
+    reset_timeout
 }
 
 

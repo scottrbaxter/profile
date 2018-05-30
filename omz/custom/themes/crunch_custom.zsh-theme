@@ -145,5 +145,14 @@ checkOP() {
 }
 OP_="$OP_COLOR"'$(checkOP)'
 
+check_last_exit_code() {
+  local LAST_EXIT_CODE=$?
+  if [[ $LAST_EXIT_CODE -ne 0 ]]; then
+    local EXIT_CODE_PROMPT="%{$fg_bold[red]%}E|$LAST_EXIT_CODE%{$reset_color%} "
+    echo "$EXIT_CODE_PROMPT"
+  fi
+}
+EXIT_='$(check_last_exit_code)'
+
 # Put it all together!
-PROMPT="$CRUNCH_TIME_$LOAD_$OP_$STS_$NUM_$HOST_$STS_PROMPT_$CRUNCH_DIR_$ADMIN_ %{$reset_color%}"
+PROMPT="$CRUNCH_TIME_$EXIT_$LOAD_$OP_$STS_$NUM_$HOST_$STS_PROMPT_$CRUNCH_DIR_$ADMIN_ %{$reset_color%}"
