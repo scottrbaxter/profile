@@ -1,6 +1,5 @@
 #!/usr/bin/env zsh
-# macos doesn't do nanoseconds; can't use $(date +%s)
-# start=$(perl -MTime::HiRes -e 'printf("%.0f\n",Time::HiRes::time()*1000)')
+# vim: ft=sh: set this file to sh if using shellcheck linter
 
 # oh-my-zsh args
 CASE_SENSITIVE="true"
@@ -13,7 +12,7 @@ HYPHEN_INSENSITIVE="true"
 
 # oh-my-zsh theme
 ZSH_CUSTOM="$PROFILE_PATH/omz/custom"
-ZSH_THEME="crunch_custom"; alias git='checkGit'
+ZSH_THEME="crunch_custom"; alias git=hub
 # POWERLEVEL9K_LEFT_PROMPT_ELEMENTS=(os_icon time context history dir vcs)
 # ZSH_THEME="powerlevel9k/powerlevel9k"
 
@@ -27,7 +26,7 @@ if [ "$OS_TYPE" = Linux ]; then
 # mac specific
 elif [ "$OS_TYPE" = Darwin ]; then
     alias ls='/usr/local/bin/gls --color=always'
-    HOMEBREW_OPENSSL="/usr/local/opt/openssl" # cause "$(brew --prefix openssl)" is super slow
+    local HOMEBREW_OPENSSL="/usr/local/opt/openssl" # cause "$(brew --prefix openssl)" is super slow
     export CFLAGS="-I$HOMEBREW_OPENSSL/include"
     export LDFLAGS="-L$HOMEBREW_OPENSSL/lib"
 fi
@@ -81,8 +80,6 @@ bindkey "^[OF" end-of-line
 bindkey "^[OH" beginning-of-line
 bindkey "^[OA" up-line-or-beginning-search
 bindkey "^[OB" down-line-or-beginning-search
-# bindkey "^[OC" emacs-forward-word # arrow key jumps word by default
-# bindkey "^[OD" emacs-backward-word # arrow key jumps word by default
 bindkey "^?" backward-delete-char
 bindkey "^[[3~" delete-char
 bindkey "^W" backward-kill-word
@@ -91,10 +88,8 @@ bindkey "^[B" backward-word
 bindkey "^[F" forward-word
 bindkey "^[[1;5C" forward-word
 bindkey "^[[1;5D" backward-word
-# bindkey "^[b" backward-char
 bindkey "^[b" emacs-backward-word
 bindkey "^[d" kill-word
-# bindkey "^[f" forward-char
 bindkey "^[f" emacs-forward-word
 bindkey "^[^?" backward-kill-word
 bindkey "^[D" kill-word
@@ -109,8 +104,8 @@ export PATH="$PYENV_ROOT/bin:$PATH"
 eval "$(pyenv init -)"
 
 # go environment
-# export GOPATH=$HOME/development/gocode
-# PATH="$GOPATH/bin:$PATH"
+export GOPATH="$HOME/go"
+PATH="$GOPATH/bin:$PATH"
 
 # needs to go after pyenv, to make ~/.local/bin work correctly (because pip install --user)
 export PATH="$PATH:$HOME/.local/bin:/usr/local/sbin:/usr/libexec:$HOME/scripts:$PROFILE_PATH/scripts"
@@ -140,24 +135,21 @@ export VAGRANT_HOME="$HOME/.Vagrant" # (default location: ~/.vagrant.d)
 # export VAGRANT_DEFAULT_PROVIDER="virtualbox"
 
 # functions
-whichAwsAccount ()
-{
-    AWS_ACCOUNT_NAME=$(aws iam list-account-aliases --query 'AccountAliases[]' --output text)
-    echo "${AWS_ACCOUNT_NAME}"
-}
-
-whichAwsStsUser ()
-{
-    aws sts get-caller-identity --output text --query '[Account, Arn]'
-}
-
-whichAwsAccess ()
-{
-    if [[ -n $AWS_STS_EXPIRATION ]]; then
-        echo $(whichAwsAccount) $(whichAwsStsUser) $(( $((${AWS_STS_TIMEOUT} - $(date +%s))) / 60 )) Minutes Remaining
+awkp(){
+    # search returns paragraph around line with search value
+    if [ $2 ]; then
+        awk -v RS= "/$1/" $2
     else
-        echo $(whichAwsAccount) $(whichAwsStsUser)
+        echo "use: awkp <thing_to_search> </path/to/file>"
     fi
+}
+
+gitBlameSort(){
+if [ ${1} ]; then
+    git blame ${1} | sort -rbk 3 | less
+else
+    echo "e.g. $0 /path/to/file"
+fi
 }
 
 peruseHistory ()
@@ -171,30 +163,6 @@ peruseHistory ()
     fi
 }
 
-bundleIdentifier (){mdls -name kMDItemCFBundleIdentifier -raw "$1"}
-
-# Wrap git. On errors, print an additional line in red.
-# not compatbile with powerlevel9k theme
-checkGit(){
-    command hub "$@" # hub provides tab completion
-    local exitCode=$?
-    if [ $exitCode -eq 141 ]; then
-        # : # do nothing (hides 141 error on git log 'less' quit)
-        return $exitCode
-    elif [ $exitCode -ne 0 ]; then
-        printf "${RED}ERROR: git exited with code $exitCode${WHITE}\n"
-        return $exitCode
-    fi
-}
-
-gitBlameSort(){
-if [ ${1} ]; then
-    git blame ${1} | sort -rbk 3 | less
-else
-    echo "e.g. $0 /path/to/file"
-fi
-}
-
 reloadZsh(){
     if alias ack > /dev/null 2>&1; then # else 'which' breaks these if reloading aliases
         # this is me being lazy with the oh-my-zsh git aliases function
@@ -205,19 +173,9 @@ reloadZsh(){
     source "$PROFILE_PATH/omz/zshrc.custom"
 }
 
-awkp(){
-    # search returns paragraph around line with search value
-    if [ $2 ]; then
-        awk -v RS= "/$1/" $2
-    else
-        echo "use: awkp <thing_to_search> </path/to/file>"
-    fi
-}
-
 # aliases
 alias 1p='source op_session.sh'
 alias l.='ls -dh .*'
-# alias l="ls_grep"
 alias ll.='ls -ldh .*'
 alias llt='ll -tr'
 alias clr='clear'
@@ -257,8 +215,6 @@ alias gbl='git branch --list --sort=creatordate'
 alias gblame=gitBlameSort
 alias gcfg='vim ~/.gitconfig'
 alias gl='git --no-pager log --oneline -25'
-# alias gp='git push origin $(git rev-parse --abbrev-ref HEAD)'
-# alias gpf='git push origin $(git rev-parse --abbrev-ref HEAD) --force-with-lease'
 alias gpf='gp -f'
 alias glo='git log --oneline --decorate'
 alias gss='git show --summary'
@@ -275,7 +231,6 @@ alias ackw='ack -w' # words mode, pattern can't be in another word
 alias serial=serialNumber
 alias check-admin=~/scripts/check-admin.sh
 alias bundleid=bundleIdentifier
-# alias bb-push='git push origin master --force-with-lease' # only for personal bitbucket stuff
 alias vg='vagrant global-status'
 alias vs='vagrant status'
 alias vup='vagrant up && vagrant ssh'
@@ -295,31 +250,9 @@ alias update-janus='JANUS=$HOME/.vim; echo "updating vim-janus in $JANUS"; cd $J
 alias ansible-playbook='ANSIBLE_STDOUT_CALLBACK="debug" ansible-playbook -vv'
 alias ansible-playbook-dense='ANSIBLE_STDOUT_CALLBACK="dense" \ansible-playbook -v'
 alias fix-spotlight='sudo mdutil -E /'
-# alias rg="command rg --color always --colors 'match:fg:blue' --colors 'line:fg:blue' --colors 'path:style:bold' --colors 'path:fg:green' -S"
-# alias rgg="rg --files -g '*cfn*'"
-# alias rgf='rg -lS' # file path only
-# alias rgu='rg -u' # unrestricted
-# alias rgfu='rg -lu' # only file path, unrestricted
-
-# docker stuff (may not be necessary with zsh 'docker' plugin)
-# eval "$(docker-machine env dockervm)"
-
-# Civis Aliases
-alias A='cd ~/projects/ansiblesite/'
-alias C='cd ~/projects/console/'
-# alias list-instances-puma="ack puma ~/projects/ansiblesite/inventories"
-# alias list-instances-dj="ack dj ~/projects/ansiblesite/inventories"
-alias whichrole=whichAwsAccess
-alias jadmin='sudo /usr/local/bin/jamf policy -id 2'
-
-alias vpn-connect="gtb --name civis-legacy-20161214"
-alias kube-context='kubectl config current-context'
 
 # API keys
 for k in ~/.keyfile-*(N); do source $k; done
-
-# permits custom window/tab title to be set in iterm2
-# export DISABLE_AUTO_TITLE="true"
 
 # Ansible - dense == rich output, debug == cleaner verbose (-v) output
 # http://docs.ansible.com/ansible/latest/dev_guide/developing_plugins.html#callback-plugins
@@ -333,28 +266,9 @@ fi
 export ANSIBLE_STDOUT_CALLBACK="dense"
 # export ANSIBLE_STDOUT_CALLBACK="debug" # pretty print verbose output
 export ANSIBLE_CALLBACK_WHITELIST="profile_tasks, profile_roles"
-# export ANSIBLE_CALLBACK_WHITELIST="context_demo, profile_tasks, profile_roles"
-# export ANSIBLE_LOAD_CALLBACK_PLUGINS=1 # ansible adhoc
 
-# https://superuser.com/questions/578359/how-can-i-enable-colored-output-for-osx-diff
-# source "`brew --prefix`/etc/grc.bashrc"
+# permits custom window/tab title to be set in iterm2
+# export DISABLE_AUTO_TITLE="true"
 
-# exercism completion
-# if [ -f ~/.config/exercism/exercism_completion.zsh ]; then
-#     . ~/.config/exercism/exercism_completion.zsh
-# fi
-
-# color stderr (e.g. in ~/.vim run 'rake')
-# https://github.com/sickill/stderred
-# export DYLD_INSERT_LIBRARIES=~/development/stderred/build/libstderred.dylib${DYLD_INSERT_LIBRARIES:+:$DYLD_INSERT_LIBRARIES}
-alias stderred="LD_PRELOAD=~/development/stderred/build/libstderred.dylib\${LD_PRELOAD:+:\$LD_PRELOAD}"
-# STDERRED_ESC_CODE=$(echo -e '\e[;92m') ruby -e 'puts "Yo!"; warn "Jola"' # green Jola
-# STDERRED_ESC_CODE=$(echo -e '\e[;31m') ruby -e 'puts "Yo!"; warn "Jola"' # red Jola
-
-# end=$(perl -MTime::HiRes -e 'printf("%.0f\n",Time::HiRes::time()*1000)')
-# echo "Sourcing \"$0\" completed in \"$((end-start))\" nanoseconds"
-
-# specifically for shellcheck linting, set this file to sh
-# vim: ft=zsh:
-
+# iterm2 shell integration
 test -e "${HOME}/.iterm2_shell_integration.zsh" && source "${HOME}/.iterm2_shell_integration.zsh"
