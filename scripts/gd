@@ -1,0 +1,20 @@
+#!/usr/bin/env bash
+# quick git diff
+
+set -e
+
+git_diff(){
+    if [ "$2" ]; then
+        # $1==older commit
+        # $2==newer commit
+        git diff "$1"^ "$2"
+    elif [ "$1" ]; then
+        # only specific commit
+        git diff "$1"^ "$1"
+    else
+        # latest commit
+        git diff HEAD^ HEAD
+    fi
+}
+
+git_diff "$@"

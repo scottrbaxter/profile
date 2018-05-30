@@ -164,11 +164,7 @@ peruseHistory ()
 }
 
 reloadZsh(){
-    if alias ack > /dev/null 2>&1; then # else 'which' breaks these if reloading aliases
-        # this is me being lazy with the oh-my-zsh git aliases function
-        # echo -e "unaliasing: ack & omz git defaults"
-        unalias ack
-    fi
+    unalias -a # remove all aliases
     export PATH=$PATH_DEFAULT
     source "$PROFILE_PATH/omz/zshrc.custom"
 }
@@ -185,7 +181,7 @@ alias cll='clear;ls -lh'
 alias cla='clear;ls -lah'
 alias bz='bunzip2'
 alias rar='unrar'
-alias scr='screen -dr'
+alias scr='screen -dR'
 alias df='df -h'
 alias dud='du -d 1 -h'
 alias digs='dig $1 +short'
