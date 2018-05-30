@@ -6,7 +6,8 @@ nmap <space>a \cA
 nmap <space>d :Gdiff<CR>
 nmap <space>f :FixWhitespace<CR>
 nmap <space>r \c<space>
-nmap <space>g \gb
+nmap <space>b :Gblame<CR>
+nmap <space>d :Gdiff<CR>
 nmap <space>q :q<CR>
 nmap <space>Q :q!<CR>
 nmap <space>w :w<CR>
