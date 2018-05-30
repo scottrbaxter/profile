@@ -1,0 +1,27 @@
+#!/usr/bin/env bash
+
+set -e
+
+
+# whichAwsAccess ()
+# {
+#     if [[ -n $AWS_STS_EXPIRATION ]]; then
+#         echo $(whichAwsAccount) $(whichAwsStsUser) $(( $((${AWS_STS_TIMEOUT} - $(date +%s))) / 60 )) Minutes Remaining
+#     else
+#         echo $(whichAwsAccount) $(whichAwsStsUser)
+#     fi
+# }
+
+# whichAwsAccount ()
+# {
+#     AWS_ACCOUNT_NAME=$(aws iam list-account-aliases --query 'AccountAliases[]' --output text)
+#     echo "${AWS_ACCOUNT_NAME}"
+# }
+
+whichAwsStsUser ()
+{
+    aws sts get-caller-identity --output text --query '[Account, Arn]'
+}
+
+
+whichAwsStsUser

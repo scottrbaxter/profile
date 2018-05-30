@@ -68,13 +68,13 @@ main(){
             brewUpdate
             brewUpgrade
             caskUpgrade
-            brewCleanup noprompt
+            # brewCleanup noprompt
             ;;
         -b|--brew )
             brewUpdate
             header "Updating all homebrew taps"; brew update
             brewUpgrade
-            brewCleanup
+            # brewCleanup
             ;;
         -c|--cask )
             brewUpdate
