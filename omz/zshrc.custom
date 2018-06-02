@@ -245,6 +245,7 @@ alias zloadtest='/usr/bin/time /bin/zsh $PROFILE_PATH/omz/zshrc.custom -i -c exi
 alias update-janus='JANUS=$HOME/.vim; echo "updating vim-janus in $JANUS"; cd $JANUS && rake && cd -'
 alias ansible-playbook='ANSIBLE_STDOUT_CALLBACK="debug" ansible-playbook -vv'
 alias ansible-playbook-dense='ANSIBLE_STDOUT_CALLBACK="dense" \ansible-playbook -v'
+alias ansible-playbook-vagrant='ansible-playbook -i .vagrant/provisioners/ansible/inventory/vagrant_ansible_inventory playbook.yaml'
 alias fix-spotlight='sudo mdutil -E /'
 
 # API keys

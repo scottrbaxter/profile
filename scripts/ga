@@ -6,6 +6,8 @@ PURPLE="\033[0;35m"
 WHITE="\033[0m"
 PORCELAIN=$(git status --porcelain 2>/dev/null)
 PORCELAINLIST=$(awk '{print $2}' <<< "$PORCELAIN")
+UNSTAGED=$(echo -e "$PORCELAIN" | grep "^ \|^MM")
+UNTRACKED=$(echo -e "$PORCELAIN" | grep "^??")
 
 header(){
     echo -e "[${PURPLE}${1}${WHITE}]"
@@ -33,8 +35,7 @@ gitcheck(){
 }
 
 checkStaged(){
-    unstaged=$(echo -e "$PORCELAIN" | grep "^ \|^MM")
-    if [ "$unstaged" ]; then
+    if [ "$UNSTAGED" ]; then
         header "Staging Modified"
         echo -e "$PORCELAINLIST\n"
         git add --patch "$1" 2>/dev/null # without sending error to null,
@@ -45,19 +46,18 @@ checkStaged(){
 }
 
 checkTracked(){
-    untracked=$(echo -e "$PORCELAIN" | grep "^??")
-    if [ "$untracked" ]; then
-        header "Staging Untracked: $1"
+    if [ "$UNTRACKED" ]; then
+        header "Staging uNTRACKED: $1"
         git add "$1"
     fi
 }
 
 main(){
     if [ "$PORCELAIN" ]; then
-        # echo "$PORCELAINLIST"
-        if [ ! "$1" ]; then # stage all files if none specified
-            checkStaged .
-            checkTracked .
+        if [ ! "$@" ]; then # stage all files if none specified
+            checkStaged "$*"
+            checkTracked "$*"
+        # if first var entered does not match contents of PORCELAINLIST
         elif [[ $PORCELAINLIST =~ $1 ]]; then
             filename=$(echo "${PORCELAINLIST/$'\n'/ }" | grep "$1")
             checkStaged $filename # must be without quotes
