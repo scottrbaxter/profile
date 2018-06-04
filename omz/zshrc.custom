@@ -170,53 +170,12 @@ reloadZsh(){
 }
 
 # aliases
+alias D='cd ~/development/docker'
+alias N='cd ~/notes'
+alias P='cd $PROFILE_PATH'
+alias S='cd ~/scripts'
+alias V='cd ~/development/vagrant'
 alias 1p='source op_session.sh'
-alias l.='ls -dh .*'
-alias ll.='ls -ldh .*'
-alias llt='ll -tr'
-alias clr='clear'
-alias cl='clear;ls -h'
-alias cl.='clear;ls -dh .*'
-alias cll='clear;ls -lh'
-alias cla='clear;ls -lah'
-alias bz='bunzip2'
-alias rar='unrar'
-alias scr='screen -dR'
-alias df='df -h'
-alias dud='du -d 1 -h'
-alias digs='dig $1 +short'
-alias D='cd ~/Downloads'
-alias grep='grep -i --color=always' # (case insensitive, color output)
-alias preview='open /Applications/Preview.app '
-alias rm='rm -i'
-alias rr='rsync -avhP --delete'
-alias top='top -u'
-alias top='htop'
-alias h='peruseHistory'
-alias hl='peruseHistory -l'
-alias vi='vim'
-alias vvv='vim ~/.vimrc'
-alias vva='vim ~/.vimrc.after'
-alias vvb='vim ~/.vimrc.before'
-alias hh='sudo vim /etc/hosts'
-alias zz="vim $PROFILE_PATH/omz/zshrc.custom"
-alias zedit='vim $ZSH_CUSTOM/themes/crunch_custom.zsh-theme'
-alias fixaudio='sudo launchctl stop com.apple.audio.coreaudiod'
-alias iCloudStatus='brctl log --wait --shorten'
-alias python-http-server='python -m SimpleHTTPServer'
-alias fixAppStoreApps='killall -KILL storeaccountd'
-alias publicip='dig +short myip.opendns.com @resolver1.opendns.com'
-alias gb='git rev-parse --abbrev-ref HEAD'
-alias gbl='git branch --list --sort=creatordate'
-alias gblame=gitBlameSort
-alias gcfg='vim ~/.gitconfig'
-alias gl='git --no-pager log --oneline -25'
-alias gpf='gp -f'
-alias glo='git log --oneline --decorate'
-alias gss='git show --summary'
-alias accounts='head -9 ~/projects/civis-accounts'
-alias iftop='sudo /usr/local/sbin/iftop -P'
-alias ips='curl http://ipinfo.io/ip; ifconfig| grep -w inet'
 alias ack='ack --ackrc $PROFILE_PATH/ackrc'
 alias ackg='ack -g' # check filenames for pattern
 alias ackgw='ackg -w' # words mode, pattern can't be in another word
@@ -224,31 +183,67 @@ alias ackp=awkp # [FUNC] search returns paragraph around line with search value
 alias acks='ack --noignore-dir=is:submodules/,tmp/,scott/' # will search submodules
 alias acksg='acks -g' # filenames only, will search submodules
 alias ackw='ack -w' # words mode, pattern can't be in another word
-alias serial=serialNumber
-alias check-admin=~/scripts/check-admin.sh
-alias bundleid=bundleIdentifier
+alias ansible-playbook='ANSIBLE_STDOUT_CALLBACK="debug" ansible-playbook -vv'
+alias ansible-playbook-dense='ANSIBLE_STDOUT_CALLBACK="dense" \ansible-playbook -v'
+alias bz='bunzip2'
+alias clr='clear'
+alias df='df -h'
+alias dud='du -d 1 -h'
+alias digs='dig $1 +short'
+alias grep='grep -i --color=always' # (case insensitive, color output)
+alias h='peruseHistory'
+alias hl='peruseHistory -l'
+alias hh='sudo vim /etc/hosts'
+alias l.='ls -dh .*'
+alias ll.='ls -ldh .*'
+alias llt='ll -tr'
+alias man=betterman
+alias pep8="$(which pep8) -v"
+alias bep8="$(which bashate)"
+alias pms-log='tail -f /var/lib/plexmediaserver/Library/Application\ Support/Plex\ Media\ Server/Logs/Plex\ Media\ Server.log'
+alias publicip='dig +short myip.opendns.com @resolver1.opendns.com'
+alias python-http-server='python -m SimpleHTTPServer'
+alias rar='unrar'
+alias rm='rm -i'
+alias rr='rsync -avhP --delete'
+alias sb-log='tail -f /usr/local/bin/Sick-Beard/Logs/sickbeard.log'
+alias scr='screen -dR'
+alias top='htop'
+alias update-janus='JANUS=$HOME/.vim; echo "updating vim-janus in $JANUS"; cd $JANUS && rake && cd -'
+alias vi='vim'
+alias vvv='vim ~/.vimrc'
+alias vva='vim ~/.vimrc.after'
+alias vvb='vim ~/.vimrc.before'
+alias zedit='vim $ZSH_CUSTOM/themes/crunch_custom.zsh-theme'
 alias vg='vagrant global-status'
 alias vs='vagrant status'
 alias vup='vagrant up && vagrant ssh'
 alias youtube-dl-mp4="youtube-dl -f 'bestvideo[ext=mp4]+bestaudio[ext=m4a]/mp4'"
-alias pep8="$(which pep8) -v"
-alias bep8="$(which bashate)"
-alias pms-log='tail -f /var/lib/plexmediaserver/Library/Application\ Support/Plex\ Media\ Server/Logs/Plex\ Media\ Server.log'
-alias sb-log='tail -f /usr/local/bin/Sick-Beard/Logs/sickbeard.log'
-alias D='cd ~/development/docker'
-alias N='cd ~/notes'
-alias P='cd $PROFILE_PATH'
-alias S='cd ~/scripts'
-alias V='cd ~/development/vagrant'
+alias zz="vim $PROFILE_PATH/omz/zshrc.custom"
+
+# git
+alias gb='git rev-parse --abbrev-ref HEAD'
+alias gbl='git branch --list --sort=creatordate'
+alias gblame=gitBlameSort
+alias gcfg='vim ~/.gitconfig'
+alias gl='git --no-pager log --oneline -25'
+alias glo='git log --oneline --decorate'
+alias gpf='gp -f'
+alias gss='git show --summary'
+
+# MacOS
+alias fixaudio='sudo launchctl stop com.apple.audio.coreaudiod'
+alias iCloudStatus='brctl log --wait --shorten'
+alias fixAppStoreApps='killall -KILL storeaccountd'
+alias iftop='sudo /usr/local/sbin/iftop -P'
+alias ips='curl http://ipinfo.io/ip; ifconfig| grep -w inet'
+alias preview='open /Applications/Preview.app '
+alias serial=serialNumber
 alias zupdate='upgrade_oh_my_zsh'
 alias zloadtest='/usr/bin/time /bin/zsh $PROFILE_PATH/omz/zshrc.custom -i -c exit' # speed test load zsh profile
-alias update-janus='JANUS=$HOME/.vim; echo "updating vim-janus in $JANUS"; cd $JANUS && rake && cd -'
-alias ansible-playbook='ANSIBLE_STDOUT_CALLBACK="debug" ansible-playbook -vv'
-alias ansible-playbook-dense='ANSIBLE_STDOUT_CALLBACK="dense" \ansible-playbook -v'
-alias ansible-playbook-vagrant='ansible-playbook -i .vagrant/provisioners/ansible/inventory/vagrant_ansible_inventory playbook.yaml'
 alias fix-spotlight='sudo mdutil -E /'
 
-# API keys
+# additional stuff
 for k in ~/.keyfile-*(N); do source $k; done
 
 # Ansible - dense == rich output, debug == cleaner verbose (-v) output
@@ -260,8 +255,8 @@ if [ $ANSIBLE_STDOUT_CALLBACK ] || [ $ANSIBLE_CALLBACK_WHITELIST ]; then
             ANSIBLE_LOAD_CALLBACK_PLUGINS
 fi
 
-export ANSIBLE_STDOUT_CALLBACK="dense"
 # export ANSIBLE_STDOUT_CALLBACK="debug" # pretty print verbose output
+export ANSIBLE_STDOUT_CALLBACK="dense"
 export ANSIBLE_CALLBACK_WHITELIST="profile_tasks, profile_roles"
 
 # permits custom window/tab title to be set in iterm2

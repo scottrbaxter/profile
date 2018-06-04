@@ -10,13 +10,12 @@
     local = log --oneline --no-merges
     newbranch = checkout -b
     pf = push --force-with-lease
-    pushf = push --force-with-lease
     removechanges = checkout --
     renamebranch = branch -m
     staged = diff --staged
     switch = "!f() { git checkout $1 2>/dev/null || git checkout -b $1 origin/$1 2>/dev/null || git checkout -b $1; }; f"
     undo = reset HEAD~1 --mixed
-    unstage = reset HEAD
+    unstage = "!f() { git reset HEAD "$@" && gs; }; f"
     url = remote -v
     wip = commit -am "WIP"
     wipe = !git add -A && git commit -qm 'WIPE SAVEPOINT' && git reset HEAD~1 --hard
