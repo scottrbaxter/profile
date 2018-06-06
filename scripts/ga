@@ -1,99 +1,110 @@
 #!/usr/bin/env bash
 
-set -e
+PURPLE="\\033[0;35m"
+WHITE="\\033[0m"
 
-PURPLE="\033[0;35m"
-WHITE="\033[0m"
-PORCELAIN=$(git status --porcelain 2>/dev/null)
-PORCELAINLIST=$(awk '{print $2}' <<< "$PORCELAIN")
-UNSTAGED=$(echo -e "$PORCELAIN" | grep "^ \|^MM")
-UNTRACKED=$(echo -e "$PORCELAIN" | grep "^??")
 
-header(){
-    echo -e "[${PURPLE}${1}${WHITE}]"
+checkPorcelain(){
+    porcelain=$(git status --porcelain 2>/dev/null)
+    porcelainlist=$(awk '{print $NF}' <<< "$porcelain")
 }
 
-fullstatus(){
-    if [ -z "$PORCELAIN" ]; then
+checkModified(){
+    echo -e "$porcelain" | grep "^ \\|^MM" | awk '{print $NF}'
+}
+
+checkUntracked(){
+    grep "^??" <<< "$porcelain" | awk '{print $NF}'
+}
+
+commitChanges(){
+    read -rp "$(header 'Commit changes? [Y/n/a]mend to previous commit, or enter commit message') " answer
+    case "$answer" in
+        "") git commit -v ;;
+        [Yy] ) git commit -v ;;
+        [Aa] ) git commit --amend ;;
+        [Nn] ) exit 1 ;;
+        *) git commit -m "$answer" ;;
+    esac
+    echo
+}
+
+fullStatus(){
+    checkPorcelain
+    if [ -z "$porcelain" ]; then
         header "Git Show - Latest Commit"
         gitcheck show
         echo
     else
         header "Git Diff/Staged"
         gitcheck diff HEAD
+        echo
     fi
     header "Git Status"
     gitcheck status
     echo
-    [ "$PORCELAIN" ] \
+    [ "$porcelain" ] \
     && header "Porcelain Status" \
-    && echo -e "$PORCELAIN"
+    && echo -e "$porcelain"
+    showPreviousCommit
 }
 
 gitcheck(){
     git -c color."$1"=always --no-pager "$@"
 }
 
-checkStaged(){
-    if [ "$UNSTAGED" ]; then
-        header "Staging Modified"
-        echo -e "$PORCELAINLIST\n"
-        git add --patch "$1" 2>/dev/null # without sending error to null,
-        # i get this before running the add:
-        # warning: empty strings as pathspecs will be made invalid in upcoming releases.
-        # please use . instead if you meant to match all paths
-    fi
-}
-
-checkTracked(){
-    if [ "$UNTRACKED" ]; then
-        header "Staging uNTRACKED: $1"
-        git add "$1"
-    fi
+header(){
+    echo -e "[${PURPLE}${1}${WHITE}]"
 }
 
 main(){
-    if [ "$PORCELAIN" ]; then
-        if [ ! "$@" ]; then # stage all files if none specified
-            checkStaged "$*"
-            checkTracked "$*"
-        # if first var entered does not match contents of PORCELAINLIST
-        elif [[ $PORCELAINLIST =~ $1 ]]; then
-            filename=$(echo "${PORCELAINLIST/$'\n'/ }" | grep "$1")
-            checkStaged $filename # must be without quotes
-            checkTracked $filename # must be without quotes
-            exit 0 # testing
-        else
-            echo "[WARN] invalid file: \"$1\""
-            exit 1
-        fi
-        # break this out to an if check
-            header "Porcelain Status"
-            # newstatus=git status --porcelain 2>/dev/null
-            git status --porcelain
-        echo
-        header "Previous Git Commit"
-        # git show @~
+    checkPorcelain
+    if [ -z "$porcelain" ]; then
+        header "No modified or untracked files, showing latest commit on branch"
         git --no-pager log -1 --oneline --decorate
-        read -rp "$(header 'Commit changes? [Y/n/a]mend to previous commit') " yna
-        echo
-        if [ -z "$yna" ]; then # default option if no argument is passed
-            git commit -v
-        else
-            case "${yna}" in
-                [Yy]*)  git commit -v ;;
-                [Aa]*)  git commit --amend ;;
-                [Nn]*)  return 0 ;;
-                *)  echo "invalid entry, try again"; main ;;
-            esac
-        fi
+        return 1
     else
-        header "No unstaged or untracked files, showing latest commit on branch"
-        git --no-pager log -1 --oneline --decorate
-        echo
+        if [ "$TO_STAGE" ]; then # stage files if specified
+            TO_STAGE="$*"
+        else # stage all porcelain files if none specified
+            TO_STAGE="."
+        fi
+        stageFiles "$TO_STAGE"
+        checkPorcelain
+        showPreviousCommit
+        commitChanges
+        fullStatus
     fi
 }
 
+showPreviousCommit(){
+    header "Previous Git Commit"
+    git --no-pager log -1 --oneline --decorate
+    echo
+}
 
-# make $PORCELAIN a function
-main "${@}" && [ "$PORCELAIN" ] # && fullstatus
+stageFiles(){
+    header "Staging Modified/Untracked Files"
+    if [ "$TO_STAGE" = "." ]; then
+        git add --patch .
+    else
+        modified=$(checkModified)
+        while read -r line; do
+            grep -w "$line" <<< "$TO_STAGE" >/dev/null && \
+                staging_modified+="$line "
+        done <<< "$modified"
+    fi
+    [ "$staging_modified" ] && \
+        git add --patch $staging_modified 2>/dev/null # git 128 error if quoted
+
+    untracked=$(checkUntracked)
+    while read -r line; do
+        grep -w "$line" <<< "$TO_STAGE" >/dev/null && \
+            staging_untracked+="$line "
+    done <<< "$untracked"
+    [ "$staging_untracked" ] && \
+        git add $staging_untracked 2>/dev/null # git 128 error if quoted
+}
+
+
+main "$TO_STAGE"
