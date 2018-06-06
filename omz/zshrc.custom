@@ -12,7 +12,7 @@ HYPHEN_INSENSITIVE="true"
 
 # oh-my-zsh theme
 ZSH_CUSTOM="$PROFILE_PATH/omz/custom"
-ZSH_THEME="crunch_custom"; alias git=hub
+ZSH_THEME="crunch_custom" # ; alias git=hub
 # POWERLEVEL9K_LEFT_PROMPT_ELEMENTS=(os_icon time context history dir vcs)
 # ZSH_THEME="powerlevel9k/powerlevel9k"
 
@@ -185,6 +185,7 @@ alias acksg='acks -g' # filenames only, will search submodules
 alias ackw='ack -w' # words mode, pattern can't be in another word
 alias ansible-playbook='ANSIBLE_STDOUT_CALLBACK="debug" ansible-playbook -vv'
 alias ansible-playbook-dense='ANSIBLE_STDOUT_CALLBACK="dense" \ansible-playbook -v'
+alias ansible-playbook-yaml='ANSIBLE_STDOUT_CALLBACK="yaml" \ansible-playbook -v'
 alias bz='bunzip2'
 alias clr='clear'
 alias df='df -h'
@@ -248,15 +249,16 @@ for k in ~/.keyfile-*(N); do source $k; done
 
 # Ansible - dense == rich output, debug == cleaner verbose (-v) output
 # http://docs.ansible.com/ansible/latest/dev_guide/developing_plugins.html#callback-plugins
-if [ $ANSIBLE_STDOUT_CALLBACK ] || [ $ANSIBLE_CALLBACK_WHITELIST ]; then
-    # echo -e "removing vars:\nANSIBLE_STDOUT_CALLBACK\nANSIBLE_CALLBACK_WHITELIST"
-    unset ANSIBLE_STDOUT_CALLBACK \
-            ANSIBLE_CALLBACK_WHITELIST \
-            ANSIBLE_LOAD_CALLBACK_PLUGINS
-fi
+# if [ $ANSIBLE_STDOUT_CALLBACK ] || [ $ANSIBLE_CALLBACK_WHITELIST ]; then
+#     # echo -e "removing vars:\nANSIBLE_STDOUT_CALLBACK\nANSIBLE_CALLBACK_WHITELIST"
+#     unset ANSIBLE_STDOUT_CALLBACK \
+#             ANSIBLE_CALLBACK_WHITELIST \
+#             ANSIBLE_LOAD_CALLBACK_PLUGINS
+# fi
 
 # export ANSIBLE_STDOUT_CALLBACK="debug" # pretty print verbose output
 export ANSIBLE_STDOUT_CALLBACK="dense"
+export ANSIBLE_LOAD_CALLBACK_PLUGINS="True"
 export ANSIBLE_CALLBACK_WHITELIST="profile_tasks, profile_roles"
 
 # permits custom window/tab title to be set in iterm2
