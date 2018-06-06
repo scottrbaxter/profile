@@ -44,6 +44,14 @@ fullstatus(){
     fi
     header "Git Status"
     gitcheck status
+    echo
+    header "Previous Commit"
+    showPreviousCommit
+}
+
+showPreviousCommit(){
+    git --no-pager log -1 --oneline --decorate
+    echo
 }
 
 
