@@ -2,15 +2,31 @@
 # quick git diff
 
 set -e
+set -x
+
+COMMIT_1="$1"
+COMMIT_2="$2"
+INTEGER='^[0-9]+$'
+
+
+# if ! [[ $COMMIT =~ $INTEGER ]] ; then
+#    echo "error: Not a number" >&2; exit 1
+# fi
+
+# exit 0
 
 git_diff(){
-    if [ "$2" ]; then
+    if [ "$COMMIT_2" ]; then
         # $1==older commit
         # $2==newer commit
-        git diff "$1"^ "$2"
-    elif [ "$1" ]; then
-        # only specific commit
-        git diff "$1"^ "$1"
+        git diff "$COMMIT_1"^ "$COMMIT_2"
+    elif [ "$COMMIT_1" ]; then
+        # if [[ $COMMIT_1 =~ $INTEGER ]] ; then
+        #     echo git diff # number of most recent commit
+        # else
+            # only specific commit
+            git diff "$1"^ "$1"
+        # fi
     else
         # latest commit
         git diff HEAD^ HEAD
