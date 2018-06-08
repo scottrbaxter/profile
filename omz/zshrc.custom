@@ -183,9 +183,6 @@ alias ackp=awkp # [FUNC] search returns paragraph around line with search value
 alias acks='ack --noignore-dir=is:submodules/,tmp/,scott/' # will search submodules
 alias acksg='acks -g' # filenames only, will search submodules
 alias ackw='ack -w' # words mode, pattern can't be in another word
-alias ansible-playbook='ANSIBLE_STDOUT_CALLBACK="debug" ansible-playbook -vv'
-alias ansible-playbook-dense='ANSIBLE_STDOUT_CALLBACK="dense" \ansible-playbook -v'
-alias ansible-playbook-yaml='ANSIBLE_STDOUT_CALLBACK="yaml" \ansible-playbook -v'
 alias bz='bunzip2'
 alias clr='clear'
 alias df='df -h'
@@ -244,22 +241,17 @@ alias zupdate='upgrade_oh_my_zsh'
 alias zloadtest='/usr/bin/time /bin/zsh $PROFILE_PATH/omz/zshrc.custom -i -c exit' # speed test load zsh profile
 alias fix-spotlight='sudo mdutil -E /'
 
+# ansible
+export ANSIBLE_CALLBACK_WHITELIST="profile_tasks, timer"
+export ANSIBLE_LOAD_CALLBACK_PLUGINS=True
+export ANSIBLE_STDOUT_CALLBACK=yaml
+export ANSIBLE_VERBOSITY=1
+alias ansible-playbook-debug='ANSIBLE_STDOUT_CALLBACK=dense ansible-playbook'
+alias ansible-playbook-dense='ANSIBLE_STDOUT_CALLBACK=dense ansible-playbook'
+alias ansible-playbook-yaml='ANSIBLE_STDOUT_CALLBACK=yaml ansible-playbook'
+
 # additional stuff
 for k in ~/.keyfile-*(N); do source $k; done
-
-# Ansible - dense == rich output, debug == cleaner verbose (-v) output
-# http://docs.ansible.com/ansible/latest/dev_guide/developing_plugins.html#callback-plugins
-# if [ $ANSIBLE_STDOUT_CALLBACK ] || [ $ANSIBLE_CALLBACK_WHITELIST ]; then
-#     # echo -e "removing vars:\nANSIBLE_STDOUT_CALLBACK\nANSIBLE_CALLBACK_WHITELIST"
-#     unset ANSIBLE_STDOUT_CALLBACK \
-#             ANSIBLE_CALLBACK_WHITELIST \
-#             ANSIBLE_LOAD_CALLBACK_PLUGINS
-# fi
-
-# export ANSIBLE_STDOUT_CALLBACK="debug" # pretty print verbose output
-export ANSIBLE_STDOUT_CALLBACK="dense"
-export ANSIBLE_LOAD_CALLBACK_PLUGINS="True"
-export ANSIBLE_CALLBACK_WHITELIST="profile_tasks, profile_roles"
 
 # permits custom window/tab title to be set in iterm2
 # export DISABLE_AUTO_TITLE="true"
