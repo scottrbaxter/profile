@@ -65,6 +65,9 @@ endif
 " move to 1st character on line when changing lines
 nmap <Up> <Up>^
 nmap <Down> <Down>^
+" vimdiff vertical split switching
+nmap <S-C-Left> <C-W>h
+nmap <S-C-Right> <C-W>l
 " hold shift to highlight text in visual mode.
 nmap <S-Up> V<Up>^
 nmap <S-Down> V<Down>^

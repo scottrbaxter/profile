@@ -8,6 +8,7 @@ set -e
 PURPLE="\033[0;35m"
 WHITE="\033[0m"
 PORCELAIN=$(git status --porcelain 2>/dev/null)
+GITCOMMITS=5
 
 
 header(){
@@ -44,6 +45,14 @@ fullstatus(){
     fi
     header "Git Status"
     gitcheck status
+    echo
+    showPreviousCommit
+}
+
+showPreviousCommit(){
+    header "Previous $GITCOMMITS Commit(s)"
+    git --no-pager log -"$GITCOMMITS" --oneline --decorate
+    echo
 }
 
 
