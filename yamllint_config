@@ -19,6 +19,7 @@ rules:
   line-length:
     level: warning
     max: 120
+  truthy: disable
 
 ### default values
 #
