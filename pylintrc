@@ -1,3 +1,4 @@
 [MASTER]
 
-pylint: disable-msg=C0103
+disable=missing-docstring
+disable-msg=C0103
