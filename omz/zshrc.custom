@@ -244,7 +244,8 @@ alias fix-spotlight='sudo mdutil -E /'
 # ansible
 export ANSIBLE_CALLBACK_WHITELIST="profile_tasks, timer"
 export ANSIBLE_LOAD_CALLBACK_PLUGINS=True
-export ANSIBLE_STDOUT_CALLBACK=yaml
+export ANSIBLE_STDOUT_CALLBACK=debug
+# export ANSIBLE_STDOUT_CALLBACK=yaml # 2.5 or later
 export ANSIBLE_VERBOSITY=1
 alias ansible-playbook-debug='ANSIBLE_STDOUT_CALLBACK=dense ansible-playbook'
 alias ansible-playbook-dense='ANSIBLE_STDOUT_CALLBACK=dense ansible-playbook'
