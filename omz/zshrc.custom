@@ -111,7 +111,7 @@ PATH="$GOPATH/bin:$PATH"
 export PATH="$PATH:$HOME/.local/bin:/usr/local/sbin:/usr/libexec:$HOME/scripts:$PROFILE_PATH/scripts"
 
 # shellcheck linter
-export SHELLCHECK_OPTS="-e SC2129 -e SC2059"
+export SHELLCHECK_OPTS="-e SC1091 -e SC2059 -e SC2129"
 
 # homebrew stuff
 export HOMEBREW_CASK_OPTS="--appdir=~/Applications"
@@ -126,6 +126,11 @@ export EDITOR="vim"
 if pyenv which aws_zsh_completer.sh 1>/dev/null 2>&1; then
   source "$(pyenv which aws_zsh_completer.sh)"
 fi
+
+# google cloud platform
+# source /usr/local/Caskroom/google-cloud-sdk/latest/google-cloud-sdk/completion.zsh.inc
+# source /usr/local/Caskroom/google-cloud-sdk/latest/google-cloud-sdk/path.zsh.inc
+# kubectl completion zsh > "${fpath[1]}/_kubectl"
 
 # Vagrant / VirtualBox
 # https://www.vagrantup.com/docs/other/environmental-variables.html

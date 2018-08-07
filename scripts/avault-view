@@ -7,13 +7,13 @@ vault_file="$1"
 
 if [ -z "$vault_file" ]; then
     echo "Vaults available:"
-    echo "$vaults" | awk -F'/' '{print $(NF-1)}'
+    echo "$vaults" | awk -F'/' '{print $(NF-1)}' | sort
     echo
     read -rp "enter vault to view: " file
     # <<< == here string, allows grep to search a variable
-    vault_file=$(grep -w "$file" <<< "$vaults" | head -1)
+    vault_file=$(grep -w "$file" <<< "$vaults" | tail -1)
 else
-    vault_file=$(grep -w "$1" <<< "$vaults" | head -1)
+    vault_file=$(grep -w "$1" <<< "$vaults" | tail -1)
 fi
 
 echo "Access granted: $vault_file"
