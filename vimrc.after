@@ -133,7 +133,7 @@ nnoremap <silent> <F2> :set hlsearch!<CR>
 " nmap <S-LeftRelease> w
 
 " add single quote around text until next white space
-nnoremap " lBcE""<Esc>Pw
+" nnoremap " lBcE""<Esc>Pw
 nnoremap ' lBcE''<Esc>Pw
 nnoremap [ lBcE[]<Esc>Pw
 " nnoremap { lBcE"{{  }}"<Esc>3hPw
