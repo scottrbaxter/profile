@@ -61,6 +61,10 @@ fpath=($fpath /usr/local/share/zsh-completions)
 autoload -U select-word-style
 select-word-style bash
 
+# handles special characters from links/urls
+autoload -Uz url-quote-magic
+zle -N self-insert url-quote-magic
+
 # custom PATH stuff
 export PATH_DEFAULT="$PATH" # needed for reloadZsh
 
@@ -207,8 +211,8 @@ alias pms-log='tail -f /var/lib/plexmediaserver/Library/Application\ Support/Ple
 alias publicip='dig +short myip.opendns.com @resolver1.opendns.com'
 alias python-http-server='python -m SimpleHTTPServer'
 alias rar='unrar'
-alias rm='rm -i'
-alias rr='rsync -avhP --delete'
+alias rr='rsync -avhP'
+alias rrd='rsync -avhP --delete'
 alias sb-log='tail -f /usr/local/bin/Sick-Beard/Logs/sickbeard.log'
 alias scr='screen -dR'
 alias top='htop'
