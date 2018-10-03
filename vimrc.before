@@ -1,5 +1,4 @@
 " disable any plugins (internal to janus or external from ~/.janus folder)
-" call janus#disable_plugin('supertab')
 call janus#disable_plugin('nerdtree')
 call janus#disable_plugin('syntastic') " testing w0rp/ale linter
 " call janus#disable_plugin('supertab') " tab after an IP error: Keyword completion (^N^P) Pattern not found
