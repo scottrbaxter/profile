@@ -49,3 +49,6 @@
 [submodule "submodules/dot_janus/vim-closer"]
 	path = submodules/dot_janus/vim-closer
 	url = https://github.com/rstacruz/vim-closer.git
+[submodule "submodules/fonts"]
+	path = submodules/fonts
+	url = https://github.com/powerline/fonts.git
