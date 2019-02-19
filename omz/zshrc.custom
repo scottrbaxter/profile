@@ -23,6 +23,7 @@ if [ "$OS_TYPE" = Linux ]; then
     alias apt='sudo apt'
     alias apts='apt search'
     alias ls='ls --color=always'
+    export QUOTING_STYLE=literal
 # mac specific
 elif [ "$OS_TYPE" = Darwin ]; then
     alias ls='/usr/local/bin/gls --color=always'
@@ -225,7 +226,9 @@ alias zedit='vim $ZSH_CUSTOM/themes/crunch_custom.zsh-theme'
 alias vg='vagrant global-status'
 alias vs='vagrant status'
 alias vup='vagrant up && vagrant ssh'
-alias youtube-dl-mp4="youtube-dl -f 'bestvideo[ext=mp4]+bestaudio[ext=m4a]/mp4'"
+alias yt='youtube-dl'
+alias yt22='youtube-dl -f 22'
+alias ytmp4="youtube-dl -f 'bestvideo[ext=mp4]+bestaudio[ext=m4a]/mp4'"
 alias zz="vim $PROFILE_PATH/omz/zshrc.custom"
 
 # git
