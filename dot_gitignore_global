@@ -11,6 +11,10 @@
 
 # ansible
 .vault_pass
+.ansible-lint
+
+# terraform
+terraform.tfvars
 
 # submodules
 **/doc/tags
