@@ -155,11 +155,11 @@ awkp(){
 }
 
 gitBlameSort(){
-if [ ${1} ]; then
-    git blame ${1} | sort -rbk 3 | less
-else
-    echo "e.g. $0 /path/to/file"
-fi
+    if [ ${1} ]; then
+        git blame ${1} | sort -rbk 3 | less
+    else
+        echo "e.g. $0 /path/to/file"
+    fi
 }
 
 peruseHistory ()
@@ -180,11 +180,11 @@ reloadZsh(){
 }
 
 # aliases
-alias D='cd ~/development/docker'
+alias D='cd ~/docker'
 alias N='cd ~/notes'
 alias P='cd $PROFILE_PATH'
 alias S='cd ~/scripts'
-alias V='cd ~/development/vagrant'
+alias V='cd ~/vagrant'
 alias 1p='source op_session.sh'
 alias ack='ack --ackrc $PROFILE_PATH/ackrc'
 alias ackg='ack -g' # check filenames for pattern
@@ -208,13 +208,11 @@ alias llt='ll -tr'
 alias man=betterman
 alias pep8="$(which pep8) -v"
 alias bep8="$(which bashate)"
-alias pms-log='tail -f /var/lib/plexmediaserver/Library/Application\ Support/Plex\ Media\ Server/Logs/Plex\ Media\ Server.log'
 alias publicip='dig +short myip.opendns.com @resolver1.opendns.com'
 alias python-http-server='python -m SimpleHTTPServer'
 alias rar='unrar'
 alias rr='rsync -avhP'
 alias rrd='rsync -avhP --delete'
-alias sb-log='tail -f /usr/local/bin/Sick-Beard/Logs/sickbeard.log'
 alias scr='screen -dR'
 alias top='htop'
 alias update-janus='JANUS=$HOME/.vim; echo "updating vim-janus in $JANUS"; cd $JANUS && rake && cd -'
@@ -226,20 +224,15 @@ alias zedit='vim $ZSH_CUSTOM/themes/crunch_custom.zsh-theme'
 alias vg='vagrant global-status'
 alias vs='vagrant status'
 alias vup='vagrant up && vagrant ssh'
-alias yt='youtube-dl'
-alias yt22='youtube-dl -f 22'
-alias ytmp4="youtube-dl -f 'bestvideo[ext=mp4]+bestaudio[ext=m4a]/mp4'"
 alias zz="vim $PROFILE_PATH/omz/zshrc.custom"
 
 # git
 alias gb='git rev-parse --abbrev-ref HEAD'
 alias gbl='git branch --list --sort=creatordate'
 alias gblame=gitBlameSort
-alias gcfg='vim ~/.gitconfig'
 alias gl='git --no-pager log --oneline -25'
 alias glo='git log --oneline --decorate'
 alias gpf='gp -f'
-alias gss='git show --summary'
 
 # MacOS
 alias fixaudio='sudo launchctl stop com.apple.audio.coreaudiod'
@@ -248,10 +241,7 @@ alias fixAppStoreApps='killall -KILL storeaccountd'
 alias iftop='sudo /usr/local/sbin/iftop -P'
 alias ips='curl http://ipinfo.io/ip; ifconfig| grep -w inet'
 alias preview='open /Applications/Preview.app '
-alias serial=serialNumber
 alias zupdate='upgrade_oh_my_zsh'
-alias zloadtest='/usr/bin/time /bin/zsh $PROFILE_PATH/omz/zshrc.custom -i -c exit' # speed test load zsh profile
-alias fix-spotlight='sudo mdutil -E /'
 
 # ansible
 export ANSIBLE_CALLBACK_WHITELIST="profile_tasks, timer"
