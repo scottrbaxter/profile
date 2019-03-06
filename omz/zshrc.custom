@@ -44,6 +44,10 @@ export TERM="xterm-256color"
 # also need to add 'tab' in iterm2 profile/advanced semantic history
 plugins=(docker pip zsh-autosuggestions zsh-syntax-highlighting)
 
+# fix
+# https://github.com/robbyrussell/oh-my-zsh/issues/6835#issuecomment-390216875
+ZSH_DISABLE_COMPFIX=true
+
 source $ZSH/oh-my-zsh.sh
 
 ####################################
