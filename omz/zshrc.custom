@@ -27,7 +27,7 @@ if [ "$OS_TYPE" = Linux ]; then
 # mac specific
 elif [ "$OS_TYPE" = Darwin ]; then
     alias ls='/usr/local/bin/gls --color=always'
-    local HOMEBREW_OPENSSL="/usr/local/opt/openssl" # cause "$(brew --prefix openssl)" is super slow
+    local HOMEBREW_OPENSSL="command -v openssl" # cause "$(brew --prefix openssl)" is super slow
     export CFLAGS="-I$HOMEBREW_OPENSSL/include"
     export LDFLAGS="-L$HOMEBREW_OPENSSL/lib"
 fi
@@ -184,7 +184,7 @@ reloadZsh(){
 }
 
 # aliases
-alias D='cd ~/docker'
+alias D='cd ~/development'
 alias N='cd ~/notes'
 alias P='cd $PROFILE_PATH'
 alias S='cd ~/scripts'
