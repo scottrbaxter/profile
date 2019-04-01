@@ -30,6 +30,7 @@ set nocompatible
 " end of line has $, tab has ▸
 set list lcs=eol:¬,tab:▸\-
 " set list lcs=tab:\▸\
+set wrap
 
 " au == autocmd
 " autocmd VimEnter *.py nested :TagbarOpen
