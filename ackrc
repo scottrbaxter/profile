@@ -25,6 +25,7 @@
 --ignore-directory=is:submodules/
 --ignore-directory=is:tmp/
 --ignore-directory=is:scott/
+--ignore-directory=is:.terragrunt-cache/
 
 
 # list current filters with this:
