@@ -88,10 +88,9 @@ NUM_=$CRUNCH_HIST_COLOR'$CMDCOUNT '                # notice the single(!) tics
 
 # hostname
 # CRUNCH_HOST="${CRUNCH_HOST_COLOR}"'$(hostname -s)'
-if [[ $(hostname -s) == sbaxter-Civis-Mac ]]; then
+if [[ $(hostname -s) == work ]]; then
     CRUNCH_HOST_COLOR="%{$fg[cyan]%}"
-    HOST_="${CRUNCH_HOST_COLOR}"'Civis '
-    HOST='Civis' # HOST var sets oh-my-zsh window title hostname (test with 'print -P %n@%m')
+    HOST_="${CRUNCH_HOST_COLOR}"'$(hostname -s) '
     # prompt expansion http://zsh.sourceforge.net/Doc/Release/Prompt-Expansion.html#Prompt-Expansion
 elif [[ $(hostname -s) == navi ]]; then
     CRUNCH_HOST_COLOR="%{$fg[cyan]%}"
