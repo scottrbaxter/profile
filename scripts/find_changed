@@ -1,0 +1,47 @@
+#!/usr/bin/env bash
+
+set -e
+
+# colors
+# RED="\033[31m"
+# PURPLE="\033[35m"
+# WHITE="\033[0m"
+# DAYS=14
+NAME=$(basename "${0}")
+
+
+# header(){
+#     echo -e "[${PURPLE}${1}${WHITE}]"
+# }
+
+find_filenames(){
+    # add a variable to specify time
+    mdfind 'kMDItemFSContentChangeDate>$time.now(-300)'
+}
+
+
+main(){
+    if [ -z "$1" ] || [ "$1" == "-h*" ]; then
+        # read -rp "Update all? [Y/n] " yn
+        echo
+        # case "$yn" in
+        #     [Nn]*)      main -h ;;
+        #     ""|[Yya]*)   main -a ;;
+        # esac
+    fi
+    case "$1" in
+        # -t|--time )
+        #     ;;
+        -[h]|--help )
+            echo "help menu"
+            echo "Options are: $NAME -[t]ime, -[h]elp"
+            exit 0
+            ;;
+        * )
+            find_filenames
+
+    esac
+}
+
+
+main "$1"
