@@ -14,6 +14,12 @@ nmap <space>w :w<CR>
 nmap <space><tab> :%s/\t/    /g<CR>
 nmap <space>' cs"'
 nmap <space>" cs'"
+nmap ' ysiw'
+nmap " ysiw"
+nmap <space>[ ysiw]
+nmap <space>] ysiw}i$<Esc>
+nmap <space>} ysiw{
+nmap <space>{ ysiw[
 nmap <space>- :s/-/_/<CR>
 vmap <space>- :s/\%V-/_/<CR>
 nmap <space>_ :s/_/-/<CR>
@@ -135,8 +141,8 @@ nnoremap <silent> <F2> :set hlsearch!<CR>
 
 " add single quote around text until next white space
 " nnoremap " lBcE""<Esc>Pw
-nnoremap ' lBcE''<Esc>Pw
-nnoremap [ lBcE[]<Esc>Pw
+" nnoremap ' lBcE''<Esc>Pw
+" nnoremap [ lBcE[]<Esc>Pw
 " nnoremap { lBcE"{{  }}"<Esc>3hPw
 " add single quote around word
 " nnoremap " ciw""<Esc>P
@@ -144,11 +150,11 @@ nnoremap [ lBcE[]<Esc>Pw
 " nnoremap [ ciw[]<Esc>Pw
 " nnoremap { ciw{}<Esc>Pw
 
-nmap <Leader>' ds'
-nmap <Leader>" ds"
-nmap <Leader>[ ds[
+" nmap <Leader>' ds'
+" nmap <Leader>" ds"
+" nmap <Leader>[ ds[
 " nmap <Leader>{ ds{ds{ds"
-nmap <Leader>( ds(
+" nmap <Leader>( ds(
 
 " stay in visual mode when changing indent level with < or >
 vmap < <gv
