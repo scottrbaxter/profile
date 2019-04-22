@@ -27,9 +27,14 @@ if [ "$OS_TYPE" = Linux ]; then
 # mac specific
 elif [ "$OS_TYPE" = Darwin ]; then
     alias ls='/usr/local/bin/gls --color=always'
-    local HOMEBREW_OPENSSL="command -v openssl" # cause "$(brew --prefix openssl)" is super slow
-    export CFLAGS="-I$HOMEBREW_OPENSSL/include"
-    export LDFLAGS="-L$HOMEBREW_OPENSSL/lib"
+    # mojave required these to be unset
+    # CFLAGS="-I$(brew --prefix readline)/include -I$(brew --prefix openssl)/include -I$(xcrun --show-sdk-path)/usr/include"
+    # LDFLAGS="-L$(brew --prefix readline)/lib -L$(brew --prefix openssl)/lib"
+    # High Sierra
+    # local HOMEBREW_OPENSSL="command -v openssl" # cause "$(brew --prefix openssl)" is super slow
+    # export CFLAGS="-I$HOMEBREW_OPENSSL/include"
+    # export LDFLAGS="-L$HOMEBREW_OPENSSL/lib"
+
 fi
 
 # skip_global_compinit=1

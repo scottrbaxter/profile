@@ -88,25 +88,21 @@ NUM_=$CRUNCH_HIST_COLOR'$CMDCOUNT '                # notice the single(!) tics
 
 # hostname
 # CRUNCH_HOST="${CRUNCH_HOST_COLOR}"'$(hostname -s)'
-if [[ $(hostname -s) == sbaxter-Civis-Mac ]]; then
     CRUNCH_HOST_COLOR="%{$fg[cyan]%}"
-    HOST_="${CRUNCH_HOST_COLOR}"'Civis '
-    HOST='Civis' # HOST var sets oh-my-zsh window title hostname (test with 'print -P %n@%m')
+if [[ $(hostname -s) == neptune ]]; then
+    HOST_="${CRUNCH_HOST_COLOR}"'$(hostname -s) '
     # prompt expansion http://zsh.sourceforge.net/Doc/Release/Prompt-Expansion.html#Prompt-Expansion
-elif [[ $(hostname -s) == navi ]]; then
-    CRUNCH_HOST_COLOR="%{$fg[cyan]%}"
-    HOST_="${CRUNCH_HOST_COLOR}"'$(hostname -s) '
-elif [[ $(hostname -s) == macpro ]]; then
-    CRUNCH_HOST_COLOR="%{$fg[white]%}"
-    HOST_="${CRUNCH_HOST_COLOR}"'$(hostname -s) '
-elif [[ $(hostname -s) == euclid ]]; then
-    CRUNCH_HOST_COLOR="%{$fg[yellow]%}"
-    HOST_="${CRUNCH_HOST_COLOR}"'$(hostname -s) '
-elif [[ $(hostname -s) =~ [test] ]]; then
+elif [[ $(hostname -s) == terra ]]; then
     CRUNCH_HOST_COLOR="%{$fg[green]%}"
     HOST_="${CRUNCH_HOST_COLOR}"'$(hostname -s) '
-else
+elif [[ $(hostname -s) == jupiter ]]; then
     CRUNCH_HOST_COLOR="%{$fg[red]%}"
+    HOST_="${CRUNCH_HOST_COLOR}"'$(hostname -s) '
+elif [[ $(hostname -s) == saturn ]]; then
+    CRUNCH_HOST_COLOR="%{$fg[yellow]%}"
+    HOST_="${CRUNCH_HOST_COLOR}"'$(hostname -s) '
+else
+    CRUNCH_HOST_COLOR="%{$fg[white]%}"
     HOST_="${CRUNCH_HOST_COLOR}"'$(hostname -s) '
 fi
 
@@ -127,7 +123,7 @@ checkSTS() {
         return
     elif [[ -n $AWS_STS_EXPIRATION && $AWS_STS_TIMEOUT -ge $(NOW) ]]; then
         AWS_STS_MINUTES_REMAINING=$(( $(( AWS_STS_TIMEOUT - $(NOW) )) / 60 ))
-        echo "$(echo ${AWS_ACCOUNT_NAME} | sed 's/^.\{6\}//g')|$AWS_STS_MINUTES_REMAINING "
+        echo "$(echo ${AWS_ACCOUNT_NAME})|$AWS_STS_MINUTES_REMAINING "
     elif [[ $AWS_STS_TIMEOUT -le $(NOW) ]]; then
       unset AWS_STS_EXPIRATION
     fi
