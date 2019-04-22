@@ -62,6 +62,11 @@ se mouse+=a " mouse copy turns into visual mode
 " se mouse=nicr " mouse scroll is nicer, and click puts you where the mouse is, but click select doesn't enable visual mode
 " let g:wheel#scroll_on_wrap = 1      " 0=disable, 1=enable (default)
 
+" set ttymouse=sgr
+" set balloondelay=250
+" set ballooneval
+set balloonevalterm
+let g:ale_set_balloons = 1
 
 if !has('nvim')
   set clipboard=autoselect " yank to osx clipboard, but doesn't put vim's change/delete stuff in clipboard
