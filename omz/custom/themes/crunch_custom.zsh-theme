@@ -123,7 +123,7 @@ checkSTS() {
         return
     elif [[ -n $AWS_STS_EXPIRATION && $AWS_STS_TIMEOUT -ge $(NOW) ]]; then
         AWS_STS_MINUTES_REMAINING=$(( $(( AWS_STS_TIMEOUT - $(NOW) )) / 60 ))
-        echo "$(echo ${AWS_ACCOUNT_NAME} | sed 's/^.\{6\}//g')|$AWS_STS_MINUTES_REMAINING "
+        echo "$(echo ${AWS_ACCOUNT_NAME})|$AWS_STS_MINUTES_REMAINING "
     elif [[ $AWS_STS_TIMEOUT -le $(NOW) ]]; then
       unset AWS_STS_EXPIRATION
     fi
