@@ -88,21 +88,21 @@ NUM_=$CRUNCH_HIST_COLOR'$CMDCOUNT '                # notice the single(!) tics
 
 # hostname
 # CRUNCH_HOST="${CRUNCH_HOST_COLOR}"'$(hostname -s)'
-if [[ $(hostname -s) == hades ]]; then
     CRUNCH_HOST_COLOR="%{$fg[cyan]%}"
+if [[ $(hostname -s) == neptune ]]; then
     HOST_="${CRUNCH_HOST_COLOR}"'$(hostname -s) '
     # prompt expansion http://zsh.sourceforge.net/Doc/Release/Prompt-Expansion.html#Prompt-Expansion
-elif [[ $(hostname -s) == ares ]]; then
+elif [[ $(hostname -s) == terra ]]; then
     CRUNCH_HOST_COLOR="%{$fg[green]%}"
     HOST_="${CRUNCH_HOST_COLOR}"'$(hostname -s) '
-elif [[ $(hostname -s) == apollo ]]; then
-    CRUNCH_HOST_COLOR="%{$fg[white]%}"
+elif [[ $(hostname -s) == jupiter ]]; then
+    CRUNCH_HOST_COLOR="%{$fg[red]%}"
     HOST_="${CRUNCH_HOST_COLOR}"'$(hostname -s) '
-elif [[ $(hostname -s) == poseidon ]]; then
+elif [[ $(hostname -s) == saturn ]]; then
     CRUNCH_HOST_COLOR="%{$fg[yellow]%}"
     HOST_="${CRUNCH_HOST_COLOR}"'$(hostname -s) '
 else
-    CRUNCH_HOST_COLOR="%{$fg[red]%}"
+    CRUNCH_HOST_COLOR="%{$fg[white]%}"
     HOST_="${CRUNCH_HOST_COLOR}"'$(hostname -s) '
 fi
 
