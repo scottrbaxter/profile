@@ -190,7 +190,6 @@ reloadZsh(){
 
 # aliases
 alias D='cd ~/development'
-alias M='cd ~/msidata'
 alias N='cd ~/notes'
 alias P='cd $PROFILE_PATH'
 alias S='cd ~/scripts'
