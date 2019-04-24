@@ -96,7 +96,7 @@ elif [[ $(hostname -s) == terra ]]; then
     CRUNCH_HOST_COLOR="%{$fg[green]%}"
     HOST_="${CRUNCH_HOST_COLOR}"'$(hostname -s) '
 elif [[ $(hostname -s) == jupiter ]]; then
-    CRUNCH_HOST_COLOR="%{$fg[red]%}"
+    CRUNCH_HOST_COLOR="%{$fg[magenta]%}"
     HOST_="${CRUNCH_HOST_COLOR}"'$(hostname -s) '
 elif [[ $(hostname -s) == saturn ]]; then
     CRUNCH_HOST_COLOR="%{$fg[yellow]%}"
