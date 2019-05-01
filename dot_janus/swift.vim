@@ -1,1 +1,1 @@
-/Users/scott/development/profile/submodules/dot_janus/swift.vim
+../submodules/dot_janus/swift.vim
