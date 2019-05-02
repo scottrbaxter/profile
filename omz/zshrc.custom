@@ -13,7 +13,10 @@ HYPHEN_INSENSITIVE="true"
 # oh-my-zsh theme
 ZSH_CUSTOM="$PROFILE_PATH/omz/custom"
 ZSH_THEME="crunch_custom" # ; alias git=hub
-# POWERLEVEL9K_LEFT_PROMPT_ELEMENTS=(os_icon time context history dir vcs)
+# POWERLEVEL9K_LEFT_PROMPT_ELEMENTS=(date context history dir vcs)
+# POWERLEVEL9K_LOAD_WHICH=1
+# POWERLEVEL9K_DATE_FORMAT="%D{%d|%H:%M:%S}"
+# POWERLEVEL9K_RIGHT_PROMPT_ELEMENTS=()
 # ZSH_THEME="powerlevel9k/powerlevel9k"
 
 # determine Mac or Linux OS
@@ -47,7 +50,7 @@ export TERM="xterm-256color"
 
 # add plugins=(osx) for the tab command, to command-click a vim file in new tab
 # also need to add 'tab' in iterm2 profile/advanced semantic history
-plugins=(docker pip zsh-autosuggestions zsh-syntax-highlighting)
+plugins=(aws docker pip zsh-autosuggestions zsh-syntax-highlighting)
 
 # fix
 # https://github.com/robbyrussell/oh-my-zsh/issues/6835#issuecomment-390216875
