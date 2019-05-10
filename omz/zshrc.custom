@@ -144,6 +144,10 @@ if pyenv which aws_zsh_completer.sh 1>/dev/null 2>&1; then
   source "$(pyenv which aws_zsh_completer.sh)"
 fi
 
+# hashicorp vault autocomplete
+autoload -U +X bashcompinit && bashcompinit
+complete -o nospace -C /usr/local/bin/vault vault
+
 # google cloud platform
 # source /usr/local/Caskroom/google-cloud-sdk/latest/google-cloud-sdk/completion.zsh.inc
 # source /usr/local/Caskroom/google-cloud-sdk/latest/google-cloud-sdk/path.zsh.inc
@@ -214,6 +218,7 @@ alias grep='grep -i --color=always' # (case insensitive, color output)
 alias h='peruseHistory'
 alias hl='peruseHistory -l'
 alias hh='sudo vim /etc/hosts'
+alias k='$(which kubectl)'
 alias l.='ls -dh .*'
 alias ll.='ls -ldh .*'
 alias llt='ll -tr'
@@ -226,6 +231,8 @@ alias rar='unrar'
 alias rr='rsync -avhP'
 alias rrd='rsync -avhP --delete'
 alias scr='screen -dR'
+alias t='$(which terraform)'
+alias tg='$(which terragrunt)'
 alias top='htop'
 alias update-janus='JANUS=$HOME/.vim; echo "updating vim-janus in $JANUS"; cd $JANUS && rake && cd -'
 alias vi='vim'
