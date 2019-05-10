@@ -14,7 +14,9 @@
 .ansible-lint
 
 # terraform
-terraform.tfvars
+.terraform
+*.tfstate
+*.tfstate.backup
 
 # submodules
 **/doc/tags
