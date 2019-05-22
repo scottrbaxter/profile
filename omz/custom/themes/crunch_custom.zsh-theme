@@ -130,6 +130,12 @@ checkSTS() {
 }
 STS_="$STS_COLOR"'$(checkSTS)'
 
+# KUBE_PS1_PREFIX=""
+# KUBE_PS1_SUFFIX=""
+# KUBE_PS1_NS_ENABLE='false'
+# KUBE_PS1_DIVIDER=""
+# KUBE_='$(kube_ps1) '
+
 # check if op is logged in
 checkOP() {
     if [[ ! $OP_EXPIRATION ]]; then
@@ -151,4 +157,4 @@ check_last_exit_code() {
 EXIT_='$(check_last_exit_code)'
 
 # Put it all together!
-PROMPT="$CRUNCH_TIME_$EXIT_$LOAD_$OP_$STS_$NUM_$HOST_$STS_PROMPT_$CRUNCH_DIR_$ADMIN_ %{$reset_color%}"
+PROMPT="$CRUNCH_TIME_$EXIT_$LOAD_$NUM_$OP_$STS_$HOST_$CRUNCH_DIR_$ADMIN_ %{$reset_color%}"
