@@ -28,6 +28,11 @@ nmap ` v~
 nmap t :TagbarOpen fj<CR>
 nnoremap q :q<CR>
 vmap <space>r \c<space>
+vmap <space>t :Tabularize<CR>
+vmap <space>= :Tabularize /=<CR>
+vmap <space># :Tabularize /#<CR>
+vmap <space>" :Tabularize /"<CR>
+nmap v<down> vi}
 
 " set nonumber
 " set nolist " list disables linebreak
