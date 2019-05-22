@@ -219,13 +219,13 @@ alias grep='grep -i --color=always' # (case insensitive, color output)
 alias h='peruseHistory'
 alias hl='peruseHistory -l'
 alias hh='sudo vim /etc/hosts'
-alias k='$(which kubectl)'
+alias k='kubectl'
 alias l.='ls -dh .*'
 alias ll.='ls -ldh .*'
 alias llt='ll -tr'
 alias man=betterman
-alias pep8="$(which pep8) -v"
-alias bep8="$(which bashate)"
+alias pep8="pep8 -v"
+alias bep8="bashate"
 alias publicip='dig +short myip.opendns.com @resolver1.opendns.com'
 alias python-http-server='python -m SimpleHTTPServer'
 alias rar='unrar'
@@ -276,8 +276,8 @@ export AWS_DEFAULT_REGION='us-east-2'
 export TF_PLUGIN_CACHE_DIR="$HOME/.terraform.d/plugin-cache"
 export TERRAGRUNT_DOWNLOAD="$HOME/.terraform.d/terragrunt-tmp"
 export TERRAGRUNT_SOURCE_UPDATE='true'
-alias t='$(which terraform)'
-alias tg='$(which terragrunt)'
+alias t='terraform'
+alias tg='terragrunt'
 
 # additional stuff
 for k in ~/.keyfile-*(N); do source $k; done
