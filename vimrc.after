@@ -28,6 +28,11 @@ nmap ` v~
 nmap t :TagbarOpen fj<CR>
 nnoremap q :q<CR>
 vmap <space>r \c<space>
+vmap <space>t :Tabularize<CR>
+vmap <space>= :Tabularize /=<CR>
+vmap <space># :Tabularize /#<CR>
+vmap <space>" :Tabularize /"<CR>
+nmap v<down> vi}
 
 " set nonumber
 " set nolist " list disables linebreak
@@ -293,8 +298,9 @@ nmap <silent> <F7> :set invlbr<CR>:set lbr?<CR>
 nmap <silent> <F8> :set invautoindent<CR>:set autoindent?<CR>
 au FileType gitcommit set tw=99
 au FileType json nnoremap <silent> <F6> :%!python -m json.tool<CR>
-au FileType json nnoremap <silent> <F9> :call ConcealLevelToggle()<CR>
-au FileType python map <buffer> <F9> :call Flake8()<CR>
+" au FileType json nnoremap <silent> <F9> :call ConcealLevelToggle()<CR>
+" au FileType python map <buffer> <F9> :call Flake8()<CR>
+au FileType json,yaml nnoremap <silent> <F9> :call ConvertJsonYaml()<CR>
 au FileType markdown nnoremap <silent> <F9> :call ConcealLevelToggle()<CR>
 au FileType markdown set tw=120
 nmap <F10> :echo "hi<" . synIDattr(synID(line("."),col("."),1),"name") . '> trans<' . synIDattr(synID(line("."),col("."),0),"name") . "> lo<" . synIDattr(synIDtrans(synID(line("."),col("."),1)),"name") . ">"<CR>
@@ -320,3 +326,13 @@ let vim_markdown_preview_github=1
 let vim_markdown_preview_toggle=1
 " let vim_markdown_preview_hotkey='<C-p>'
 let vim_markdown_preview_browser='Google Chrome'
+
+function! ConvertJsonYaml()
+  if (&ft=='json')
+    :%!json2yaml
+    :set ft=yaml
+  elseif (&ft=='yaml')
+    :%!yaml2json
+    :set ft=json
+  endif
+endfunction

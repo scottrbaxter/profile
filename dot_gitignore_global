@@ -14,7 +14,12 @@
 .ansible-lint
 
 # terraform
-terraform.tfvars
+.terraform
+*.tfstate
+*.tfstate.backup
+*.terraform.tfstate.lock.*
+# terragrunt
+*.terragrunt-cache
 
 # submodules
 **/doc/tags

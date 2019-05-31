@@ -13,7 +13,10 @@ HYPHEN_INSENSITIVE="true"
 # oh-my-zsh theme
 ZSH_CUSTOM="$PROFILE_PATH/omz/custom"
 ZSH_THEME="crunch_custom" # ; alias git=hub
-# POWERLEVEL9K_LEFT_PROMPT_ELEMENTS=(os_icon time context history dir vcs)
+# POWERLEVEL9K_LEFT_PROMPT_ELEMENTS=(date context history dir vcs)
+# POWERLEVEL9K_LOAD_WHICH=1
+# POWERLEVEL9K_DATE_FORMAT="%D{%d|%H:%M:%S}"
+# POWERLEVEL9K_RIGHT_PROMPT_ELEMENTS=()
 # ZSH_THEME="powerlevel9k/powerlevel9k"
 
 # determine Mac or Linux OS
@@ -23,10 +26,13 @@ if [ "$OS_TYPE" = Linux ]; then
     alias apt='sudo apt'
     alias apts='apt search'
     alias ls='ls --color=always'
+    alias kubectl=microk8s.kubectl
     export QUOTING_STYLE=literal
+    export PATH="/snap/bin:$PATH"
 # mac specific
 elif [ "$OS_TYPE" = Darwin ]; then
     alias ls='/usr/local/bin/gls --color=always'
+    export HOMEBREW_NO_INSTALL_CLEANUP=true
     # mojave required these to be unset
     # CFLAGS="-I$(brew --prefix readline)/include -I$(brew --prefix openssl)/include -I$(xcrun --show-sdk-path)/usr/include"
     # LDFLAGS="-L$(brew --prefix readline)/lib -L$(brew --prefix openssl)/lib"
@@ -34,7 +40,6 @@ elif [ "$OS_TYPE" = Darwin ]; then
     # local HOMEBREW_OPENSSL="command -v openssl" # cause "$(brew --prefix openssl)" is super slow
     # export CFLAGS="-I$HOMEBREW_OPENSSL/include"
     # export LDFLAGS="-L$HOMEBREW_OPENSSL/lib"
-
 fi
 
 # skip_global_compinit=1
@@ -47,7 +52,7 @@ export TERM="xterm-256color"
 
 # add plugins=(osx) for the tab command, to command-click a vim file in new tab
 # also need to add 'tab' in iterm2 profile/advanced semantic history
-plugins=(docker pip zsh-autosuggestions zsh-syntax-highlighting)
+plugins=(aws command-time docker kubectl pip zsh-autosuggestions zsh-syntax-highlighting)
 
 # fix
 # https://github.com/robbyrussell/oh-my-zsh/issues/6835#issuecomment-390216875
@@ -141,6 +146,10 @@ if pyenv which aws_zsh_completer.sh 1>/dev/null 2>&1; then
   source "$(pyenv which aws_zsh_completer.sh)"
 fi
 
+# hashicorp vault autocomplete
+autoload -U +X bashcompinit && bashcompinit
+complete -o nospace -C /usr/local/bin/vault vault
+
 # google cloud platform
 # source /usr/local/Caskroom/google-cloud-sdk/latest/google-cloud-sdk/completion.zsh.inc
 # source /usr/local/Caskroom/google-cloud-sdk/latest/google-cloud-sdk/path.zsh.inc
@@ -204,19 +213,22 @@ alias acksg='acks -g' # filenames only, will search submodules
 alias ackw='ack -w' # words mode, pattern can't be in another word
 alias bz='bunzip2'
 alias clr='clear'
+alias cp='cp -a'
 alias df='df -h'
 alias dud='du -d 1 -h'
 alias digs='dig $1 +short'
 alias grep='grep -i --color=always' # (case insensitive, color output)
-alias h='peruseHistory'
+alias h='helm'
+alias hist='peruseHistory'
 alias hl='peruseHistory -l'
 alias hh='sudo vim /etc/hosts'
+alias k='kubectl'
 alias l.='ls -dh .*'
 alias ll.='ls -ldh .*'
 alias llt='ll -tr'
 alias man=betterman
-alias pep8="$(which pep8) -v"
-alias bep8="$(which bashate)"
+alias pep8="pep8 -v"
+alias bep8="bashate"
 alias publicip='dig +short myip.opendns.com @resolver1.opendns.com'
 alias python-http-server='python -m SimpleHTTPServer'
 alias rar='unrar'
@@ -261,6 +273,14 @@ export ANSIBLE_VERBOSITY=1
 alias ansible-playbook-debug='ANSIBLE_STDOUT_CALLBACK=dense ansible-playbook'
 alias ansible-playbook-dense='ANSIBLE_STDOUT_CALLBACK=dense ansible-playbook'
 alias ansible-playbook-yaml='ANSIBLE_STDOUT_CALLBACK=yaml ansible-playbook'
+
+# terraform
+export AWS_DEFAULT_REGION='us-east-2'
+export TF_PLUGIN_CACHE_DIR="$HOME/.terraform.d/plugin-cache"
+export TERRAGRUNT_DOWNLOAD="$HOME/.terraform.d/terragrunt-tmp"
+export TERRAGRUNT_SOURCE_UPDATE='true'
+alias t='terraform'
+alias tg='terragrunt'
 
 # additional stuff
 for k in ~/.keyfile-*(N); do source $k; done
