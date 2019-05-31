@@ -26,7 +26,9 @@ if [ "$OS_TYPE" = Linux ]; then
     alias apt='sudo apt'
     alias apts='apt search'
     alias ls='ls --color=always'
+    alias kubectl=microk8s.kubectl
     export QUOTING_STYLE=literal
+    export PATH="/snap/bin:$PATH"
 # mac specific
 elif [ "$OS_TYPE" = Darwin ]; then
     alias ls='/usr/local/bin/gls --color=always'
