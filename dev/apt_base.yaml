@@ -1,0 +1,27 @@
+---
+# designed for bento/ubuntu-18.04
+# manual rerun: ansible-playbook -i .vagrant/provisioners/ansible/inventory/vagrant_ansible_inventory playbook.yaml
+- name: apt | dist-upgrade
+  apt:
+    autoclean: true
+    cache_valid_time: 600
+    upgrade: dist
+
+- name: apt | restart check
+  ignore_errors: yes
+  stat:
+    path: /var/run/reboot-required
+  register: apt_check
+  changed_when: apt_check.stat.exists
+
+- name: apt | restart if needed
+  shell: ( /bin/sleep 5 && /sbin/shutdown -r now ) &
+    removes=/var/run/reboot-required
+  async: 30
+  poll: 0
+  ignore_errors: true
+  notify:
+    - server restart
+  when:
+    - apt_check.stat.exists
+...
