@@ -62,3 +62,6 @@
 [submodule "submodules/omz/custom/plugins/command-time"]
 	path = submodules/omz/custom/plugins/command-time
 	url = https://github.com/popstas/zsh-command-time.git
+[submodule "submodules/dot_janus/terraform-lsp"]
+	path = submodules/dot_janus/terraform-lsp
+	url = https://github.com/juliosueiras/terraform-lsp.git
