@@ -1,108 +1,27 @@
 ---
-# designed for bento/ubuntu-16.04
-- name: Deploy user profile
-  # become: yes
+# designed for bento/ubuntu-18.04
+# manual rerun: ansible-playbook -i .vagrant/provisioners/ansible/inventory/vagrant_ansible_inventory playbook.yaml
+- name: simple task so i can run other playbooks once vagrant vm is up
+  become: yes
   hosts: all
-  vars:
-    python_version: 2.7.14
-    lintbug: HEAD
   tasks:
-    - name: apt | hub repo
-      become: yes
-      apt_repository:
-        repo: ppa:cpick/hub
+    - debug: var=inventory_hostname
 
-    - name: apt | dist-upgrade
-      become: yes
-      apt:
-        cache_valid_time: 3600
-        upgrade: dist
+- name: apt updates
+  become: yes
+  hosts: all
+  tasks:
+    - include_tasks: ./apt_base.yaml
+  handlers:
+    - name: server restart
+      wait_for_connection:
+        delay: 15
 
-    - name: apt | install packages
-      become: yes
-      apt:
-        name:
-          - build-essential
-          - curl
-          - hub
-          - libbz2-dev
-          - libncurses5-dev
-          - libncursesw5-dev
-          - libreadline-dev
-          - libsqlite3-dev
-          - libssl-dev
-          - llvm
-          - make
-          - python-pexpect
-          - rake
-          - tk-dev
-          - wget
-          - xz-utils
-          - zlib1g-dev
-          - zsh
-
-    - name: user | create required directories
-      file:
-        path: "$HOME/{{ item }}"
-        state: directory
-      with_items:
-        - 'development'
-        - '.config/yamllint'
-
-    - name: user | clone profile
-      git:
-        repo: 'https://github.com/scottrbaxter/profile.git'
-        dest: '$HOME/development/profile'
-        version: "{{ lintbug }}"
-
-    - name: omz | install oh-my-zsh
-      git:
-        repo: 'https://github.com/robbyrussell/oh-my-zsh.git'
-        dest: '$HOME/.oh-my-zsh'
-        version: "{{ lintbug }}"
-
-    - name: omz | enable chsh -s /bin/zsh
-      become: yes
-      lineinfile:
-        path: /etc/shells
-        line: /bin/zsh
-
-    - name: omz | change shell
-      become: yes
-      command: chsh -s /bin/zsh "{{ ansible_user }}"
-
-    - name: vim | install janus
-      shell:
-        curl -L https://bit.ly/janus-bootstrap | bash
-
-    - name: user | profile symlinks
-      file:
-        src: '$HOME/development/profile/{{ item.src }}'
-        path: '$HOME/{{ item.dest }}'
-        state: link
-        force: yes
-      with_items:
-        - { src: 'dot_janus', dest: '.janus' }
-        - { src: 'dot_gitconfig', dest: '.gitconfig' }
-        - { src: 'dot_gitignore_global', dest: '.gitignore_global' }
-        - { src: 'omz/dot_zshrc', dest: '.zshrc' }
-        - { src: 'pylintrc', dest: '.config/pylintrc' }
-        - { src: 'vimrc.after', dest: '.vimrc.after' }
-        - { src: 'vimrc.before', dest: '.vimrc.before' }
-        - { src: 'yamllint_config', dest: '.config/yamllint/config' }
-
-    - name: python | git clone pyenv
-      git:
-        repo: 'https://github.com/pyenv/pyenv.git'
-        dest: '$HOME/.pyenv'
-        version: "{{ lintbug }}"
-
-    - name: python | install
-      shell: |
-        export PYENV_ROOT="$HOME/.pyenv"
-        export PATH="$PYENV_ROOT/bin:$PATH"
-        eval "$(pyenv init -)"
-        pyenv install "{{ python_version }}"
-        pyenv global "{{ python_version }}"
-        pip install --upgrade pip
+- name: install profile
+  hosts: all
+  tasks:
+    - include_tasks: ./profile.yaml
+  vars:
+    github_commit: HEAD
+    python_version: 2.7.16
 ...

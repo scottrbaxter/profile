@@ -275,7 +275,7 @@ alias ansible-playbook-dense='ANSIBLE_STDOUT_CALLBACK=dense ansible-playbook'
 alias ansible-playbook-yaml='ANSIBLE_STDOUT_CALLBACK=yaml ansible-playbook'
 
 # terraform
-export AWS_DEFAULT_REGION='us-east-2'
+# export AWS_DEFAULT_REGION='us-east-2'
 export TF_PLUGIN_CACHE_DIR="$HOME/.terraform.d/plugin-cache"
 export TERRAGRUNT_DOWNLOAD="$HOME/.terraform.d/terragrunt-tmp"
 export TERRAGRUNT_SOURCE_UPDATE='true'

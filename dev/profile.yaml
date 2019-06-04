@@ -1,0 +1,94 @@
+---
+# designed for bento/ubuntu-18.04
+- name: apt | install packages
+  become: true
+  apt:
+    name:
+      - ack
+      - build-essential
+      - curl
+      - dkms
+      - fail2ban
+      - htop
+      - libbz2-dev
+      - libncurses5-dev
+      - libncursesw5-dev
+      - libreadline-dev
+      - libsqlite3-dev
+      - libssl-dev
+      - linux-headers-{{ ansible_kernel }}
+      - llvm
+      - make
+      - python-pexpect
+      - rake
+      - tk-dev
+      - wget
+      - xz-utils
+      - zlib1g-dev
+      - zsh
+
+- name: user | create required directories
+  file:
+    path: "$HOME/{{ item }}"
+    state: directory
+  with_items:
+    - 'development'
+    - '.config/yamllint'
+
+- name: user | clone profile
+  git:
+    repo: 'https://github.com/scottrbaxter/profile.git'
+    dest: '$HOME/development/profile'
+    version: "{{ github_commit }}"
+
+- name: omz | install oh-my-zsh
+  git:
+    repo: 'https://github.com/robbyrussell/oh-my-zsh.git'
+    dest: '$HOME/.oh-my-zsh'
+    version: "{{ github_commit }}"
+
+- name: omz | change shell
+  become: true
+  user:
+    name: vagrant
+    shell: /bin/zsh
+
+- name: vim | install janus
+  shell:
+    curl -L https://bit.ly/janus-bootstrap | bash
+  args:
+    creates: '$HOME/.vim/janus'
+
+- name: user | profile symlinks
+  file:
+    src: '$HOME/development/profile/{{ item.src }}'
+    path: '$HOME/{{ item.dest }}'
+    state: link
+    force: true
+  with_items:
+    - {src: 'dot_janus', dest: '.janus'}
+    - {src: 'dot_gitconfig', dest: '.gitconfig'}
+    - {src: 'dot_gitignore_global', dest: '.gitignore_global'}
+    - {src: 'omz/dot_zshrc', dest: '.zshrc'}
+    - {src: 'pylintrc', dest: '.config/pylintrc'}
+    - {src: 'vimrc.after', dest: '.vimrc.after'}
+    - {src: 'vimrc.before', dest: '.vimrc.before'}
+    - {src: 'yamllint_config', dest: '.config/yamllint/config'}
+
+- name: python | git clone pyenv
+  git:
+    repo: 'https://github.com/pyenv/pyenv.git'
+    dest: '$HOME/.pyenv'
+    version: "{{ github_commit }}"
+
+- name: python | install
+  shell: |
+    export PYENV_ROOT="$HOME/.pyenv"
+    export PATH="$PYENV_ROOT/bin:$PATH"
+    eval "$(pyenv init -)"
+    pyenv install "{{ python_version }}"
+    pyenv global "{{ python_version }}"
+    pip install --upgrade pip
+  args:
+    creates: "$HOME/.pyenv/versions/{{ python_version }}/bin/python"
+...
