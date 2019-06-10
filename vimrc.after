@@ -213,7 +213,7 @@ highlight SpellCap ctermbg=DarkRed
 let g:indentLine_color_term = 239 " indent marker color
 let g:indentLine_char = '|' " indent marker character (options: ¦┆│⎸▏)
 let g:indentLine_concealcursor = 'inc'
-let g:indentLine_conceallevel = 2
+let g:indentLine_conceallevel = 0 " default "2" hides markdown(.md) hyperlinks
 
 " fix tab for proper indenting, except for ft-plugin file types that have this set elsewhere
 " tabstop is the number of spaces pressing tab enters, softtapstop is the number of spaces deleted with the delete key
