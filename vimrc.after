@@ -32,7 +32,7 @@ vmap <space>t :Tabularize<CR>
 vmap <space>= :Tabularize /=<CR>
 vmap <space># :Tabularize /#<CR>
 vmap <space>" :Tabularize /"<CR>
-nmap v<down> vi}
+" nmap v<down> vi}
 
 " set nonumber
 " set nolist " list disables linebreak
