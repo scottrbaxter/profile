@@ -52,7 +52,7 @@ export TERM="xterm-256color"
 
 # add plugins=(osx) for the tab command, to command-click a vim file in new tab
 # also need to add 'tab' in iterm2 profile/advanced semantic history
-plugins=(aws command-time docker kubectl pip zsh-autosuggestions zsh-syntax-highlighting)
+plugins=(aws command-time docker helm pip zsh-autosuggestions zsh-syntax-highlighting)
 
 # fix
 # https://github.com/robbyrussell/oh-my-zsh/issues/6835#issuecomment-390216875
@@ -223,6 +223,21 @@ alias hist='peruseHistory'
 alias hl='peruseHistory -l'
 alias hh='sudo vim /etc/hosts'
 alias k='kubectl'
+alias ka='k apply -f'
+alias kc='k cluster-info'
+alias kcc='k config current-context'
+alias kcg='k config get-contexts'
+alias kcu='k config use-context'
+alias kd='k describe'
+alias kg='k get'
+alias kga='k get all -A'
+alias kcg='k config get-contexts'
+alias kgd='k get deploy'
+alias kgn='k get ns'
+alias kgp='k get po'
+alias kgs='k get svc'
+alias kgsc='k get sc'
+alias ku='k config use-context'
 alias l.='ls -dh .*'
 alias ll.='ls -ldh .*'
 alias llt='ll -tr'
@@ -275,7 +290,7 @@ alias ansible-playbook-dense='ANSIBLE_STDOUT_CALLBACK=dense ansible-playbook'
 alias ansible-playbook-yaml='ANSIBLE_STDOUT_CALLBACK=yaml ansible-playbook'
 
 # terraform
-export AWS_DEFAULT_REGION='us-east-2'
+# export AWS_DEFAULT_REGION='us-east-2'
 export TF_PLUGIN_CACHE_DIR="$HOME/.terraform.d/plugin-cache"
 export TERRAGRUNT_DOWNLOAD="$HOME/.terraform.d/terragrunt-tmp"
 export TERRAGRUNT_SOURCE_UPDATE='true'

@@ -32,7 +32,7 @@ vmap <space>t :Tabularize<CR>
 vmap <space>= :Tabularize /=<CR>
 vmap <space># :Tabularize /#<CR>
 vmap <space>" :Tabularize /"<CR>
-nmap v<down> vi}
+" nmap v<down> vi}
 
 " set nonumber
 " set nolist " list disables linebreak
@@ -213,7 +213,7 @@ highlight SpellCap ctermbg=DarkRed
 let g:indentLine_color_term = 239 " indent marker color
 let g:indentLine_char = '|' " indent marker character (options: ¦┆│⎸▏)
 let g:indentLine_concealcursor = 'inc'
-let g:indentLine_conceallevel = 2
+let g:indentLine_conceallevel = 0 " default "2" hides markdown(.md) hyperlinks
 
 " fix tab for proper indenting, except for ft-plugin file types that have this set elsewhere
 " tabstop is the number of spaces pressing tab enters, softtapstop is the number of spaces deleted with the delete key
@@ -235,6 +235,7 @@ au FileType zsh setlocal tabstop=4 shiftwidth=4 softtabstop=4 expandtab " confor
 " au BufNewFile,BufRead *.yaml set filetype=ansible.yaml
 " au BufNewFile,BufRead *.yml set filetype=ansible.yaml
 au BufRead,BufNewFile */playbooks/*.y*ml set filetype=ansible.yaml
+au BufRead,BufNewFile *.hcl set filetype=terraform
 au BufNewFile,BufRead *.yaml setlocal indentkeys=0{,0},:,0#,!^F,o,0,e
 au BufEnter * if &filetype == "" | setlocal ft=text | endif " any unknown filetype will be known as 'text'
 let g:ansible_unindent_after_newline = 1
