@@ -21,21 +21,3 @@ To test profile, run:
 cd dev
 vagrant up && vagrant ssh
 ```
-
-### Tools used/customized in this profile
-
-- [ ] macos
-- [ ] iterm
-- [ ] oh-my-zsh
-- [ ] vim
-- [ ] git
-- [ ] python
-- [ ] virtualbox
-- [ ] vagrant
-- [ ] docker
-- [ ] linux (ubuntu/centos)
-- [ ] aws
-- [ ] ansible
-- [ ] ssh
-- [ ] ack
-- [ ] linters
