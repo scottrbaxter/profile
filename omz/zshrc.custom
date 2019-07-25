@@ -222,22 +222,6 @@ alias h='helm'
 alias hist='peruseHistory'
 alias hl='peruseHistory -l'
 alias hh='sudo vim /etc/hosts'
-alias k='kubectl'
-alias ka='k apply -f'
-alias kc='k cluster-info'
-alias kcc='k config current-context'
-alias kcg='k config get-contexts'
-alias kcu='k config use-context'
-alias kd='k describe'
-alias kg='k get'
-alias kga='k get all -A'
-alias kcg='k config get-contexts'
-alias kgd='k get deploy'
-alias kgn='k get ns'
-alias kgp='k get po'
-alias kgs='k get svc'
-alias kgsc='k get sc'
-alias ku='k config use-context'
 alias l.='ls -dh .*'
 alias ll.='ls -ldh .*'
 alias llt='ll -tr'
@@ -262,23 +246,6 @@ alias vs='vagrant status'
 alias vup='vagrant up && vagrant ssh'
 alias zz="vim $PROFILE_PATH/omz/zshrc.custom"
 
-# git
-alias gb='git rev-parse --abbrev-ref HEAD'
-alias gbl='git branch --list --sort=creatordate'
-alias gblame=gitBlameSort
-alias gl='git --no-pager log --oneline -25'
-alias glo='git log --oneline --decorate'
-alias gpf='gp -f'
-
-# MacOS
-alias fixaudio='sudo launchctl stop com.apple.audio.coreaudiod'
-alias iCloudStatus='brctl log --wait --shorten'
-alias fixAppStoreApps='killall -KILL storeaccountd'
-alias iftop='sudo /usr/local/sbin/iftop -P'
-alias ips='curl http://ipinfo.io/ip; ifconfig| grep -w inet'
-alias preview='open /Applications/Preview.app '
-alias zupdate='upgrade_oh_my_zsh'
-
 # ansible
 export ANSIBLE_CALLBACK_WHITELIST="profile_tasks, timer"
 export ANSIBLE_LOAD_CALLBACK_PLUGINS=True
@@ -288,6 +255,41 @@ export ANSIBLE_VERBOSITY=1
 alias ansible-playbook-debug='ANSIBLE_STDOUT_CALLBACK=dense ansible-playbook'
 alias ansible-playbook-dense='ANSIBLE_STDOUT_CALLBACK=dense ansible-playbook'
 alias ansible-playbook-yaml='ANSIBLE_STDOUT_CALLBACK=yaml ansible-playbook'
+
+# git
+alias gb='git rev-parse --abbrev-ref HEAD'
+alias gbl='git branch --list --sort=creatordate'
+alias gblame=gitBlameSort
+alias gl='git --no-pager log --oneline -25'
+alias glo='git log --oneline --decorate'
+alias gpf='gp -f'
+
+# kubernetes
+[ "$KUBECTL_NAMESPACE" ] || export KUBECTL_NAMESPACE=default
+alias k='kubectl --namespace $KUBECTL_NAMESPACE'
+alias ka='kubectl apply -f'
+alias kc='kubectl cluster-info'
+alias kcc='kubectl config current-context'
+alias kcg='kubectl config get-contexts'
+alias kcu='kubectl config use-context'
+alias kd='k describe'
+alias kg='k get'
+alias kga='kubectl get all -A'
+alias kgd='k get deployments'
+alias kgn='kubectl get namespaces'
+alias kgp='k get pods'
+alias kgs='k get services'
+alias kgsc='k get storageclasses'
+alias kns='source set-kubectl-namespace $1'
+
+# MacOS
+alias fixaudio='sudo launchctl stop com.apple.audio.coreaudiod'
+alias iCloudStatus='brctl log --wait --shorten'
+alias fixAppStoreApps='killall -KILL storeaccountd'
+alias iftop='sudo /usr/local/sbin/iftop -P'
+alias ips='curl http://ipinfo.io/ip; ifconfig| grep -w inet'
+alias preview='open /Applications/Preview.app '
+alias zupdate='upgrade_oh_my_zsh'
 
 # terraform
 # export AWS_DEFAULT_REGION='us-east-2'
