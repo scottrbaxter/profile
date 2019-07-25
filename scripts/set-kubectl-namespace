@@ -1,0 +1,22 @@
+#!/usr/bin/env bash
+# source this script to set KUBECTL_NAMESPACE variable for your current shell
+
+set -e
+
+NEW_NAMESPACE="$1"
+[ "$KUBECTL_NAMESPACE" ] || export KUBECTL_NAMESPACE=default
+
+
+if [ ! "$NEW_NAMESPACE" ]; then
+    echo "ERROR no namespace provided"
+    echo "usage: source $0 <new-namespace>"
+    echo "Press any key to continue"
+    read -n 1 -s -r
+    exit 1
+# if namespace is passed and is not already defined
+elif [ "$NEW_NAMESPACE" != "$KUBECTL_NAMESPACE" ]; then
+    echo -e "kubectl changing namespace from \"$KUBECTL_NAMESPACE\" to \"$NEW_NAMESPACE\""
+    export KUBECTL_NAMESPACE="$NEW_NAMESPACE"
+else
+    echo "kubectl namespace already set to \"$KUBECTL_NAMESPACE\""
+fi
