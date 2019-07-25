@@ -265,7 +265,8 @@ alias glo='git log --oneline --decorate'
 alias gpf='gp -f'
 
 # kubernetes
-alias k='kubectl'
+[ "$KUBECTL_NAMESPACE" ] || export KUBECTL_NAMESPACE=default
+alias k='kubectl --namespace $KUBECTL_NAMESPACE'
 alias ka='kubectl apply -f'
 alias kc='kubectl cluster-info'
 alias kcc='kubectl config current-context'
@@ -279,6 +280,7 @@ alias kgn='kubectl get namespaces'
 alias kgp='k get pods'
 alias kgs='k get services'
 alias kgsc='k get storageclasses'
+alias kns='source set-kubectl-namespace $1'
 
 # MacOS
 alias fixaudio='sudo launchctl stop com.apple.audio.coreaudiod'
