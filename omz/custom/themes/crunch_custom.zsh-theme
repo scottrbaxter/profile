@@ -1,5 +1,5 @@
 # specifically for shellcheck linting, set this file to sh
-# vim: ft=sh:
+# vim: ft=bash:
 
 # CRUNCH - created from Steve Eley's cat waxing.
 # Initially hacked from the Dallas theme. Thanks, Dallas Reedy.
@@ -18,17 +18,17 @@
 
 CRUNCH_BRACKET_COLOR="%{$fg[white]%}"
 CRUNCH_TIME_COLOR="%{$fg[blue]%}"
-#CRUNCH_TIME_COLOR="%{$fg[yellow]%}"
 CRUNCH_RVM_COLOR="%{$fg[magenta]%}"
 CRUNCH_DIR_COLOR="%{$fg[blue]%}"
-#CRUNCH_DIR_COLOR="%{$fg[cyan]%}"
 CRUNCH_GIT_BRANCH_COLOR="%{$fg[green]%}"
 CRUNCH_GIT_CLEAN_COLOR="%{$fg[green]%}"
 CRUNCH_GIT_DIRTY_COLOR="%{$fg[red]%}"
 CRUNCH_HIST_COLOR="%{$fg[red]%}"
+K8S_COLOR="%{$fg[blue]%}"
 LOAD_COLOR="%{$fg[magenta]%}"
+OP_COLOR="%{$fg_bold[cyan]%}"
+RESET_COLOR="%{$reset_color%}"
 STS_COLOR="%{$fg[white]%}"
-OP_COLOR="%{$fg[blue]%}"
 
 # time
 NOW(){
@@ -130,22 +130,29 @@ checkSTS() {
 }
 STS_="$STS_COLOR"'$(checkSTS)'
 
-# KUBE_PS1_PREFIX=""
-# KUBE_PS1_SUFFIX=""
-# KUBE_PS1_NS_ENABLE='false'
-# KUBE_PS1_DIVIDER=""
-# KUBE_='$(kube_ps1) '
-
 # check if op is logged in
 checkOP() {
     if [[ ! $OP_EXPIRATION ]]; then
         return
     else
-        OP_MINUTES_REMAINING=$(( $(( OP_EXPIRATION - $(NOW) )) / 60 ))
-        echo "P|$OP_MINUTES_REMAINING "
+        local OP_MINUTES_REMAINING=$(( $(( OP_EXPIRATION - $(NOW) )) / 60 ))
+        echo "p|$OP_MINUTES_REMAINING "
     fi
 }
-OP_="$OP_COLOR"'$(checkOP)'
+OP_="$OP_COLOR"'$(checkOP)'"$RESET_COLOR"
+
+# Checking Kubernetes Current Context
+check_k8s() {
+  [ -e ~/.kube/config ] && \
+    K8S_CONTEXT=$(grep current-context ~/.kube/config | awk '{print $2}')
+  if [ -n "${K8S_CONTEXT}" ]; then
+    local K8S_PROMPT="k|$K8S_CONTEXT"
+    echo "$K8S_PROMPT "
+else
+    return
+  fi
+}
+K8S_="$K8S_COLOR"'$(check_k8s)'"$RESET_COLOR"
 
 check_last_exit_code() {
   local LAST_EXIT_CODE=$?
@@ -157,4 +164,4 @@ check_last_exit_code() {
 EXIT_='$(check_last_exit_code)'
 
 # Put it all together!
-PROMPT="$CRUNCH_TIME_$EXIT_$LOAD_$NUM_$OP_$STS_$HOST_$CRUNCH_DIR_$ADMIN_ %{$reset_color%}"
+PROMPT="$CRUNCH_TIME_$EXIT_$LOAD_$NUM_$OP_$K8S_$STS_$HOST_$CRUNCH_DIR_$ADMIN_ %{$reset_color%}"
