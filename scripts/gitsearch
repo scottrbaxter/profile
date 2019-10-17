@@ -3,7 +3,7 @@
 set -e
 
 COUNT=3
-GITSEARCH="gitColor log -S ${*} -n $COUNT --pretty=format:%H"
+GITSEARCH="gitColor log --max-count=$COUNT --pretty=format:%H -S ${*}"
 
 
 header(){
