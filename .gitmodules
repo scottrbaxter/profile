@@ -52,7 +52,7 @@
 	url = https://github.com/pearofducks/ansible-vim.git
 [submodule "submodules/dot_janus/ale"]
 	path = submodules/dot_janus/ale
-	url = https://github.com/w0rp/ale.git
+	url = https://github.com/dense-analysis/ale.git
 [submodule "submodules/dot_janus/vim-terraform"]
 	path = submodules/dot_janus/vim-terraform
 	url = https://github.com/hashivim/vim-terraform.git
