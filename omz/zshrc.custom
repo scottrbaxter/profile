@@ -282,6 +282,7 @@ alias kgs='k get services --output=wide'
 alias kgsc='k get storageclasses --output=wide'
 alias kns='kubens'
 alias kx='kubectx'
+alias stern='stern --timestamps'
 
 # MacOS
 alias fixaudio='sudo launchctl stop com.apple.audio.coreaudiod'
