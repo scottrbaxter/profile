@@ -19,28 +19,6 @@ ZSH_THEME="crunch_custom" # ; alias git=hub
 # POWERLEVEL9K_RIGHT_PROMPT_ELEMENTS=()
 # ZSH_THEME="powerlevel9k/powerlevel9k"
 
-# determine Mac or Linux OS
-OS_TYPE=$(uname -s)
-# linux specific
-if [ "$OS_TYPE" = Linux ]; then
-    alias apt='sudo apt'
-    alias apts='apt search'
-    alias ls='ls --color=always'
-    alias kubectl=microk8s.kubectl
-    export QUOTING_STYLE=literal
-    export PATH="/snap/bin:$PATH"
-# mac specific
-elif [ "$OS_TYPE" = Darwin ]; then
-    alias ls='/usr/local/bin/gls --color=always'
-    export HOMEBREW_NO_INSTALL_CLEANUP=true
-    # mojave required these to be unset
-    # CFLAGS="-I$(brew --prefix readline)/include -I$(brew --prefix openssl)/include -I$(xcrun --show-sdk-path)/usr/include"
-    # LDFLAGS="-L$(brew --prefix readline)/lib -L$(brew --prefix openssl)/lib"
-    # High Sierra
-    # local HOMEBREW_OPENSSL="command -v openssl" # cause "$(brew --prefix openssl)" is super slow
-    # export CFLAGS="-I$HOMEBREW_OPENSSL/include"
-    # export LDFLAGS="-L$HOMEBREW_OPENSSL/lib"
-fi
 
 # skip_global_compinit=1
 export TERM="xterm-256color"
@@ -68,6 +46,28 @@ source $ZSH/oh-my-zsh.sh
 export RED="\033[0;31m"
 export WHITE="\033[0m"
 
+# determine Mac or Linux OS
+OS_TYPE=$(uname -s)
+# linux specific
+if [ "$OS_TYPE" = Linux ]; then
+    alias apt='sudo apt'
+    alias apts='apt search'
+    alias ls='ls --color=always'
+    export QUOTING_STYLE=literal
+    [ command -v microk8s.kubectl >/dev/null 2>&1 ] && alias kubectl=microk8s.kubectl
+# mac specific
+elif [ "$OS_TYPE" = Darwin ]; then
+    alias ls='/usr/local/bin/gls --color=always'
+    export HOMEBREW_NO_INSTALL_CLEANUP=true
+    # mojave required these to be unset
+    # CFLAGS="-I$(brew --prefix readline)/include -I$(brew --prefix openssl)/include -I$(xcrun --show-sdk-path)/usr/include"
+    # LDFLAGS="-L$(brew --prefix readline)/lib -L$(brew --prefix openssl)/lib"
+    # High Sierra
+    # local HOMEBREW_OPENSSL="command -v openssl" # cause "$(brew --prefix openssl)" is super slow
+    # export CFLAGS="-I$HOMEBREW_OPENSSL/include"
+    # export LDFLAGS="-L$HOMEBREW_OPENSSL/lib"
+fi
+
 # custom dir function path
 fpath=($fpath /usr/local/share/zsh-completions)
 
@@ -84,10 +84,32 @@ zle -N self-insert url-quote-magic
 export PATH_DEFAULT="$PATH" # needed for reloadZsh
 
 # ruby stuff, make sure /.rbenv/bin is in $PATH
-export RBENV_ROOT="$HOME/.rbenv"
-export PATH="$RBENV_ROOT/bin:$PATH"
-# eval "$(rbenv init -)"
-# eval "$(rbenv init - --no-rehash)"
+command -v rbenv >/dev/null 2>&1 && \
+    export RBENV_ROOT="$HOME/.rbenv" && \
+    export PATH="$RBENV_ROOT/bin:$PATH" && \
+    eval "$(rbenv init -)"
+
+# python environment
+command -v pyenv >/dev/null 2>&1 && \
+    export PYENV_ROOT="$HOME/.pyenv" && \
+    export PATH="$PYENV_ROOT/bin:$PATH" && \
+    eval "$(pyenv init -)"
+    # aws tab completion # source /usr/local/share/zsh/site-functions/_aws # if installed via brew
+    # pyenv's built in which command to check for installed aws completer
+    pyenv which aws_zsh_completer.sh 1>/dev/null 2>&1 && source "$(pyenv which aws_zsh_completer.sh)"
+
+# go environment
+command -v go >/dev/null 2>&1 && \
+    export GOPATH="$HOME/go" && \
+    PATH="$GOPATH/bin:$PATH"
+
+# needs to go after pyenv, to make ~/.local/bin work correctly (because pip install --user)
+[ -d $HOME/.local ] && export PATH="$PATH:$HOME/.local/bin"
+[ -d /usr/local/sbin ] && export PATH="$PATH:/usr/local/sbin"
+[ -d /usr/libexec ] && export PATH="$PATH:/usr/libexec"
+[ -d $HOME/scripts ] && export PATH="$PATH:$HOME/scripts"
+[ -d $PROFILE_PATH/scripts ] && export PATH="$PATH:$PROFILE_PATH/scripts"
+[ -d /snap/bin ] && export PATH="/snap/bin:$PATH"
 
 # Bash-like navigation (alt left/right forward-word like bash)
 # http://stackoverflow.com/questions/10847255/how-to-make-zsh-forward-word-behaviour-same-as-in-bash-emacs (man zshall)
@@ -117,34 +139,16 @@ bindkey "^[w" kill-region
 bindkey "^[^[OA" up-line-or-beginning-search # fix for escape/up arrow annoyance
 bindkey "^R" history-incremental-search-backward
 
-# python environment
-export PYENV_ROOT="$HOME/.pyenv"
-export PATH="$PYENV_ROOT/bin:$PATH"
-eval "$(pyenv init -)"
-
-# go environment
-export GOPATH="$HOME/go"
-PATH="$GOPATH/bin:$PATH"
-
-# needs to go after pyenv, to make ~/.local/bin work correctly (because pip install --user)
-export PATH="$PATH:$HOME/.local/bin:/usr/local/bin:/usr/local/sbin:/usr/libexec:$HOME/scripts:$PROFILE_PATH/scripts"
-
 # shellcheck linter
 export SHELLCHECK_OPTS="-e SC1091 -e SC2059 -e SC2129"
 
-# homebrew stuff
+# homebrew
 # export HOMEBREW_CASK_OPTS="--appdir=~/Applications"
 
 export LANG="en_US.UTF-8"
 export LC_ALL="en_US.UTF-8"
 export LC_CTYPE="UTF-8"
 export EDITOR="vim"
-
-# aws tab completion # source /usr/local/share/zsh/site-functions/_aws # if installed via brew
-# pyenv's built in which command to check for installed aws completer
-if pyenv which aws_zsh_completer.sh 1>/dev/null 2>&1; then
-  source "$(pyenv which aws_zsh_completer.sh)"
-fi
 
 # hashicorp vault autocomplete
 autoload -U +X bashcompinit && bashcompinit
@@ -191,11 +195,24 @@ peruseHistory ()
     fi
 }
 
+python_http_server(){
+    python -m SimpleHTTPServer
+}
+
 reloadZsh(){
     unalias -a # remove all aliases
     export PATH=$PATH_DEFAULT
     source "$PROFILE_PATH/omz/zshrc.custom"
 }
+
+update_janus(){
+    JANUS=$HOME/.vim
+    echo "updating vim-janus in $JANUS"
+    cd $JANUS
+    rake
+    cd -
+}
+
 
 # aliases
 alias D='cd ~/development'
@@ -229,13 +246,11 @@ alias man=betterman
 alias pep8="pep8 -v"
 alias bep8="bashate"
 alias publicip='dig +short myip.opendns.com @resolver1.opendns.com'
-alias python-http-server='python -m SimpleHTTPServer'
 alias rar='unrar'
 alias rr='rsync -avhP'
 alias rrd='rsync -avhP --delete'
 alias scr='screen -dR'
 alias top='htop'
-alias update-janus='JANUS=$HOME/.vim; echo "updating vim-janus in $JANUS"; cd $JANUS && rake && cd -'
 alias vi='vim'
 alias vvv='vim ~/.vimrc'
 alias vva='vim ~/.vimrc.after'
