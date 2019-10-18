@@ -70,7 +70,7 @@ se mouse+=a " mouse copy turns into visual mode
 " set ttymouse=sgr
 " set balloondelay=250
 " set ballooneval
-set balloonevalterm
+" set balloonevalterm
 let g:ale_set_balloons = 1
 
 if !has('nvim')
