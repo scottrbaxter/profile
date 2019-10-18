@@ -45,5 +45,9 @@
     name  = Scott Baxter
 [credential]
     helper = osxkeychain
+[diff]
+    ignoreSubmodules = all
+    ; ignoreSubmodules = dirty
+    ; ignoreSubmodules = untracked
 [diff "sopsdiffer"]
-	textconv = sops -d
+    textconv = sops -d
