@@ -30,7 +30,7 @@ export TERM="xterm-256color"
 
 # add plugins=(osx) for the tab command, to command-click a vim file in new tab
 # also need to add 'tab' in iterm2 profile/advanced semantic history
-plugins=(aws command-time docker kubectl helm pip zsh-autosuggestions zsh-syntax-highlighting)
+plugins=(aws command-time docker go kubectl helm pip zsh-autosuggestions zsh-syntax-highlighting)
 
 # fix
 # https://github.com/robbyrussell/oh-my-zsh/issues/6835#issuecomment-390216875
@@ -48,8 +48,7 @@ export PATH_DEFAULT="$PATH" # needed for reloadZsh
 [ -d $HOME/scripts ] && export PATH="$PATH:$HOME/scripts"
 [ -d $PROFILE_PATH/scripts ] && export PATH="$PATH:$PROFILE_PATH/scripts"
 [ -d /snap/bin ] && export PATH="/snap/bin:$PATH"
-[ -d /usr/local/bin ] && export PATH="/usr/local/bin:$PATH" # dsm
-[ -d /usr/syno ] && export PATH="$PATH:/usr/syno/bin:/usr/syno/sbin" # dsm
+[ -d /usr/syno ] && export PATH="$PATH:/usr/local/bin:/usr/syno/bin:/usr/syno/sbin" # dsm
 
 source $ZSH/oh-my-zsh.sh
 
