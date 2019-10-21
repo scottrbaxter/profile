@@ -7,7 +7,7 @@ set -e
 
 PURPLE="\033[0;35m"
 WHITE="\033[0m"
-PORCELAIN=$(git status --porcelain 2>/dev/null)
+PORCELAIN=$(git status --porcelain --ignore-submodules=dirty 2>/dev/null)
 GITCOMMITS=5
 
 
@@ -16,7 +16,7 @@ header(){
 }
 
 gitcheck(){
-    git -c color."$1"=always --no-pager "$@"
+    git -c color."$1"=always --no-pager "$@" --ignore-submodules=dirty
 }
 
 # check if branch is remote HEAD (e.g. master), maybe not needed

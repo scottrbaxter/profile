@@ -4,7 +4,7 @@ set -e
 
 PURPLE="\033[0;35m"
 WHITE="\033[0m"
-PORCELAIN=$(git status --porcelain 2>/dev/null)
+PORCELAIN=$(git status --porcelain --ignore-submodules=dirty 2>/dev/null)
 PORCELAINLIST=$(awk '{print $2}' <<< "$PORCELAIN")
 
 header(){
@@ -29,7 +29,7 @@ fullstatus(){
 }
 
 gitcheck(){
-    git -c color."$1"=always --no-pager "$@"
+    git -c color."$1"=always --no-pager "$@" --ignore-submodules=dirty
 }
 
 checkStaged(){
@@ -69,8 +69,7 @@ main(){
         fi
         # break this out to an if check
             header "Porcelain Status"
-            # newstatus=git status --porcelain 2>/dev/null
-            git status --porcelain
+            gitcheck status
         echo
         header "Previous Git Commit"
         # git show @~
