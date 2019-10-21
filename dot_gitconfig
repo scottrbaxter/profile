@@ -26,6 +26,8 @@
     editor       = vim
     pager        = less
     excludesfile = ~/.gitignore_global
+[diff]
+    ignoreSubmodules = dirty
 [github]
     user = scottrbaxter
 [merge]
@@ -39,6 +41,7 @@
     submodule = false
     tag       = false
 [status]
+    ignoreSubmodules = dirty
     submoduleSummary = true
 [user]
     email = scottrbaxter@gmail.com
