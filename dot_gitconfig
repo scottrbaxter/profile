@@ -14,7 +14,7 @@
     renamebranch         = branch -m
     staged               = diff --staged
     submodulelist        = "!f() { git config --file .gitmodules --get-regexp path | awk '{ print $2 }'; }; f"
-    switch               = "!f() { git checkout $1 2>/dev/null || git checkout -b $1 origin/$1 2>/dev/null || git checkout -b $1; git submodule update --init --recursive; }; f"
+    sw                   = "!f() { git checkout $1 2>/dev/null || git checkout -b $1 origin/$1 2>/dev/null || git checkout -b $1; }; f"
     undo                 = reset HEAD~1 --mixed
     unstage              = "!f() { git reset HEAD "$@" && gs; }; f"
     url                  = remote -v
