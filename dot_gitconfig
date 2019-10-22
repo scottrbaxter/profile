@@ -48,10 +48,5 @@
     name  = Scott Baxter
 [credential]
     helper = osxkeychain
-[diff]
-    ; https://git-scm.com/docs/git-config#git-config-statussubmoduleSummary
-    ; ignoreSubmodules = all ; will never be considered modified, but will show up in output of status and commit when it has been staged
-    ignoreSubmodules = dirty ; ignore changes to the submodules work tree and differences between HEAD of the submodule and commit recorded in the superproject
-    ; ignoreSubmodules = untracked ; let submodules with modified tracked files in their work tree show up
 [diff "sopsdiffer"]
     textconv = sops -d
