@@ -33,6 +33,7 @@ vmap <space>= :Tabularize /=<CR>
 vmap <space># :Tabularize /#<CR>
 vmap <space>" :Tabularize /"<CR>
 " nmap v<down> vi}
+nmap <silent> <space>c :call MessageToClipboard()<CR>
 
 " set nonumber
 " set nolist " list disables linebreak
@@ -292,6 +293,12 @@ function! ColorColumnToggle()
     endif
 endfunction
 
+function! MessageToClipboard()
+  redir @+
+  1message
+  redir END
+endfunction
+
 au BufNewFile,BufRead * setlocal formatoptions-=cro " default: croql
 nmap <silent> H :set cursorcolumn!<CR>
 nmap <silent> <F3> :set invwrap<CR>:set wrap?<CR>
@@ -337,3 +344,6 @@ function! ConvertJsonYaml()
     :set ft=json
   endif
 endfunction
+
+" search hyphenated words
+set iskeyword+=-
