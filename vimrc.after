@@ -32,6 +32,8 @@ vmap <space>t :Tabularize<CR>
 vmap <space>= :Tabularize /=<CR>
 vmap <space># :Tabularize /#<CR>
 vmap <space>" :Tabularize /"<CR>
+vnoremap A <C-v>$A
+vnoremap I <C-v>$I
 " nmap v<down> vi}
 nmap <silent> <space>c :call MessageToClipboard()<CR>
 

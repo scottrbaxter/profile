@@ -8,6 +8,9 @@
 **/*.retry
 **/docker.tst.*
 **/*.vagrant
+**/*.notes
+.ash_history
+.bash_history
 
 # ansible
 .vault_pass
@@ -22,7 +25,7 @@
 *.terragrunt-cache
 
 # submodules
-**/doc/tags
+# **/doc/tags
 # **/submodules
 
 # https://gist.github.com/octocat/9257657
