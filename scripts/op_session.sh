@@ -5,6 +5,9 @@
 # use: OP_CLOUD_ACCOUNT="[your-account-name]" source /path/to/op_session.sh command
 # e.g.: OP_CLOUD_ACCOUNT="familyname" source ~/op_session.sh get account
 
+# caveat: if you have spaces in a name, you need to escape quotes with \"item one\" or '"item one"'
+# e.g. 1p list items --vault=\"vault name\"
+
 
 check_session(){
     # attempt sign in if session is not active
