@@ -65,12 +65,14 @@ if [ "$OS_TYPE" = Linux ]; then
     alias docker='sudo docker'
     alias dc='sudo docker-compose'
     alias ls='ls --color=always'
+    GOLANG_BIN='/usr/bin/go'
     PYENV_BIN='$HOME/.pyenv/bin/pyenv'
     RBENV_BIN='$HOME/.rbenv/bin/rbenv'
 # mac specific
 elif [ "$OS_TYPE" = Darwin ]; then
     alias ls='/usr/local/bin/gls --color=always'
     export HOMEBREW_NO_INSTALL_CLEANUP=true
+    GOLANG_BIN='/usr/local/bin/go'
     PYENV_BIN='/usr/local/bin/pyenv'
     RBENV_BIN='/usr/local/bin/rbenv'
 fi
@@ -78,6 +80,7 @@ fi
 # ruby environment
 [ $RBENV_BIN ] && \
     export RBENV_ROOT="$HOME/.rbenv" && \
+    export PATH="$RBENV_ROOT/bin:$PATH" && \
     eval "$(rbenv init -)"
 
 # python environment
@@ -85,15 +88,13 @@ fi
     export PYENV_ROOT="$HOME/.pyenv" && \
     export PATH="$PYENV_ROOT/bin:$PATH" && \
     eval "$(pyenv init -)" && \
-    # aws tab completion # source /usr/local/share/zsh/site-functions/_aws # if installed via brew
     # pyenv's built in which command to check for installed aws completer
     pyenv which aws_zsh_completer.sh 1>/dev/null 2>&1 && source "$(pyenv which aws_zsh_completer.sh)"
 
 # go environment
-command -v go >/dev/null 2>&1 && \
+[ $GOLANG_BIN ] && \
     export GOPATH="$HOME/go" && \
     PATH="$GOPATH/bin:$PATH"
-
 
 # handles special characters from links/urls
 autoload -Uz url-quote-magic
