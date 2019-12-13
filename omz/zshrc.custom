@@ -56,13 +56,32 @@ source $ZSH/oh-my-zsh.sh
 
 # additioanl profile settings
 
+# determine Mac or Linux OS
+OS_TYPE=$(uname -s)
+# linux specific
+if [ "$OS_TYPE" = Linux ]; then
+    alias apt='sudo apt'
+    alias apts='apt search'
+    alias docker='sudo docker'
+    alias dc='sudo docker-compose'
+    alias ls='ls --color=always'
+    PYENV_BIN='$HOME/.pyenv/bin/pyenv'
+    RBENV_BIN='$HOME/.rbenv/bin/rbenv'
+# mac specific
+elif [ "$OS_TYPE" = Darwin ]; then
+    alias ls='/usr/local/bin/gls --color=always'
+    export HOMEBREW_NO_INSTALL_CLEANUP=true
+    PYENV_BIN='/usr/local/bin/pyenv'
+    RBENV_BIN='/usr/local/bin/rbenv'
+fi
+
 # ruby environment
-command -v rbenv >/dev/null 2>&1 && \
+[ $RBENV_BIN ] && \
     export RBENV_ROOT="$HOME/.rbenv" && \
     eval "$(rbenv init -)"
 
 # python environment
-command -v pyenv >/dev/null 2>&1 && \
+[ $PYENV_BIN ] && \
     export PYENV_ROOT="$HOME/.pyenv" && \
     export PATH="$PYENV_ROOT/bin:$PATH" && \
     eval "$(pyenv init -)" && \
@@ -75,29 +94,6 @@ command -v go >/dev/null 2>&1 && \
     export GOPATH="$HOME/go" && \
     PATH="$GOPATH/bin:$PATH"
 
-# determine Mac or Linux OS
-OS_TYPE=$(uname -s)
-# linux specific
-if [ "$OS_TYPE" = Linux ]; then
-    alias apt='sudo apt'
-    alias apts='apt search'
-    alias docker='sudo docker'
-    alias dc='sudo docker-compose'
-    alias ls='ls --color=always'
-    export QUOTING_STYLE=literal
-    [ command -v microk8s.kubectl >/dev/null 2>&1 ] && alias kubectl=microk8s.kubectl
-# mac specific
-elif [ "$OS_TYPE" = Darwin ]; then
-    alias ls='/usr/local/bin/gls --color=always'
-    export HOMEBREW_NO_INSTALL_CLEANUP=true
-    # mojave required these to be unset
-    # CFLAGS="-I$(brew --prefix readline)/include -I$(brew --prefix openssl)/include -I$(xcrun --show-sdk-path)/usr/include"
-    # LDFLAGS="-L$(brew --prefix readline)/lib -L$(brew --prefix openssl)/lib"
-    # High Sierra
-    # local HOMEBREW_OPENSSL="command -v openssl" # cause "$(brew --prefix openssl)" is super slow
-    # export CFLAGS="-I$HOMEBREW_OPENSSL/include"
-    # export LDFLAGS="-L$HOMEBREW_OPENSSL/lib"
-fi
 
 # handles special characters from links/urls
 autoload -Uz url-quote-magic
@@ -141,6 +137,7 @@ export LANG="en_US.UTF-8"
 export LC_ALL="en_US.UTF-8"
 export LC_CTYPE="UTF-8"
 export EDITOR="vim"
+export QUOTING_STYLE=literal
 
 # hashicorp vault autocomplete
 autoload -U +X bashcompinit && bashcompinit

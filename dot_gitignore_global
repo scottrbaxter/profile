@@ -4,13 +4,10 @@
 # **/tst*
 **/.keyfile*
 **/temp
-**/tmp
+**/.dev
 **/*.retry
 **/docker.tst.*
 **/*.vagrant
-**/*.notes
-.ash_history
-.bash_history
 
 # ansible
 .vault_pass
