@@ -1,0 +1,27 @@
+# permit search of hidden files and folders
+--hidden
+
+# sort by file path
+--sort=path
+
+--no-ignore
+
+# ignore files and folders
+--glob=!.git
+--glob=!.dev
+
+# Sets the color to be used for matches.
+# --colors=path:fg:blue
+--colors=path:fg:black
+--colors=path:style:bold
+--colors=path:style:underline
+--colors=line:fg:red
+--colors=line:style:intense
+--colors=line:style:underline
+# --colors=column:fg:magenta
+# --colors=column:style:bold
+# --colors=match:fg:cyan
+--colors=match:fg:red
+# --colors=match:style:intense
+
+# vim: ft=sh
