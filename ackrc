@@ -22,10 +22,10 @@
 # For example, mason users may wish to include --ignore-dir=data.
 # The --noignore-dir option allows users to search directories which would normally be ignored
 # (perhaps to research the contents of .svn/props directories)
---ignore-directory=is:submodules/
---ignore-directory=is:tmp/
---ignore-directory=is:scott/
---ignore-directory=is:.terragrunt-cache/
+# --ignore-directory=is:submodules/
+# --ignore-directory=is:tmp/
+# --ignore-directory=is:scott/
+# --ignore-directory=is:.terragrunt-cache/
 
 
 # list current filters with this:

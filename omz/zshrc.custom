@@ -30,7 +30,7 @@ export TERM="xterm-256color"
 
 # add plugins=(osx) for the tab command, to command-click a vim file in new tab
 # also need to add 'tab' in iterm2 profile/advanced semantic history
-plugins=(aws command-time docker go kubectl helm pip zsh-autosuggestions)
+plugins=(aws command-time docker go kubectl helm pip ripgrep zsh-autosuggestions)
 
 # fix
 # https://github.com/robbyrussell/oh-my-zsh/issues/6835#issuecomment-390216875
@@ -139,6 +139,7 @@ export LC_ALL="en_US.UTF-8"
 export LC_CTYPE="UTF-8"
 export EDITOR="vim"
 export QUOTING_STYLE=literal
+export RIPGREP_CONFIG_PATH=$PROFILE_PATH/ripgreprc
 
 # hashicorp vault autocomplete
 autoload -U +X bashcompinit && bashcompinit
@@ -237,6 +238,10 @@ alias pep8="pep8 -v"
 alias bep8="bashate"
 alias publicip='dig +short myip.opendns.com @resolver1.opendns.com'
 alias rar='unrar'
+alias rgl='rg --files-with-matches' # print filenames with contents that match
+alias rgg='rg --files | rg' # match part of filename
+alias rggw='rg --files | rg --word-regexp' # match filenames explicit words
+alias rgw='rg --word-regexp' # match explicit words
 alias rr='rsync -avhP'
 alias rrd='rsync -avhP --delete'
 alias scr='screen -dR'
