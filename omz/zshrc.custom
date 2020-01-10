@@ -32,15 +32,15 @@ export TERM="xterm-256color"
 # also need to add 'tab' in iterm2 profile/advanced semantic history
 plugins=(aws command-time docker go kubectl helm pip ripgrep zsh-autosuggestions)
 
-# fix
-# https://github.com/robbyrussell/oh-my-zsh/issues/6835#issuecomment-390216875
+# fix https://github.com/robbyrussell/oh-my-zsh/issues/6835#issuecomment-390216875
 ZSH_DISABLE_COMPFIX=true
+
 
 # custom dir function path
 fpath=($fpath /usr/local/share/zsh-completions)
 
 # custom PATH stuff
-export PATH_DEFAULT="$PATH" # needed for reloadZsh
+export PATH_PREVIOUS="$PATH" # needed for reloadZsh
 
 [ -d $HOME/.local ] && export PATH="$PATH:$HOME/.local/bin" # needs to append for pyenv, because pip install --user
 [ -d /usr/local/sbin ] && export PATH="$PATH:/usr/local/sbin"
@@ -192,7 +192,8 @@ python_http_server(){
 
 reloadZsh(){
     unalias -a # remove all aliases
-    export PATH=$PATH_DEFAULT
+    PATH=$PATH_PREVIOUS
+    ZSH_AUTOSUGGEST_CLEAR_WIDGETS="$ZSH_AUTOSUGGEST_CLEAR_WIDGETS_PREVIOUS"
     source "$PROFILE_PATH/omz/zshrc.custom"
 }
 
@@ -310,6 +311,10 @@ export TERRAGRUNT_DOWNLOAD="$HOME/.terraform.d/terragrunt-tmp"
 export TERRAGRUNT_SOURCE_UPDATE='true'
 alias t='terraform'
 alias tg='terragrunt'
+
+# fix https://github.com/zsh-users/zsh-autosuggestions/issues/351#issuecomment-515415202
+export ZSH_AUTOSUGGEST_CLEAR_WIDGETS_PREVIOUS="$ZSH_AUTOSUGGEST_CLEAR_WIDGETS" # needed for reloadZsh
+ZSH_AUTOSUGGEST_CLEAR_WIDGETS+=(bracketed-paste)
 
 # additional stuff
 for k in ~/.keyfile-*(N); do source $k; done
