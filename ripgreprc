@@ -4,10 +4,13 @@
 # sort by file path
 --sort=path
 
---no-ignore
+# ignore version control files
+--no-ignore-vcs
+
+# not case sensitive
+--ignore-case
 
 # ignore files and folders
-# --glob=!.dev
 --glob=!.dev/*_history
 
 # colorscheme
