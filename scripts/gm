@@ -7,7 +7,6 @@ set -e
 PURPLE="\033[0;35m"
 WHITE="\033[0m"
 currentbranch=$(git rev-parse --abbrev-ref HEAD)
-submodules=$(git submodule)
 
 
 header(){
@@ -26,7 +25,7 @@ masterpull(){
     # gitColor pull origin master:master
     header "Git Pull"
     gitColor pull --rebase --prune
-    if [ "${submodules}" ]; then
+    if git submodule > /dev/null 2>&1; then
         header "Git Submodule Update"
         gitColor submodule sync --recursive && \
             gitColor submodule update --init --recursive
