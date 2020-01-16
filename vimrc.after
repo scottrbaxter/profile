@@ -27,7 +27,7 @@ vmap <space>_ :s/\%V_/-/<CR>
 nmap ` v~
 nmap t :TagbarOpen fj<CR>
 nnoremap q :q<CR>
-vmap <space>r \c<space><C-O>
+vmap <space>r \c<space>
 vmap <space>= :s/[ ]\{2,}=/ =/g<CR><C-O>
 nmap <space>= :%s/[ ]\{2,}=/ =/g<CR><C-O>
 vmap <space>t :Tabularize /=<CR>
@@ -37,7 +37,7 @@ vmap <space>" :Tabularize /"<CR>
 vnoremap A <C-v>$A
 vnoremap I <C-v>$I
 " nmap v<down> vi}
-nmap <silent> <space>c :call MessageToClipboard()<CR>
+nmap <silent> <space>c :call MessageToClipboard()<CR><CR>
 
 " set nonumber
 " set nolist " list disables linebreak
