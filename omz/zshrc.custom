@@ -63,7 +63,7 @@ if [ "$OS_TYPE" = Linux ]; then
     alias apt='sudo apt'
     alias apts='apt search'
     alias docker='sudo docker'
-    alias dc='sudo docker-compose'
+    alias docker-compose='sudo docker-compose'
     alias ls='ls --color=always'
     GOLANG_BIN='/usr/bin/go'
     PYENV_BIN="$HOME/.pyenv/bin/pyenv"
