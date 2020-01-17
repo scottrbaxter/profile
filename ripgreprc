@@ -13,6 +13,9 @@
 # ignore files and folders
 --glob=!.dev/*_history
 
+# include hcl files with terraform type
+--type-add=tf:*.{tf,tfvars,hcl}
+
 # colorscheme
 --colors=path:fg:green
 --colors=path:style:bold
