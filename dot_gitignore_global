@@ -5,6 +5,7 @@
 **/.keyfile*
 **/temp
 **/.dev
+**/.ce-cli
 **/*.retry
 **/docker.tst.*
 **/*.vagrant
