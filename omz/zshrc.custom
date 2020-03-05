@@ -68,6 +68,7 @@ if [ "$OS_TYPE" = Linux ]; then
     GOLANG_BIN='/usr/bin/go'
     PYENV_BIN="$HOME/.pyenv/bin/pyenv"
     RBENV_BIN="$HOME/.rbenv/bin/rbenv"
+    LS_COLORS+=':ow=01;33'
 # mac specific
 elif [ "$OS_TYPE" = Darwin ]; then
     alias ls='/usr/local/bin/gls --color=always'
