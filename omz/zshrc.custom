@@ -318,7 +318,6 @@ export TERRAGRUNT_SOURCE_UPDATE='true'
 alias t='terraform'
 alias tg='terragrunt'
 
-ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE="fg=#9E9E9E"
 # fix https://github.com/zsh-users/zsh-autosuggestions/issues/351#issuecomment-515415202
 ZSH_AUTOSUGGEST_CLEAR_WIDGETS_PREVIOUS="$ZSH_AUTOSUGGEST_CLEAR_WIDGETS" # needed for reloadZsh
 ZSH_AUTOSUGGEST_CLEAR_WIDGETS+=(bracketed-paste)
