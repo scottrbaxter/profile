@@ -12,6 +12,7 @@
 
 # ignore files and folders
 --glob=!.dev/*_history
+--glob=!.git/*
 
 # include hcl files with terraform type
 --type-add=tf:*.{tf,tfvars,hcl}
