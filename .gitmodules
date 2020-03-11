@@ -58,3 +58,6 @@
 [submodule "submodules/dot_janus/terraform-lsp"]
 	path = submodules/dot_janus/terraform-lsp
 	url = https://github.com/juliosueiras/terraform-lsp.git
+[submodule "submodules/omz/custom/themes/powerlevel10k"]
+	path = submodules/omz/custom/themes/powerlevel10k
+	url = https://github.com/romkatv/powerlevel10k.git

@@ -12,12 +12,12 @@ HYPHEN_INSENSITIVE="true"
 
 # oh-my-zsh theme
 ZSH_CUSTOM="$PROFILE_PATH/omz/custom"
-ZSH_THEME="crunch_custom" # ; alias git=hub
+# ZSH_THEME="crunch_custom"
+ZSH_THEME="powerlevel10k/powerlevel10k"
 # POWERLEVEL9K_LEFT_PROMPT_ELEMENTS=(date context history dir vcs)
 # POWERLEVEL9K_LOAD_WHICH=1
 # POWERLEVEL9K_DATE_FORMAT="%D{%d|%H:%M:%S}"
 # POWERLEVEL9K_RIGHT_PROMPT_ELEMENTS=()
-# ZSH_THEME="powerlevel9k/powerlevel9k"
 
 
 # skip_global_compinit=1
