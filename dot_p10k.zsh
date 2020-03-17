@@ -39,6 +39,7 @@
   # The list of segments shown on the left. Fill it with the most important segments.
   typeset -g POWERLEVEL9K_LEFT_PROMPT_ELEMENTS=(
     # =========================[ Line #1 ]=========================
+    context                 # user@hostname
     # os_icon               # os identifier
     dir                     # current directory
     vcs                     # git status
@@ -83,12 +84,12 @@
     haskell_stack           # haskell version from stack (https://haskellstack.org/)
     kubecontext             # current kubernetes context (https://kubernetes.io/)
     terraform               # terraform workspace (https://www.terraform.io)
-    aws                     # aws profile (https://docs.aws.amazon.com/cli/latest/userguide/cli-configure-profiles.html)
+    # aws                     # aws profile (https://docs.aws.amazon.com/cli/latest/userguide/cli-configure-profiles.html)
     aws_eb_env              # aws elastic beanstalk environment (https://aws.amazon.com/elasticbeanstalk/)
     azure                   # azure account name (https://docs.microsoft.com/en-us/cli/azure)
     gcloud                  # google cloud cli account and project (https://cloud.google.com/)
     google_app_cred         # google application credentials (https://cloud.google.com/docs/authentication/production)
-    context                 # user@hostname
+    # context                 # user@hostname
     nordvpn                 # nordvpn connection status, linux only (https://nordvpn.com/)
     ranger                  # ranger shell (https://github.com/ranger/ranger)
     nnn                     # nnn shell (https://github.com/jarun/nnn)
@@ -96,7 +97,9 @@
     midnight_commander      # midnight commander shell (https://midnight-commander.org/)
     nix_shell               # nix shell (https://nixos.org/nixos/nix-pills/developing-with-nix-shell.html)
     # vpn_ip                # virtual private network indicator
-    # load                  # CPU load
+    load                    # CPU load
+    hist                    # running count of commands executed in current shell
+    sts                     # check aws sts
     # disk_usage            # disk usage
     # ram                   # free RAM
     # swap                  # used swap
@@ -781,6 +784,7 @@
   typeset -g POWERLEVEL9K_LOAD_CRITICAL_FOREGROUND=166
   # Custom icon.
   # typeset -g POWERLEVEL9K_LOAD_VISUAL_IDENTIFIER_EXPANSION='⭐'
+  typeset -g POWERLEVEL9K_LOAD_VISUAL_IDENTIFIER_EXPANSION=
 
   ################[ todo: todo items (https://github.com/todotxt/todo.txt-cli) ]################
   # Todo color.
@@ -1434,9 +1438,9 @@
 
   ####################################[ time: current time ]####################################
   # Current time color.
-  typeset -g POWERLEVEL9K_TIME_FOREGROUND=66
+  typeset -g POWERLEVEL9K_TIME_FOREGROUND=08 # 66
   # Format for the current time: 09:51:02. See `man 3 strftime`.
-  typeset -g POWERLEVEL9K_TIME_FORMAT='%D{%H:%M:%S}'
+  typeset -g POWERLEVEL9K_TIME_FORMAT='%D{%d|%H:%M:%S}'
   # If set to true, time will update when you hit enter. This way prompts for the past
   # commands will contain the start times of their commands as opposed to the default
   # behavior where they contain the end times of their preceding commands.
@@ -1472,6 +1476,28 @@
     # instant_prompt_example. This will give us the same `example` prompt segment in the instant
     # and regular prompts.
     prompt_example
+  }
+
+  ### user fuctions ###
+  # aws sts assume-role timeout
+  function prompt_sts() {
+    if [[ ! $AWS_STS_EXPIRATION ]]; then
+      return
+    elif [[ -n $AWS_STS_EXPIRATION && $AWS_STS_TIMEOUT -ge $(date -u +%s) ]]; then
+      AWS_STS_MINUTES_REMAINING=$(( $(( AWS_STS_TIMEOUT - $(date -u +%s) )) / 60 ))
+      p10k segment -f white -t "$(echo ${AWS_ACCOUNT_NAME##*-})|$AWS_STS_MINUTES_REMAINING"
+      # work convenience ${AWS_ACCOUNT_NAME##*-} e.g. drops characters before hyphen e.g. test-name becomes name
+    elif [[ $AWS_STS_TIMEOUT -le $(date -u +%s) ]]; then
+      unset AWS_STS_EXPIRATION
+    fi
+  }
+  # typeset -g POWERLEVEL9K_STS_SHOW_ON_COMMAND='aws|awless|terraform|pulumi' # enabled dynamic
+
+  # command count
+  function prompt_hist() {
+    [[ $CMDCOUNT -ge 1 ]] || CMDCOUNT=1
+    preexec() { ((CMDCOUNT++)) }
+    p10k segment -f 033 -t $CMDCOUNT
   }
 
   # User-defined prompt segments can be customized the same way as built-in segments.
