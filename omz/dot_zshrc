@@ -67,4 +67,5 @@ source "$PROFILE_PATH/omz/zshrc.custom"
 # vim: ft=zsh:
 
 # To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
-[[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
+# [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
+[[ ! -f $PROFILE_PATH/dot_p10k.zsh ]] || source $PROFILE_PATH/dot_p10k.zsh
