@@ -66,25 +66,25 @@ if [ "$OS_TYPE" = Linux ]; then
     alias docker='sudo docker'
     alias docker-compose='sudo docker-compose'
     alias ls='ls --color=always'
-    GOLANG_BIN='/usr/bin/go'
+    # GOLANG_BIN='/usr/bin/go'
     PYENV_BIN="$HOME/.pyenv/bin/pyenv"
-    RBENV_BIN="$HOME/.rbenv/bin/rbenv"
+    # RBENV_BIN="$HOME/.rbenv/bin/rbenv"
     LS_COLORS+=':ow=01;33'
 # mac specific
 elif [ "$OS_TYPE" = Darwin ]; then
     alias ls='/usr/local/bin/gls --color=always'
     export HOMEBREW_NO_INSTALL_CLEANUP=true
-    GOLANG_BIN='/usr/local/bin/go'
+    # GOLANG_BIN='/usr/local/bin/go'
     PYENV_BIN='/usr/local/bin/pyenv'
-    RBENV_BIN='/usr/local/bin/rbenv'
+    # RBENV_BIN='/usr/local/bin/rbenv'
 fi
 
 # ruby environment
-if [ -e $RBENV_BIN ]; then
-    export RBENV_ROOT="$HOME/.rbenv"
-    export PATH="$RBENV_ROOT/bin:$PATH"
-    eval "$(rbenv init -)"
-fi
+# if [ -e $RBENV_BIN ]; then
+#     export RBENV_ROOT="$HOME/.rbenv"
+#     export PATH="$RBENV_ROOT/bin:$PATH"
+#     eval "$(rbenv init -)"
+# fi
 
 # python environment
 if [ -e $PYENV_BIN ]; then
@@ -96,12 +96,14 @@ if [ -e $PYENV_BIN ]; then
 fi
 
 # go environment
-if [ -e $GOLANG_BIN ]; then
-    export GOPATH="$HOME/go"
-    PATH="$GOPATH/bin:$PATH"
-fi
+# if [ -e $GOLANG_BIN ]; then
+#     export GOPATH="$HOME/go"
+#     PATH="$GOPATH/bin:$PATH"
+# fi
 
 # handles special characters from links/urls
+# DISABLE_MAGIC_FUNCTIONS=true
+# legacy fix
 autoload -Uz url-quote-magic
 zle -N self-insert url-quote-magic
 
@@ -266,10 +268,10 @@ alias vup='vagrant up && vagrant ssh'
 alias zz="vim $PROFILE_PATH/omz/zshrc.custom"
 
 # ansible
-export ANSIBLE_CALLBACK_WHITELIST="profile_tasks, timer"
+# export ANSIBLE_CALLBACK_WHITELIST="profile_tasks, timer"
 export ANSIBLE_LOAD_CALLBACK_PLUGINS=True
 # export ANSIBLE_STDOUT_CALLBACK=debug
-export ANSIBLE_STDOUT_CALLBACK=yaml # 2.5 or later
+# export ANSIBLE_STDOUT_CALLBACK=yaml # 2.5 or later
 export ANSIBLE_VERBOSITY=1
 alias ansible-playbook-debug='ANSIBLE_STDOUT_CALLBACK=dense ansible-playbook'
 alias ansible-playbook-dense='ANSIBLE_STDOUT_CALLBACK=dense ansible-playbook'
