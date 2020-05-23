@@ -1,1 +1,17 @@
+# https://github.com/koalaman/shellcheck/wiki/SC2154
+# var is referenced but not assigned.
 disable=SC2154
+
+# https://github.com/koalaman/shellcheck/wiki/SC1091
+# Not following: (error message here)
+disable=SC1091
+
+# https://github.com/koalaman/shellcheck/wiki/SC2059
+# Don't use variables in the printf format string. Use printf "..%s.." "$foo".
+disable=SC2059
+
+# https://github.com/koalaman/shellcheck/wiki/SC2129
+# Consider using { cmd1; cmd2; } >> file instead of individual redirects.
+disable=SC2129
+
+# vim: ft=conf
