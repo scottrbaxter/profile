@@ -268,14 +268,16 @@ alias vup='vagrant up && vagrant ssh'
 alias zz="vim $PROFILE_PATH/omz/zshrc.custom"
 
 # ansible
+export ANSIBLE_CONFIG="$PROFILE_PATH/ansible.cfg"
+alias ap='ansible-playbook'
 # export ANSIBLE_CALLBACK_WHITELIST="profile_tasks, timer"
-export ANSIBLE_LOAD_CALLBACK_PLUGINS=True
+# export ANSIBLE_LOAD_CALLBACK_PLUGINS=True
 # export ANSIBLE_STDOUT_CALLBACK=debug
 # export ANSIBLE_STDOUT_CALLBACK=yaml # 2.5 or later
-export ANSIBLE_VERBOSITY=1
-alias ansible-playbook-debug='ANSIBLE_STDOUT_CALLBACK=dense ansible-playbook'
-alias ansible-playbook-dense='ANSIBLE_STDOUT_CALLBACK=dense ansible-playbook'
-alias ansible-playbook-yaml='ANSIBLE_STDOUT_CALLBACK=yaml ansible-playbook'
+# export ANSIBLE_VERBOSITY=1
+# alias ansible-playbook-debug='ANSIBLE_STDOUT_CALLBACK=dense ansible-playbook'
+# alias ansible-playbook-dense='ANSIBLE_STDOUT_CALLBACK=dense ansible-playbook'
+# alias ansible-playbook-yaml='ANSIBLE_STDOUT_CALLBACK=yaml ansible-playbook'
 
 # git
 alias gb='git rev-parse --abbrev-ref HEAD'

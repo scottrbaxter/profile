@@ -4,6 +4,7 @@
 # **/tst*
 **/.keyfile*
 **/temp
+**/tmp
 **/.dev
 **/.ce-cli
 **/*.retry
