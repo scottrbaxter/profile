@@ -1,6 +1,15 @@
 #!/usr/bin/env zsh
 # vim: ft=sh: set this file to sh if using shellcheck linter
 
+### debug ###
+# zmodload zsh/zprof # https://carlosbecker.com/posts/speeding-up-zsh/
+typeset -F SECONDS # much smaller than seconds
+time_test(){
+    echo "[INFO] $SECONDS $1"
+}
+# time_test "started $(basename $0)"
+### end debug ###
+
 # oh-my-zsh args
 CASE_SENSITIVE="true"
 COMPLETION_WAITING_DOTS="true"
@@ -14,11 +23,6 @@ HYPHEN_INSENSITIVE="true"
 ZSH_CUSTOM="$PROFILE_PATH/omz/custom"
 ZSH_THEME="powerlevel10k/powerlevel10k"
 # ZSH_THEME="crunch_custom"
-# POWERLEVEL9K_LEFT_PROMPT_ELEMENTS=(date context history dir vcs)
-# POWERLEVEL9K_LOAD_WHICH=1
-# POWERLEVEL9K_DATE_FORMAT="%D{%d|%H:%M:%S}"
-# POWERLEVEL9K_RIGHT_PROMPT_ELEMENTS=()
-
 
 # skip_global_compinit=1
 export TERM="xterm-256color"
@@ -30,10 +34,12 @@ export TERM="xterm-256color"
 
 # add plugins=(osx) for the tab command, to command-click a vim file in new tab
 # also need to add 'tab' in iterm2 profile/advanced semantic history
-plugins=(aws docker go kubectl helm pip ripgrep zsh-autosuggestions)
+# removed aws plugin - REALLY slow, and pyenv aws_zsh_completer.sh fails autoload/bashcompinit
+plugins=(docker docker-compose ripgrep zsh-autosuggestions)
 
+# symlinks to ../Cellar, fixed this with 'compaudit | xargs chmod g-w,o-w'
 # fix https://github.com/robbyrussell/oh-my-zsh/issues/6835#issuecomment-390216875
-ZSH_DISABLE_COMPFIX=true
+# ZSH_DISABLE_COMPFIX=true
 
 
 # custom dir function path
@@ -91,8 +97,10 @@ if [ -e $PYENV_BIN ]; then
     export PYENV_ROOT="$HOME/.pyenv"
     export PATH="$PYENV_ROOT/bin:$PATH"
     eval "$(pyenv init -)"
-    # pyenv's built in which command to check for installed aws completer
-    pyenv which aws_zsh_completer.sh 1>/dev/null 2>&1 && source "$(pyenv which aws_zsh_completer.sh)"
+    if whence aws 1>/dev/null; then
+        autoload bashcompinit && bashcompinit
+        complete -C "$(command -v aws_completer)" aws
+    fi
 fi
 
 # go environment
@@ -102,6 +110,8 @@ if [ -e $GOLANG_BIN ]; then
 fi
 
 # handles special characters from links/urls
+# DISABLE_MAGIC_FUNCTIONS=true
+# legacy fix
 autoload -Uz url-quote-magic
 zle -N self-insert url-quote-magic
 
@@ -133,9 +143,6 @@ bindkey "^[w" kill-region
 bindkey "^[^[OA" up-line-or-beginning-search # fix for escape/up arrow annoyance
 bindkey "^R" history-incremental-search-backward
 
-# shellcheck linter
-export SHELLCHECK_OPTS="-e SC1091 -e SC2059 -e SC2129"
-
 # homebrew
 # export HOMEBREW_CASK_OPTS="--appdir=~/Applications"
 
@@ -149,11 +156,6 @@ export RIPGREP_CONFIG_PATH=$PROFILE_PATH/ripgreprc
 # hashicorp vault autocomplete
 autoload -U +X bashcompinit && bashcompinit
 complete -o nospace -C /usr/local/bin/vault vault
-
-# google cloud platform
-# source /usr/local/Caskroom/google-cloud-sdk/latest/google-cloud-sdk/completion.zsh.inc
-# source /usr/local/Caskroom/google-cloud-sdk/latest/google-cloud-sdk/path.zsh.inc
-# kubectl completion zsh > "${fpath[1]}/_kubectl"
 
 # Vagrant / VirtualBox
 # https://www.vagrantup.com/docs/other/environmental-variables.html
@@ -266,14 +268,16 @@ alias vup='vagrant up && vagrant ssh'
 alias zz="vim $PROFILE_PATH/omz/zshrc.custom"
 
 # ansible
-export ANSIBLE_CALLBACK_WHITELIST="profile_tasks, timer"
-export ANSIBLE_LOAD_CALLBACK_PLUGINS=True
+export ANSIBLE_CONFIG="$PROFILE_PATH/ansible.cfg"
+alias ap='ansible-playbook'
+# export ANSIBLE_CALLBACK_WHITELIST="profile_tasks, timer"
+# export ANSIBLE_LOAD_CALLBACK_PLUGINS=True
 # export ANSIBLE_STDOUT_CALLBACK=debug
-export ANSIBLE_STDOUT_CALLBACK=yaml # 2.5 or later
-export ANSIBLE_VERBOSITY=1
-alias ansible-playbook-debug='ANSIBLE_STDOUT_CALLBACK=dense ansible-playbook'
-alias ansible-playbook-dense='ANSIBLE_STDOUT_CALLBACK=dense ansible-playbook'
-alias ansible-playbook-yaml='ANSIBLE_STDOUT_CALLBACK=yaml ansible-playbook'
+# export ANSIBLE_STDOUT_CALLBACK=yaml # 2.5 or later
+# export ANSIBLE_VERBOSITY=1
+# alias ansible-playbook-debug='ANSIBLE_STDOUT_CALLBACK=dense ansible-playbook'
+# alias ansible-playbook-dense='ANSIBLE_STDOUT_CALLBACK=dense ansible-playbook'
+# alias ansible-playbook-yaml='ANSIBLE_STDOUT_CALLBACK=yaml ansible-playbook'
 
 # git
 alias gb='git rev-parse --abbrev-ref HEAD'
@@ -301,7 +305,7 @@ alias kgs='k get services --output=wide'
 alias kgsc='k get storageclasses --output=wide'
 alias kns='kubens'
 alias kx='kubectx'
-alias stern='stern --timestamps'
+# alias stern='stern --timestamps'
 
 # MacOS
 alias fixaudio='sudo launchctl stop com.apple.audio.coreaudiod'
@@ -329,3 +333,12 @@ for k in ~/.keyfile-*(N); do source $k; done
 
 # iterm2 shell integration
 test -e "${HOME}/.iterm2_shell_integration.zsh" && source "${HOME}/.iterm2_shell_integration.zsh"
+
+### debug ###
+# time_test "finshed $(basename $0)"
+
+# makes any child shell with TRACE_ZSH verbose/debug, and sends stderr to file specified
+[ "${TRACE_ZSH}" ] && set -x
+# spawn child shell in terminal: TRACE_ZSH=true zsh -l 2> ~/Desktop/zsh-debug-$(date "+%Y-%m-%d_%H:%M:%S").err.txt
+# zprof # https://carlosbecker.com/posts/speeding-up-zsh/
+### debug end ###
