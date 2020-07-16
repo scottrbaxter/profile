@@ -268,7 +268,7 @@ alias vup='vagrant up && vagrant ssh'
 alias zz="vim $PROFILE_PATH/omz/zshrc.custom"
 
 # ansible
-export ANSIBLE_CONFIG="$PROFILE_PATH/ansible.cfg"
+# export ANSIBLE_CONFIG="$PROFILE_PATH/ansible.cfg"
 alias ap='ansible-playbook'
 # export ANSIBLE_CALLBACK_WHITELIST="profile_tasks, timer"
 # export ANSIBLE_LOAD_CALLBACK_PLUGINS=True
