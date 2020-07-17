@@ -9,6 +9,10 @@ WHITE="\033[0m"
 currentbranch=$(git rev-parse --abbrev-ref HEAD)
 
 
+check_submodule_list(){
+    SUBMODULE_LIST=$(git submodule)
+}
+
 header(){
     echo -e "[${PURPLE}${1}${WHITE}]"
 }
@@ -22,10 +26,10 @@ masterpull(){
         header "Swithing to Master Branch"
         gitColor checkout master
     fi
-    # gitColor pull origin master:master
     header "Git Pull"
     gitColor pull --rebase --prune
-    if git submodule > /dev/null 2>&1; then
+    check_submodule_list
+    if [ "$SUBMODULE_LIST" ]; then
         header "Git Submodule Update"
         gitColor submodule sync --recursive && \
             gitColor submodule update --init --recursive --depth 1
