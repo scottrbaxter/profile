@@ -28,7 +28,7 @@ masterpull(){
     if git submodule > /dev/null 2>&1; then
         header "Git Submodule Update"
         gitColor submodule sync --recursive && \
-            gitColor submodule update --init --recursive
+            gitColor submodule update --init --recursive --depth 1
     fi
 }
 
