@@ -1,6 +1,9 @@
 " personal custom shortcuts
 nmap <silent> <space>j <Plug>(ale_next_wrap)
 nmap <silent> <space>J <Plug>(ale_previous_wrap)
+nmap <silent> <space><up> [c " GitGutterPrevHunk
+nmap <silent> <space><down> ]c " GitGutterNextHunk
+nmap <silent> <space><right> <leader>hp:wincmd P<CR>gg " GitGutterPreviewHunk
 nmap <space> \
 nmap <space>a \cA
 nmap <space>d :Gdiff<CR>
