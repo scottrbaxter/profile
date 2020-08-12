@@ -45,11 +45,11 @@
     load                    # CPU load
     command_execution_time  # duration of the last command
     background_jobs         # presence of background jobs
+    status                  # exit code of the last command
     sts                     # check aws sts
     context                 # user@hostname
     dir                     # current directory
     vcs                     # git status
-    status                  # exit code of the last command
     # =========================[ Line #2 ]=========================
     newline                 # \n
     prompt_char             # prompt symbol
