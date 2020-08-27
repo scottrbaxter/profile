@@ -68,7 +68,6 @@ OS_TYPE=$(uname -s)
 if [ "$OS_TYPE" = Linux ]; then
     alias apt='sudo apt'
     alias apts='apt search'
-    alias dc='sudo docker-compose'
     alias docker='sudo docker'
     alias docker-compose='sudo docker-compose'
     alias ls='ls --color=always'
@@ -228,7 +227,6 @@ alias acks='ack --noignore-dir=is:submodules/,tmp/,scott/' # will search submodu
 alias acksg='acks -g' # filenames only, will search submodules
 alias ackw='ack -w' # words mode, pattern can't be in another word
 alias bz='bunzip2'
-alias dc='docker-compose'
 alias clr='clear'
 alias cp='cp -a'
 alias df='df -h'
@@ -281,7 +279,7 @@ alias ap='ansible-playbook'
 
 # git
 alias gb='git rev-parse --abbrev-ref HEAD'
-alias gbl='git branch --list --sort=creatordate'
+alias gbl='git branch --list --sort=creatordate -vv'
 alias gblame=gitBlameSort
 alias gl='git --no-pager log --oneline -25'
 alias glo='git log --oneline --decorate'
