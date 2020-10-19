@@ -35,7 +35,7 @@ export TERM="xterm-256color"
 # add plugins=(osx) for the tab command, to command-click a vim file in new tab
 # also need to add 'tab' in iterm2 profile/advanced semantic history
 # removed aws plugin - REALLY slow, and pyenv aws_zsh_completer.sh fails autoload/bashcompinit
-plugins=(docker docker-compose ripgrep zsh-autosuggestions)
+plugins=(aws docker docker-compose ripgrep zsh-autosuggestions)
 
 # symlinks to ../Cellar, fixed this with 'compaudit | xargs chmod g-w,o-w'
 # fix https://github.com/robbyrussell/oh-my-zsh/issues/6835#issuecomment-390216875
@@ -75,6 +75,7 @@ if [ "$OS_TYPE" = Linux ]; then
     PYENV_BIN="$HOME/.pyenv/bin/pyenv"
     RBENV_BIN="$HOME/.rbenv/bin/rbenv"
     LS_COLORS+=':ow=01;33'
+
 # mac specific
 elif [ "$OS_TYPE" = Darwin ]; then
     alias ls='/usr/local/bin/gls --color=always'
@@ -211,7 +212,6 @@ update_janus(){
     cd -
 }
 
-
 # aliases
 alias D='cd ~/development'
 alias N='cd ~/notes'
@@ -294,9 +294,9 @@ alias kcg='k config get-contexts'
 alias kcu='k config use-context'
 alias kd='k describe'
 alias kg='k get'
-alias kga='k get all -A'
+alias kga='k get all'
 alias kgd='k get deployments --output=wide'
-alias kgn='k get namespaces --output=wide'
+alias kgn='k get nodes'
 alias kgp='k get pods --output=wide'
 alias kge='k get events'
 alias kgs='k get services --output=wide'
