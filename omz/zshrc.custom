@@ -35,7 +35,7 @@ export TERM="xterm-256color"
 # add plugins=(osx) for the tab command, to command-click a vim file in new tab
 # also need to add 'tab' in iterm2 profile/advanced semantic history
 # removed aws plugin - REALLY slow, and pyenv aws_zsh_completer.sh fails autoload/bashcompinit
-plugins=(docker docker-compose ripgrep zsh-autosuggestions)
+plugins=(aws docker docker-compose ripgrep zsh-autosuggestions)
 
 # symlinks to ../Cellar, fixed this with 'compaudit | xargs chmod g-w,o-w'
 # fix https://github.com/robbyrussell/oh-my-zsh/issues/6835#issuecomment-390216875
@@ -68,7 +68,6 @@ OS_TYPE=$(uname -s)
 if [ "$OS_TYPE" = Linux ]; then
     alias apt='sudo apt'
     alias apts='apt search'
-    alias dc='sudo docker-compose'
     alias docker='sudo docker'
     alias docker-compose='sudo docker-compose'
     alias ls='ls --color=always'
@@ -76,6 +75,7 @@ if [ "$OS_TYPE" = Linux ]; then
     PYENV_BIN="$HOME/.pyenv/bin/pyenv"
     RBENV_BIN="$HOME/.rbenv/bin/rbenv"
     LS_COLORS+=':ow=01;33'
+
 # mac specific
 elif [ "$OS_TYPE" = Darwin ]; then
     alias ls='/usr/local/bin/gls --color=always'
@@ -212,7 +212,6 @@ update_janus(){
     cd -
 }
 
-
 # aliases
 alias D='cd ~/development'
 alias N='cd ~/notes'
@@ -228,7 +227,6 @@ alias acks='ack --noignore-dir=is:submodules/,tmp/,scott/' # will search submodu
 alias acksg='acks -g' # filenames only, will search submodules
 alias ackw='ack -w' # words mode, pattern can't be in another word
 alias bz='bunzip2'
-alias dc='docker-compose'
 alias clr='clear'
 alias cp='cp -a'
 alias df='df -h'
@@ -270,6 +268,7 @@ alias zz="vim $PROFILE_PATH/omz/zshrc.custom"
 # ansible
 # export ANSIBLE_CONFIG="$PROFILE_PATH/ansible.cfg"
 alias ap='ansible-playbook'
+alias galaxy='ansible-galaxy'
 # export ANSIBLE_CALLBACK_WHITELIST="profile_tasks, timer"
 # export ANSIBLE_LOAD_CALLBACK_PLUGINS=True
 # export ANSIBLE_STDOUT_CALLBACK=debug
@@ -281,7 +280,7 @@ alias ap='ansible-playbook'
 
 # git
 alias gb='git rev-parse --abbrev-ref HEAD'
-alias gbl='git branch --list --sort=creatordate'
+alias gbl='git branch --list --sort=creatordate -vv'
 alias gblame=gitBlameSort
 alias gl='git --no-pager log --oneline -25'
 alias glo='git log --oneline --decorate'
@@ -295,10 +294,11 @@ alias kcc='k config current-context'
 alias kcg='k config get-contexts'
 alias kcu='k config use-context'
 alias kd='k describe'
+alias kdp='k describe pod'
 alias kg='k get'
-alias kga='k get all -A'
+alias kga='k get all'
 alias kgd='k get deployments --output=wide'
-alias kgn='k get namespaces --output=wide'
+alias kgn='k get nodes'
 alias kgp='k get pods --output=wide'
 alias kge='k get events'
 alias kgs='k get services --output=wide'
