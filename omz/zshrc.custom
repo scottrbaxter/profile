@@ -65,12 +65,15 @@ source $ZSH/oh-my-zsh.sh
 
 # determine Mac or Linux OS
 OS_TYPE=$(uname -s)
+CURRENT_USER=$(id -un)
 # linux specific
 if [ "$OS_TYPE" = Linux ]; then
-    alias apt='sudo apt'
+    if [ $CURRENT_USER != "root" ]; then
+        alias apt='sudo apt'
+        alias docker='sudo docker'
+        alias docker-compose='sudo docker-compose'
+    fi
     alias apts='apt search'
-    alias docker='sudo docker'
-    alias docker-compose='sudo docker-compose'
     alias ls='ls --color=always'
     GOLANG_BIN='/usr/bin/go'
     PYENV_BIN="$HOME/.pyenv/bin/pyenv"
@@ -79,8 +82,16 @@ if [ "$OS_TYPE" = Linux ]; then
 
 # mac specific
 elif [ "$OS_TYPE" = Darwin ]; then
+    alias fixaudio='sudo launchctl stop com.apple.audio.coreaudiod'
+    alias fixAppStoreApps='killall -KILL storeaccountd'
+    alias iCloudStatus='brctl log --wait --shorten'
+    alias iftop='sudo /usr/local/sbin/iftop -P'
+    alias ips='curl http://ipinfo.io/ip; ifconfig| grep -w inet'
     alias ls='/usr/local/bin/gls --color=always'
-    export HOMEBREW_NO_INSTALL_CLEANUP=true
+    alias preview='open /Applications/Preview.app '
+    alias zupdate='upgrade_oh_my_zsh'
+    HOMEBREW_NO_INSTALL_CLEANUP=true
+    # language specific
     GOLANG_BIN='/usr/local/bin/go'
     PYENV_BIN='/usr/local/bin/pyenv'
     RBENV_BIN='/usr/local/bin/rbenv'
@@ -307,15 +318,6 @@ alias kgsc='k get storageclasses --output=wide'
 alias kns='kubens'
 alias kx='kubectx'
 # alias stern='stern --timestamps'
-
-# MacOS
-alias fixaudio='sudo launchctl stop com.apple.audio.coreaudiod'
-alias iCloudStatus='brctl log --wait --shorten'
-alias fixAppStoreApps='killall -KILL storeaccountd'
-alias iftop='sudo /usr/local/sbin/iftop -P'
-alias ips='curl http://ipinfo.io/ip; ifconfig| grep -w inet'
-alias preview='open /Applications/Preview.app '
-alias zupdate='upgrade_oh_my_zsh'
 
 # terraform
 export AWS_DEFAULT_REGION='us-east-1'
