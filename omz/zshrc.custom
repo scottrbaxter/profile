@@ -48,6 +48,7 @@ fpath=($fpath /usr/local/share/zsh-completions)
 # custom PATH stuff
 export PATH_PREVIOUS="$PATH" # needed for reloadZsh
 
+[ -d /opt/homebrew/bin ] && export PATH="/opt/homebrew/bin:$PATH"
 [ -d $HOME/.local ] && export PATH="$PATH:$HOME/.local/bin" # needs to append for pyenv, because pip install --user
 [ -d /usr/local/sbin ] && export PATH="$PATH:/usr/local/sbin"
 [ -d /usr/libexec ] && export PATH="$PATH:/usr/libexec"
