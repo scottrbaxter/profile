@@ -25,7 +25,7 @@ header(){
 brewCleanup(){
     if [ "$1" == noprompt ]; then
         header "Cleaning: homebrew formulas > $DAYS days old"
-        brew cask outdated
+        brew outdated --cask
         brew cleanup --prune="$DAYS"
         exit 0
     fi
@@ -47,11 +47,11 @@ brewUpgrade(){
 }
 
 caskUpgrade(){
-    header "Brew cask upgrade"; brew cu -a --cleanup --yes; echo
+    header "Brew upgrade --cask"; brew cu -a --cleanup --yes; echo
 }
 
 caskForceUpgrade(){
-    header "Brew cask force upgrade"; brew cu -af --cleanup --yes; echo
+    header "Brew force upgrade --cask"; brew cu -af --cleanup --yes; echo
 }
 
 main(){
