@@ -35,7 +35,7 @@ export TERM="xterm-256color"
 # add plugins=(osx) for the tab command, to command-click a vim file in new tab
 # also need to add 'tab' in iterm2 profile/advanced semantic history
 # removed aws plugin - REALLY slow, and pyenv aws_zsh_completer.sh fails autoload/bashcompinit
-plugins=(aws docker docker-compose ripgrep zsh-autosuggestions)
+plugins=(aws ripgrep zsh-autosuggestions)
 
 # symlinks to ../Cellar, fixed this with 'compaudit | xargs chmod g-w,o-w'
 # fix https://github.com/robbyrussell/oh-my-zsh/issues/6835#issuecomment-390216875
@@ -87,7 +87,7 @@ elif [ "$OS_TYPE" = Darwin ]; then
     alias iCloudStatus='brctl log --wait --shorten'
     alias iftop='sudo /usr/local/sbin/iftop -P'
     alias ips='curl http://ipinfo.io/ip; ifconfig| grep -w inet'
-    alias ls='/usr/local/bin/gls --color=always'
+    alias ls='gls --color=always'
     alias preview='open /Applications/Preview.app '
     alias zupdate='upgrade_oh_my_zsh'
     HOMEBREW_NO_INSTALL_CLEANUP=true
@@ -249,6 +249,7 @@ alias h='helm'
 alias hist='peruseHistory'
 alias hl='peruseHistory -l'
 alias hh='sudo vim /etc/hosts'
+alias htop='sudo htop'
 alias l.='ls -dh .*'
 alias ll.='ls -ldh .*'
 alias llt='ll -tr'
@@ -266,7 +267,6 @@ alias rgtw='rgw --word-regexp --glob' # specify <fileype> then explicit <match>
 alias rr='rsync -avhP'
 alias rrd='rsync -avhP --delete'
 alias scr='screen -dR'
-alias top='htop'
 alias vi='vim'
 alias vvv='vim ~/.vimrc'
 alias vva='vim ~/.vimrc.after'
