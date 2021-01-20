@@ -122,7 +122,8 @@ if [ -e $GOLANG_BIN ]; then
 fi
 
 # handles special characters from links/urls
-# DISABLE_MAGIC_FUNCTIONS=true
+DISABLE_MAGIC_FUNCTIONS=true
+ZSH_AUTOSUGGEST_MANUAL_REBIND=1
 # legacy fix
 autoload -Uz url-quote-magic
 zle -N self-insert url-quote-magic
