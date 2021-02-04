@@ -49,6 +49,7 @@ fpath=($fpath /usr/local/share/zsh-completions)
 export PATH_PREVIOUS="$PATH" # needed for reloadZsh
 
 [ -d /opt/homebrew/bin ] && export PATH="/opt/homebrew/bin:$PATH"
+[ -d /opt/homebrew/sbin ] && export PATH="/opt/homebrew/sbin:$PATH"
 [ -d $HOME/.local ] && export PATH="$PATH:$HOME/.local/bin" # needs to append for pyenv, because pip install --user
 [ -d /usr/local/sbin ] && export PATH="$PATH:/usr/local/sbin"
 [ -d /usr/libexec ] && export PATH="$PATH:/usr/libexec"
@@ -64,10 +65,10 @@ source $ZSH/oh-my-zsh.sh
 # additioanl profile settings
 
 # determine Mac or Linux OS
-OS_TYPE=$(uname -s)
-CURRENT_USER=$(id -un)
+UNAME_SYSTEM=$(uname -s)
 # linux specific
-if [ "$OS_TYPE" = Linux ]; then
+if [ "$UNAME_SYSTEM" = Linux ]; then
+    CURRENT_USER=$(id -un)
     if [ $CURRENT_USER != "root" ]; then
         alias apt='sudo apt'
         alias docker='sudo docker'
@@ -81,20 +82,21 @@ if [ "$OS_TYPE" = Linux ]; then
     LS_COLORS+=':ow=01;33'
 
 # mac specific
-elif [ "$OS_TYPE" = Darwin ]; then
+elif [ "$UNAME_SYSTEM" = Darwin ]; then
+    HOMEBREW_BIN="$(brew --prefix)/bin"
     alias fixaudio='sudo launchctl stop com.apple.audio.coreaudiod'
     alias fixAppStoreApps='killall -KILL storeaccountd'
     alias iCloudStatus='brctl log --wait --shorten'
-    alias iftop='sudo /usr/local/sbin/iftop -P'
+    alias iftop='sudo iftop -P'
     alias ips='curl http://ipinfo.io/ip; ifconfig| grep -w inet'
     alias ls='gls --color=always'
     alias preview='open /Applications/Preview.app '
     alias zupdate='upgrade_oh_my_zsh'
     HOMEBREW_NO_INSTALL_CLEANUP=true
     # language specific
-    GOLANG_BIN='/usr/local/bin/go'
-    PYENV_BIN='/usr/local/bin/pyenv'
-    RBENV_BIN='/usr/local/bin/rbenv'
+    GOLANG_BIN="$HOMEBREW_BIN/go"
+    PYENV_BIN="$HOMEBREW_BIN/pyenv"
+    RBENV_BIN="$HOMEBREW_BIN/rbenv"
 fi
 
 # ruby environment
@@ -258,6 +260,7 @@ alias man=betterman
 alias pep8="pep8 -v"
 alias bep8="bashate"
 alias publicip='dig +short myip.opendns.com @resolver1.opendns.com'
+alias p=python
 alias rar='unrar'
 alias rgl='rg --files-with-matches' # print filenames with contents that match
 alias rgg='rg --files | rg' # match part of filename
