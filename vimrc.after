@@ -232,7 +232,7 @@ let g:indentLine_conceallevel = 0 " default "2" hides markdown(.md) hyperlinks
 " only needed if global tabstop is defined differently above
 au FileType dockerfile setlocal tabstop=2 shiftwidth=2 softtabstop=2
 au FileType gitconfig setlocal tabstop=4 shiftwidth=4 softtabstop=4 expandtab " conform to bashate (pep8) standards
-au FileType python setlocal tabstop=4 shiftwidth=4
+au FileType python setlocal tabstop=4 shiftwidth=4 foldmethod=indent foldnestmax=10 foldlevel=2
 au FileType ruby setlocal tabstop=2 shiftwidth=2 expandtab
 au FileType sh setlocal tabstop=4 shiftwidth=4 softtabstop=4 expandtab " conform to bashate (pep8) standards
 au FileType yaml setlocal tabstop=2 shiftwidth=2 softtabstop=2
@@ -358,10 +358,7 @@ endfunction
 set iskeyword+=-
 
 " vim folding
-set foldmethod=indent
-set foldnestmax=10
-" set nofoldenable
-set foldlevel=2
+set nofoldenable
 
 function! FoldAllToggle()
     if &foldlevel
