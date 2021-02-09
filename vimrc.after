@@ -41,6 +41,8 @@ vnoremap A <C-v>$A
 vnoremap I <C-v>$I
 " nmap v<down> vi}
 nmap <silent> <space>c :call MessageToClipboard()<CR>
+nmap f zA| " toggle open/close folding
+nmap F :call FoldAllToggle()<cr>| " equiv to toggle for zM/zR
 
 " set nonumber
 " set nolist " list disables linebreak
@@ -354,3 +356,17 @@ endfunction
 
 " search hyphenated words
 set iskeyword+=-
+
+" vim folding
+set foldmethod=indent
+set foldnestmax=10
+" set nofoldenable
+set foldlevel=2
+
+function! FoldAllToggle()
+    if &foldlevel
+        setlocal foldlevel=0
+    else
+        setlocal foldlevel=2
+    endif
+endfunction
