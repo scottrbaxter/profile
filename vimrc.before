@@ -2,7 +2,7 @@
 call janus#disable_plugin('nerdtree')
 call janus#disable_plugin('syntastic') " testing w0rp/ale linter
 " call janus#disable_plugin('supertab') " tab after an IP error: Keyword completion (^N^P) Pattern not found
-let g:SuperTabDefaultCompletionType = "<c-n>" " makes supertab list tab from top to bottom
+" let g:SuperTabDefaultCompletionType = "<c-n>" " makes supertab list tab from top to bottom
 
 " NERDCommenter stuf
 let g:NERDSpaceDelims = 1 " adds # of spaces default for all filetypes
