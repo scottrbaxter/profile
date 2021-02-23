@@ -50,3 +50,5 @@
     helper = osxkeychain
 [diff "sopsdiffer"]
     textconv = sops -d
+[init]
+	defaultBranch = master
