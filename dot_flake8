@@ -2,10 +2,9 @@
 ignore=E261
 max-line-length=120
 
-# https://pycodestyle.pycqa.org/en/latest/intro.html#error-codes
-
 # E261: At least two spaces before inline comment
 # E265: block comment should start with '# '
+# E266: too many leading '#' for block comment
 # W292: no newline at end of file
 # E501: line too long
 # E111: indentation is not a multiple of four
@@ -13,3 +12,5 @@ max-line-length=120
 # E302: expected 2 blank lines, found 1
 # W291: trailing whitespace
 # W391: blank line at end of file
+
+# vim: ft=conf:
