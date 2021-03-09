@@ -15,6 +15,7 @@
 --glob=!.dev/*
 --glob=!.git/*
 --glob=!*.tfstate*
+--glob=!submodules/*
 
 # include hcl files with terraform type
 --type-add=tf:*.{tf,tfvars,hcl}
@@ -39,4 +40,4 @@
 # --colors=column:fg:magenta
 # --colors=column:style:bold
 
-# vim: ft=sh
+# vim: ft=conf
