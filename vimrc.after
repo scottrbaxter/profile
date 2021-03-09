@@ -28,7 +28,7 @@ vmap <space>- :s/\%V-/_/<CR>
 nmap <space>_ :s/_/-/<CR>
 vmap <space>_ :s/\%V_/-/<CR>
 nmap ` v~
-nmap t :TagbarOpen fj<CR>
+nmap t :TagbarOpenAutoClose<CR>
 nnoremap q :q<CR>
 vmap <space>r \c<space>
 vmap <space>= :s/[ ]\{2,}=/ =/g<CR><C-O>

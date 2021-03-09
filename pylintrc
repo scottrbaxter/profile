@@ -1,4 +1,15 @@
 [MASTER]
 
-disable=invalid-name,missing-docstring
-disable-msg=C0103
+disable=invalid-name,missing-docstring,no-else-return
+# disable=invalid-name
+# disable=missing-docstring
+# disable=no-else-return
+disable=bad-indentation
+# disable-msg=C0103
+
+[FORMAT]
+max-line-length=120
+
+# C0103: invalid constant name
+
+# vim: set ft=conf:
