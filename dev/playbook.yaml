@@ -23,5 +23,5 @@
     - include_tasks: ./profile.yaml
   vars:
     github_commit: HEAD
-    python_version: 2.7.16
+    python_version: 3.9.2
 ...
