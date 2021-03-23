@@ -77,9 +77,16 @@
 
 - name: python | git clone pyenv
   git:
-    repo: 'https://github.com/pyenv/pyenv.git'
+    repo: "{{ item.value.repo }}"
     dest: '$HOME/.pyenv'
-    version: "{{ github_commit }}"
+    version: "{{ item.value.version }}"
+  with_dict:
+    pyenv:
+      repo: 'https://github.com/pyenv/pyenv.git'
+      version: latest
+    pyenv-virtualenv:
+      repo: 'https://github.com/pyenv/pyenv-virtualenv.git'
+      version: latest
 
 - name: python | install
   shell: |
