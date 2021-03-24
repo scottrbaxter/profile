@@ -77,9 +77,18 @@
 
 - name: python | git clone pyenv
   git:
-    repo: 'https://github.com/pyenv/pyenv.git'
-    dest: '$HOME/.pyenv'
-    version: "{{ github_commit }}"
+    dest: "{{ item.value.dest }}"
+    repo: "{{ item.value.repo }}"
+    version: "{{ item.value.version }}"
+  with_dict:
+    pyenv:
+      repo: 'https://github.com/pyenv/pyenv.git'
+      version: HEAD
+      dest: '$HOME/.pyenv'
+    pyenv-virtualenv:
+      repo: 'https://github.com/pyenv/pyenv-virtualenv.git'
+      version: HEAD
+      dest: '$HOME/.pyenv/plugins/pyenv-virtualenv'
 
 - name: python | install
   shell: |
@@ -91,4 +100,12 @@
     pip install --upgrade pip
   args:
     creates: "$HOME/.pyenv/versions/{{ python_version }}/bin/python"
+
+- name: node | install
+  shell: >
+    curl -o- https://raw.githubusercontent.com/creationix/nvm/v0.33.11/install.sh | bash
+  args:
+    executable: /bin/bash
+    chdir: "{{ ansible_env.HOME }}"
+    creates: "{{ ansible_env.HOME }}/.nvm/nvm.sh"
 ...
