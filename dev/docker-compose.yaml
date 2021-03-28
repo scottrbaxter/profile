@@ -1,0 +1,7 @@
+version: '3'
+services:
+  test:
+    hostname: test
+    image: alpine:latest
+    container_name: test
+    entrypoint: sleep 60
