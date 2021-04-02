@@ -90,7 +90,7 @@ Plugin 'godlygeek/tabular'
 Plugin 'ivanov/vim-ipython'
 Plugin 'jeetsukumaran/vim-indentwise'
 " Plugin 'juliosueiras/terraform-lsp'
-Plugin 'keith/swift'
+" Plugin 'keith/swift'
 Plugin 'liuchengxu/space-vim-dark'
 Plugin 'ntpeters/vim-better-whitespace'
 Plugin 'nvie/vim-flake8'
@@ -100,6 +100,7 @@ Plugin 'vim-airline/vim-airline'
 Plugin 'vim-airline/vim-airline-themes'
 Plugin 'willthames/ansible-lint'
 Plugin 'Yggdroot/indentLine'
+Plugin 'ycm-core/YouCompleteMe'
 
 " All of your Plugins must be added before the following line
 call vundle#end()            " required
