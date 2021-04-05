@@ -4,7 +4,7 @@ disable=invalid-name,missing-docstring,no-else-return
 # disable=invalid-name
 # disable=missing-docstring
 # disable=no-else-return
-disable=bad-indentation
+# disable=bad-indentation
 # disable-msg=C0103
 
 [FORMAT]

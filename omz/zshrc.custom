@@ -221,14 +221,6 @@ reloadZsh(){
     source "$PROFILE_PATH/omz/zshrc.custom"
 }
 
-update_janus(){
-    JANUS=$HOME/.vim
-    echo "updating vim-janus in $JANUS"
-    cd $JANUS
-    rake
-    cd -
-}
-
 # aliases
 alias D='cd ~/development'
 alias N='cd ~/notes'
@@ -274,9 +266,7 @@ alias rr='rsync -avhP'
 alias rrd='rsync -avhP --delete'
 alias scr='screen -dR'
 alias vi='vim'
-alias vvv='vim ~/.vimrc'
-alias vva='vim ~/.vimrc.after'
-alias vvb='vim ~/.vimrc.before'
+alias vv='vim ~/.vimrc'
 alias zedit='vim $ZSH_CUSTOM/themes/crunch_custom.zsh-theme'
 alias vg='vagrant global-status'
 alias vs='vagrant status'
