@@ -773,8 +773,10 @@ endif
 
 " YCM
 " let g:ycm_auto_hover = 'CursorHold'
-" let g:ycm_auto_hover = ''
-" nmap <leader>D <plug>(YCMHover)
+let g:ycm_auto_hover = ''
+" let g:ycm_key_detailed_diagnostics = '<leader>d'
+let g:ycm_key_detailed_diagnostics = ''
+nmap <space>d <plug>(YCMHover)
 " let g:ycm_key_list_select_completion = ['<TAB>', '<Down>', '<Enter>']
 " let g:ycm_key_invoke_completion = ['<C-space>', '<Enter>']
 " let g:ycm_key_list_stop_completion = ['<C-y>', '<space>']
