@@ -44,7 +44,7 @@ Plugin 'ctrlpvim/ctrlp.vim'
 " Plugin 'depuracao/vim-rdoc'
 " Plugin 'ervandew/supertab'
 " Plugin 'garbas/vim-snipmate'
-" Plugin 'honza/vim-snippets'
+Plugin 'honza/vim-snippets'
 Plugin 'jeetsukumaran/vim-buffergator'
 " Plugin 'larssmit/vim-getafe'
 Plugin 'majutsushi/tagbar'
@@ -101,8 +101,8 @@ Plugin 'vim-airline/vim-airline-themes'
 Plugin 'willthames/ansible-lint'
 Plugin 'Yggdroot/indentLine'
 Plugin 'ycm-core/YouCompleteMe'
+Plugin 'Raimondi/delimitMate'
 Plugin 'SirVer/ultisnips'
-Plugin 'honza/vim-snippets'
 
 " All of your Plugins must be added before the following line
 call vundle#end()            " required
