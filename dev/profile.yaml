@@ -6,9 +6,11 @@
     name:
       - ack
       - build-essential
+      - cmake
       - curl
       - dkms
       - fail2ban
+      - golang
       - htop
       - libbz2-dev
       - libncurses5-dev
@@ -19,9 +21,12 @@
       - linux-headers-{{ ansible_kernel }}
       - llvm
       - make
+      - mono-complete
       - python-pexpect
+      - python3-dev
       - rake
       - tk-dev
+      - vim-nox
       - wget
       - xz-utils
       - zlib1g-dev
@@ -34,18 +39,19 @@
   with_items:
     - 'development'
     - '.config/yamllint'
+    - '.vim/_temp'
 
 - name: user | clone profile
   git:
     repo: 'https://github.com/scottrbaxter/profile.git'
     dest: '$HOME/development/profile'
-    version: "{{ github_commit }}"
+    version: "{{ profile_version }}"
 
 - name: omz | install oh-my-zsh
   git:
     repo: 'https://github.com/robbyrussell/oh-my-zsh.git'
     dest: '$HOME/.oh-my-zsh'
-    version: "{{ github_commit }}"
+    version: "{{ git_version }}"
 
 - name: omz | change shell
   become: true
@@ -53,11 +59,11 @@
     name: vagrant
     shell: /bin/zsh
 
-- name: vim | install janus
-  shell:
-    curl -L https://bit.ly/janus-bootstrap | bash
-  args:
-    creates: '$HOME/.vim/janus'
+- name: vim | vundle
+  git:
+    repo: 'https://github.com/VundleVim/Vundle.vim.git'
+    dest: '$HOME/.vim/bundle/Vundle.vim'
+    version: '{{ git_version }}'
 
 - name: user | profile symlinks
   file:
@@ -66,14 +72,18 @@
     state: link
     force: true
   with_items:
-    - {src: 'dot_janus', dest: '.janus'}
     - {src: 'dot_gitconfig', dest: '.gitconfig'}
     - {src: 'dot_gitignore_global', dest: '.gitignore_global'}
+    - {src: 'dot_vimrc', dest: '.vimrc'}
+    - {src: 'hadolint.yaml', dest: '~/.config/hadolint.yaml'}
     - {src: 'omz/dot_zshrc', dest: '.zshrc'}
-    - {src: 'pylintrc', dest: '.config/pylintrc'}
-    - {src: 'vimrc.after', dest: '.vimrc.after'}
-    - {src: 'vimrc.before', dest: '.vimrc.before'}
     - {src: 'yamllint_config', dest: '.config/yamllint/config'}
+
+- name: vim | Vundle Install
+  shell: vim -E -s -c "source $HOME/.vimrc" -c PluginInstall -c qa
+  register: vundle_install
+  failed_when: vundle_install.rc >= 2
+  changed_when: False
 
 - name: python | git clone pyenv
   git:
@@ -83,11 +93,11 @@
   with_dict:
     pyenv:
       repo: 'https://github.com/pyenv/pyenv.git'
-      version: HEAD
+      version: "{{ git_version }}"
       dest: '$HOME/.pyenv'
     pyenv-virtualenv:
       repo: 'https://github.com/pyenv/pyenv-virtualenv.git'
-      version: HEAD
+      version: "{{ git_version }}"
       dest: '$HOME/.pyenv/plugins/pyenv-virtualenv'
 
 - name: python | install
@@ -95,15 +105,22 @@
     export PYENV_ROOT="$HOME/.pyenv"
     export PATH="$PYENV_ROOT/bin:$PATH"
     eval "$(pyenv init -)"
-    pyenv install "{{ python_version }}"
+    env PYTHON_CONFIGURE_OPTS="--enable-shared" pyenv install "{{ python_version }}"
     pyenv global "{{ python_version }}"
     pip install --upgrade pip
   args:
     creates: "$HOME/.pyenv/versions/{{ python_version }}/bin/python"
 
+- name: python | pip packages
+  shell: |
+    export PYENV_ROOT="$HOME/.pyenv"
+    export PATH="$PYENV_ROOT/bin:$PATH"
+    eval "$(pyenv init -)"
+    pip install ansible ansible-lint autopep8 ipython isort flake8 yamllint yapf
+
 - name: npm | install
   shell: >
-    curl -o- https://raw.githubusercontent.com/creationix/nvm/v0.33.11/install.sh | bash
+    curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.37.2/install.sh | bash
   args:
     executable: /bin/bash
     chdir: "{{ ansible_env.HOME }}"
@@ -118,4 +135,19 @@
     creates: "{{ ansible_env.HOME }}/.nvm/versions/{{ item }}"
   loop:
     - node
-...
+
+- name: ycm | install
+  shell: |
+    export PYENV_ROOT="$HOME/.pyenv"
+    export PATH="$PYENV_ROOT/bin:$PATH"
+    eval "$(pyenv init -)"
+    python3 install.py \
+      --clangd-completer \
+      --clang-completer \
+      --ts-completer \
+      --go-completer
+  args:
+    chdir: ~/.vim/bundle/YouCompleteMe
+    creates: $HOME/.vim/bundle/YouCompleteMe/third_party/ycmd/ycm_core.so
+  register: ycm_install
+  failed_when: ycm_install.rc >= 2

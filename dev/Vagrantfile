@@ -1,4 +1,4 @@
-BOX = 'bento/ubuntu-18.04'.freeze
+BOX = 'bento/ubuntu-20.04'.freeze
 CUSTOM_HOST_PORT = 3333
 FOLDER = '/Vagrant'.freeze
 HOSTNAME = 'profile'.freeze

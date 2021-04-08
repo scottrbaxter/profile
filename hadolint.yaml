@@ -1,0 +1,4 @@
+ignored:
+  - DL3008 # Pin versions in apt-get install.
+  - DL3013 # Pin versions in pip.
+  - DL3001 # For some bash commands it makes no sense running them in a Docker container like ssh, vim, shutdown, service, ps, free, top, kill, mount, ifconfig.
