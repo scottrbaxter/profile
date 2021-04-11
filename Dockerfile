@@ -9,7 +9,6 @@ RUN apt-get update \
     curl \
     dkms \
     git \
-    golang \
     htop \
     libbz2-dev \
     libffi-dev \
@@ -36,6 +35,13 @@ RUN apt-get update \
     zlib1g-dev \
     zsh \
   && LC_ALL="en_US.UTF-8" locale-gen en_US.UTF-8
+
+### Install AWS CLI version 2
+WORKDIR /tmp
+RUN wget https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip \
+  && unzip awscli-exe-linux-x86_64.zip \
+  && ./aws/install \
+  && rm -rf aws awscli-exe-linux-x86_64.zip
 
 ### iterm shell integration
 RUN wget -P /tmp https://iterm2.com/misc/install_shell_integration.sh \
@@ -72,12 +78,9 @@ RUN ln -s "$PROFILE_PATH/omz/_zshrc" ~/.zshrc \
   && ln -s "$PROFILE_PATH/_flake8" ~/.config/flake8 \
   && ln -s "$PROFILE_PATH/_gitconfig" ~/.gitconfig \
   && ln -s "$PROFILE_PATH/_gitignore_global" ~/.gitignore_global \
-  && ln -s "$PROFILE_PATH/_janus/space-vim-dark" ~/.vim/bundle/space-vim-dark \
   && ln -s "$PROFILE_PATH/_shellcheckrc" ~/.shellcheckrc \
   && ln -s "$PROFILE_PATH/_vimrc" ~/.vimrc \
   && ln -s "$PROFILE_PATH/yamllint_config" ~/.config/yamllint/config
-
-### ~/.ssh/config
 
 ### Install pyenv/pip packages
 RUN git clone https://github.com/pyenv/pyenv.git ~/.pyenv \
@@ -114,24 +117,17 @@ RUN bash -c ". /root/.nvm/nvm.sh && nvm install node" # latest
 ### install vundle
 RUN git clone https://github.com/VundleVim/Vundle.vim.git \
   /root/.vim/bundle/Vundle.vim
-# RUN vim -E +PlugInstall +visual +qall
-RUN vim -E -c "source $HOME/.vimrc" -c PluginInstall -c qall
+# using '|| :' cuz 'colorscheme space-vim-dark' is not yet installed
+RUN vim -E -s -c "source $HOME/.vimrc" -c PluginInstall -c qall || :
 
 ### Install YouCompleteMe
 WORKDIR /root/.vim/bundle/YouCompleteMe
 # RUN python3 install.py \
-RUN bash -c ". /root/.nvm/nvm.sh && python3 install.py \
-  --clangd-completer \
-  --clang-completer \
-  --ts-completer \
-  --go-completer"
-
-### Install AWS CLI version 2
-WORKDIR /tmp
-RUN wget https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip \
-  && unzip awscli-exe-linux-x86_64.zip \
-  && ./aws/install \
-  && rm -rf aws awscli-exe-linux-x86_64.zip
+RUN bash -c ". /root/.nvm/nvm.sh \
+  && python3 install.py \
+    --clangd-completer \
+    --clang-completer \
+    --ts-completer"
 
 ### Cleanup
 RUN apt-get remove --purge -y \
