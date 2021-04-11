@@ -72,11 +72,11 @@
     state: link
     force: true
   with_items:
-    - {src: 'dot_gitconfig', dest: '.gitconfig'}
-    - {src: 'dot_gitignore_global', dest: '.gitignore_global'}
-    - {src: 'dot_vimrc', dest: '.vimrc'}
+    - {src: '_gitconfig', dest: '.gitconfig'}
+    - {src: '_gitignore_global', dest: '.gitignore_global'}
+    - {src: '_vimrc', dest: '.vimrc'}
     - {src: 'hadolint.yaml', dest: '~/.config/hadolint.yaml'}
-    - {src: 'omz/dot_zshrc', dest: '.zshrc'}
+    - {src: 'omz/_zshrc', dest: '.zshrc'}
     - {src: 'yamllint_config', dest: '.config/yamllint/config'}
 
 - name: vim | Vundle Install

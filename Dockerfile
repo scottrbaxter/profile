@@ -67,14 +67,14 @@ RUN wget -P /tmp https://raw.github.com/robbyrussell/oh-my-zsh/master/tools/inst
 
 ### create symlinks
 ENV PROFILE_PATH="/root/development/profile"
-RUN ln -s "$PROFILE_PATH/omz/dot_zshrc" ~/.zshrc \
-  && ln -s "$PROFILE_PATH/dot_ansible.cfg" ~/.ansible.cfg \
-  && ln -s "$PROFILE_PATH/dot_flake8" ~/.config/flake8 \
-  && ln -s "$PROFILE_PATH/dot_gitconfig" ~/.gitconfig \
-  && ln -s "$PROFILE_PATH/dot_gitignore_global" ~/.gitignore_global \
-  && ln -s "$PROFILE_PATH/dot_janus/space-vim-dark" ~/.vim/bundle/space-vim-dark \
-  && ln -s "$PROFILE_PATH/dot_shellcheckrc" ~/.shellcheckrc \
-  && ln -s "$PROFILE_PATH/dot_vimrc" ~/.vimrc \
+RUN ln -s "$PROFILE_PATH/omz/_zshrc" ~/.zshrc \
+  && ln -s "$PROFILE_PATH/_ansible.cfg" ~/.ansible.cfg \
+  && ln -s "$PROFILE_PATH/_flake8" ~/.config/flake8 \
+  && ln -s "$PROFILE_PATH/_gitconfig" ~/.gitconfig \
+  && ln -s "$PROFILE_PATH/_gitignore_global" ~/.gitignore_global \
+  && ln -s "$PROFILE_PATH/_janus/space-vim-dark" ~/.vim/bundle/space-vim-dark \
+  && ln -s "$PROFILE_PATH/_shellcheckrc" ~/.shellcheckrc \
+  && ln -s "$PROFILE_PATH/_vimrc" ~/.vimrc \
   && ln -s "$PROFILE_PATH/yamllint_config" ~/.config/yamllint/config
 
 ### ~/.ssh/config
