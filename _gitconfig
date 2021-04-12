@@ -51,4 +51,6 @@
 [diff "sopsdiffer"]
     textconv = sops -d
 [init]
-	defaultBranch = master
+    defaultBranch = master
+[pull]
+	rebase = preserve

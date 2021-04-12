@@ -22,6 +22,7 @@
   tasks:
     - include_tasks: ./profile.yaml
   vars:
-    github_commit: HEAD
+    git_version: HEAD
+    profile_version: vundle
     python_version: 3.9.2
 ...

@@ -1,10 +1,11 @@
 [flake8]
-ignore=E261,E302,E303
+ignore=E261,E302,E303,E304
 max-line-length=120
 
 # E261: At least two spaces before inline comment
 # E265: block comment should start with '# '
 # E266: too many leading '#' for block comment
+# E304: blank lines found after function decorator
 # W292: no newline at end of file
 # E501: line too long
 # E111: indentation is not a multiple of four

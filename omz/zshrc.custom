@@ -104,6 +104,7 @@ fi
 if [ -e "$BREW_PREFIX/bin/pyenv" ] || [ -e "$HOME/.pyenv/bin/pyenv" ]; then
     export PYENV_ROOT="$HOME/.pyenv"
     export PATH="$PYENV_ROOT/bin:$PATH"
+    export PYTHON_CONFIGURE_OPTS="--enable-shared" # for YouCompleteMe
     eval "$(pyenv init -)"
     eval "$(pyenv virtualenv-init -)"
     if whence aws 1>/dev/null; then
@@ -220,14 +221,6 @@ reloadZsh(){
     source "$PROFILE_PATH/omz/zshrc.custom"
 }
 
-update_janus(){
-    JANUS=$HOME/.vim
-    echo "updating vim-janus in $JANUS"
-    cd $JANUS
-    rake
-    cd -
-}
-
 # aliases
 alias D='cd ~/development'
 alias N='cd ~/notes'
@@ -273,9 +266,7 @@ alias rr='rsync -avhP'
 alias rrd='rsync -avhP --delete'
 alias scr='screen -dR'
 alias vi='vim'
-alias vvv='vim ~/.vimrc'
-alias vva='vim ~/.vimrc.after'
-alias vvb='vim ~/.vimrc.before'
+alias vv='vim ~/.vimrc'
 alias zedit='vim $ZSH_CUSTOM/themes/crunch_custom.zsh-theme'
 alias vg='vagrant global-status'
 alias vs='vagrant status'
@@ -286,7 +277,7 @@ alias zz="vim $PROFILE_PATH/omz/zshrc.custom"
 # export ANSIBLE_CONFIG="$PROFILE_PATH/ansible.cfg"
 alias ap='ansible-playbook'
 alias galaxy='ansible-galaxy'
-# alias ansible-lint='ansible-lint -c $PROFILE_PATH/dot_ansible-lint'
+# alias ansible-lint='ansible-lint -c $PROFILE_PATH/_ansible-lint'
 # export ANSIBLE_CALLBACK_WHITELIST="profile_tasks, timer"
 # export ANSIBLE_LOAD_CALLBACK_PLUGINS=True
 # export ANSIBLE_STDOUT_CALLBACK=debug

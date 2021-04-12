@@ -16,6 +16,8 @@
 --glob=!.git/*
 --glob=!*.tfstate*
 --glob=!submodules/*
+--glob=!tmp/*
+--glob=!cdk.out/*
 
 # include hcl files with terraform type
 --type-add=tf:*.{tf,tfvars,hcl}
