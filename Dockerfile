@@ -58,9 +58,7 @@ RUN mkdir -p \
 
 ### clone profile repo
 WORKDIR /root/development/profile
-# TODO: remember to remove this when merging to master
-RUN git clone -b vundle https://github.com/scottrbaxter/profile.git \
-  ~/development/profile
+RUN git clone https://github.com/scottrbaxter/profile.git ~/development/profile
 RUN git submodule sync \
   && git submodule update --init --recursive --depth 1
 
