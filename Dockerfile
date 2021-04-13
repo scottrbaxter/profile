@@ -5,34 +5,34 @@ RUN apt-get update \
   && DEBIAN_FRONTEND=noninteractive apt-get -qy install --no-install-recommends \
     ack \
     build-essential \
-    cmake \
+    # cmake \
     curl \
-    dkms \
+    # dkms \
     git \
     htop \
-    libbz2-dev \
-    libffi-dev \
-    libncurses5-dev \
-    libncursesw5-dev \
-    libreadline-dev \
-    libsqlite3-dev \
-    libssl-dev \
-    llvm \
+    # libbz2-dev \
+    # libffi-dev \
+    # libncurses5-dev \
+    # libncursesw5-dev \
+    # libreadline-dev \
+    # libsqlite3-dev \
+    # libssl-dev \
+    # llvm \
     locales \
     make \
-    mono-complete \
+    # mono-complete \
     python-pexpect \
-    python3-dev \
-    python3-pip \
-    rake \
+    # python3-dev \
+    # python3-pip \
+    # rake \
     ripgrep \
-    tk-dev \
+    # tk-dev \
     unzip \
     vim \
-    vim-nox \
+    # vim-nox \
     wget \
     xz-utils \
-    zlib1g-dev \
+    # zlib1g-dev \
     zsh \
   && LC_ALL="en_US.UTF-8" locale-gen en_US.UTF-8
 
@@ -103,7 +103,7 @@ RUN src/configure && \
   make -C src
 
 ### Install rbenv
-RUN git clone https://github.com/rbenv/rbenv.git ~/.rbenv
+# RUN git clone https://github.com/rbenv/rbenv.git ~/.rbenv
 
 ### Node / NVM
 RUN wget -P /tmp https://raw.githubusercontent.com/nvm-sh/nvm/v0.38.0/install.sh \
@@ -119,37 +119,37 @@ RUN git clone https://github.com/VundleVim/Vundle.vim.git \
 RUN vim -E -s -c "source $HOME/.vimrc" -c PluginInstall -c qall || :
 
 ### Install YouCompleteMe
-WORKDIR /root/.vim/bundle/YouCompleteMe
+# WORKDIR /root/.vim/bundle/YouCompleteMe
 # RUN python3 install.py \
-RUN bash -c ". /root/.nvm/nvm.sh \
-  && python3 install.py \
-    --clangd-completer \
-    --clang-completer \
-    --ts-completer"
+# RUN bash -c ". /root/.nvm/nvm.sh \
+#   && python3 install.py \
+#     --clangd-completer \
+#     --clang-completer \
+#     --ts-completer"
 
 ### Cleanup
 RUN apt-get remove --purge -y \
     build-essential \
-    cmake \
-    dkms \
-    libbz2-dev \
-    libffi-dev \
-    libncurses5-dev \
-    libncursesw5-dev \
-    libreadline-dev \
-    libsqlite3-dev \
-    libssl-dev \
-    llvm \
-    make \
-    mono-complete \
-    python-pexpect \
-    python3-dev \
-    python3-pip \
-    rake \
-    tk-dev \
-    vim-nox \
+    # cmake \
+    # dkms \
+    # libbz2-dev \
+    # libffi-dev \
+    # libncurses5-dev \
+    # libncursesw5-dev \
+    # libreadline-dev \
+    # libsqlite3-dev \
+    # libssl-dev \
+    # llvm \
+    # make \
+    # mono-complete \
+    # python-pexpect \
+    # python3-dev \
+    # python3-pip \
+    # rake \
+    # tk-dev \
+    # vim-nox \
     xz-utils \
-    zlib1g-dev \
+    # zlib1g-dev \
   && apt-get autoremove -y \
   && apt-get clean \
   && rm -rf /var/lib/apt/lists/*
