@@ -62,7 +62,7 @@ source $ZSH/oh-my-zsh.sh
 
 ####################################
 
-# additioanl profile settings
+# additional profile settings
 
 [ -x "$(command -v brew)" ] && BREW_PREFIX="$(brew --prefix)"
 
