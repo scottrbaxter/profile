@@ -120,10 +120,12 @@ if [ -e "$BREW_PREFIX/bin/go" ] || [ -e "/usr/bin/go" ]; then
 fi
 
 # node.js environment
-if [ -s "$HOME/.nvm/nvm.sh" ]; then
-    export NVM_DIR="$HOME/.nvm"
-    \. "$NVM_DIR/nvm.sh"
-fi
+. $HOME/.asdf/asdf.sh
+# append completions to fpath
+fpath=(${ASDF_DIR}/completions $fpath)
+# initialise completions with ZSH's compinit
+autoload -Uz compinit
+compinit
 
 # handles special characters from links/urls
 DISABLE_MAGIC_FUNCTIONS=true

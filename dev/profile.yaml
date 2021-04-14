@@ -4,13 +4,9 @@
   become: true
   apt:
     name:
-      - ack
       - build-essential
-      - cmake
       - curl
       - dkms
-      - fail2ban
-      - golang
       - htop
       - libbz2-dev
       - libncurses5-dev
@@ -21,12 +17,8 @@
       - linux-headers-{{ ansible_kernel }}
       - llvm
       - make
-      - mono-complete
       - python-pexpect
-      - python3-dev
-      - rake
       - tk-dev
-      - vim-nox
       - wget
       - xz-utils
       - zlib1g-dev
