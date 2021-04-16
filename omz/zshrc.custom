@@ -328,7 +328,7 @@ alias tg='terragrunt'
 
 # fix https://github.com/zsh-users/zsh-autosuggestions/issues/351#issuecomment-515415202
 ZSH_AUTOSUGGEST_CLEAR_WIDGETS_PREVIOUS="$ZSH_AUTOSUGGEST_CLEAR_WIDGETS" # needed for reloadZsh
-ZSH_AUTOSUGGEST_CLEAR_WIDGETS+=(bracketed-paste)
+ZSH_AUTOSUGGEST_CLEAR_WIDGETS+=(bracketed-paste accept-line)
 
 # additional stuff
 for k in ~/.keyfile-*(N); do source $k; done
