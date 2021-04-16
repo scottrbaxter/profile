@@ -35,7 +35,7 @@ export TERM="xterm-256color"
 # add plugins=(osx) for the tab command, to command-click a vim file in new tab
 # also need to add 'tab' in iterm2 profile/advanced semantic history
 # removed aws plugin - REALLY slow, and pyenv aws_zsh_completer.sh fails autoload/bashcompinit
-plugins=(aws nvm ripgrep zsh-autosuggestions)
+plugins=(aws docker docker-compose nvm ripgrep zsh-autosuggestions)
 
 # symlinks to ../Cellar, fixed this with 'compaudit | xargs chmod g-w,o-w'
 # fix https://github.com/robbyrussell/oh-my-zsh/issues/6835#issuecomment-390216875
