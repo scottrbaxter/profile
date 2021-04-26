@@ -316,6 +316,8 @@ alias kgs='k get services --output=wide'
 alias kgsc='k get storageclasses --output=wide'
 alias kns='kubens'
 alias kx='kubectx'
+[ -x "$(command -v kubectl)" ] && source <(kubectl completion zsh) # completion
+[ -x "$(command -v helm)" ] && source <(helm completion zsh) # completion
 # alias stern='stern --timestamps'
 
 # terraform

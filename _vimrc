@@ -778,6 +778,7 @@ au FileType zsh setlocal tabstop=4 shiftwidth=4 softtabstop=4 expandtab " confor
 " au BufEnter * if &filetype == "" | setlocal ft=sh | endif
 " au BufNewFile,BufRead *.yaml set filetype=ansible.yaml
 " au BufNewFile,BufRead *.yml set filetype=ansible.yaml
+au BufRead,BufNewFile */*.bats set filetype=bash
 au BufRead,BufNewFile */playbooks/*.y*ml set filetype=ansible.yaml
 au BufRead,BufNewFile *.hcl set filetype=terraform
 au BufNewFile,BufRead *.yaml setlocal indentkeys=0{,0},:,0#,!^F,o,0,e
@@ -897,7 +898,7 @@ function! ConvertJsonYaml()
 endfunction
 
 " search hyphenated words
-set iskeyword+=-
+" set iskeyword+=-
 
 " vim folding
 set nofoldenable
