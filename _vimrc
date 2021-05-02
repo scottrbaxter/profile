@@ -577,6 +577,14 @@ vnoremap I <C-v>$I
 nmap <silent> <space>c :call MessageToClipboard()<CR>
 nmap f zA| " toggle open/close folding
 nmap F :call FoldAllToggle()<cr>| " equiv to toggle for zM/zR
+vmap ' S'
+vmap " S"
+vmap [ S[
+vmap ] S]
+vmap } S}
+vmap { S{
+vmap ( S(
+vmap ) S)
 
 " set nonumber
 " set nolist " list disables linebreak
