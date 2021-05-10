@@ -585,6 +585,7 @@ vmap } S}
 vmap { S{
 vmap ( S(
 vmap ) S)
+vmap ` S`
 
 " set nonumber
 " set nolist " list disables linebreak
