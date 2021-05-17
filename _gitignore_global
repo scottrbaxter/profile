@@ -1,20 +1,18 @@
 # file or dir matches:
-**/scott
 **/test*.yaml
-# **/tst*
 **/.keyfile*
 **/temp
 **/tmp
 **/.dev
-**/.ce-cli
-**/*.retry
 **/docker.tst.*
 **/*.vagrant
 .dockerignore
+tests/local.bats
 
 # ansible
 .vault_pass
 .ansible-lint
+**/*.retry
 
 # terraform
 .terraform
