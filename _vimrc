@@ -1,123 +1,256 @@
-set nocompatible              " be iMproved, required
-filetype off                  " required
-
-" set the runtime path to include Vundle and initialize
-set rtp+=~/.vim/bundle/Vundle.vim
-call vundle#begin()
-" alternatively, pass a path where Vundle should install plugins
-"call vundle#begin('~/some/path/here')
-
-" let Vundle manage Vundle, required
-Plugin 'VundleVim/Vundle.vim'
-
-" The following are examples of different formats supported.
-" Keep Plugin commands between vundle#begin/end.
-" plugin on GitHub repo
-" Plugin 'tpope/vim-fugitive'
-" plugin from http://vim-scripts.org/vim/scripts.html
-" Plugin 'L9'
-" Git plugin not hosted on GitHub
-" Plugin 'git://git.wincent.com/command-t.git'
-" git repos on your local machine (i.e. when working on your own plugin)
-" Plugin 'file:///home/gmarik/path/to/plugin'
-" The sparkup vim script is in a subdirectory of this repo called vim.
-" Pass the path to set the runtimepath properly.
-" Plugin 'rstacruz/sparkup', {'rtp': 'vim/'}
-" Install L9 and avoid a Naming conflict if you've already installed a
-" different version somewhere else.
-" Plugin 'ascenator/L9', {'name': 'newL9'}
+""" Specify a directory for plugins
+" - For Neovim: stdpath('data') . '/plugged'
+" - Avoid using standard Vim directory names like 'plugin'
+call plug#begin('~/.vim/plugged')
 
 """ Vim Janus loaded plugins
-" Plugin 'Lokaltog/vim-easymotion'
-" Plugin 'MarcWeber/vim-addon-mw-utils'
-" Plugin 'TechnoGate/janus-colors'
-Plugin 'airblade/vim-gitgutter'
-" Plugin 'altercation/vim-colors-solarized'
-" Plugin 'ap/vim-css-color'
-" Plugin 'blueshirts/darcula'
-" Plugin 'bronson/vim-trailing-whitespace'
-" Plugin 'chrisbra/NrrwRgn'
-" Plugin 'chrisbra/csv.vim'
-" Plugin 'chriskempson/base16-vim'
-" Plugin 'chriskempson/vim-tomorrow-theme'
-Plugin 'ctrlpvim/ctrlp.vim'
-" Plugin 'depuracao/vim-rdoc'
-" Plugin 'ervandew/supertab'
-" Plugin 'garbas/vim-snipmate'
-Plugin 'honza/vim-snippets'
-Plugin 'jeetsukumaran/vim-buffergator'
-" Plugin 'larssmit/vim-getafe'
-Plugin 'majutsushi/tagbar'
-" Plugin 'mattn/gist-vim'
-" Plugin 'mattn/webapi-vim'
-Plugin 'michaeljsmith/vim-indent-object'
-Plugin 'mileszs/ack.vim'
-Plugin 'mmalecki/vim-node.js'
-Plugin 'rgarver/Kwbd.vim'
-Plugin 'scrooloose/nerdcommenter'
-Plugin 'scrooloose/nerdtree'
-" Plugin 'sh-dude/ZoomWin'
-Plugin 'sheerun/vim-polyglot'
-" Plugin 'sjl/gundo.vim'
-" Plugin 'skalnik/vim-vroom'
-" Plugin 'sunaku/vim-ruby-minitest'
-" Plugin 'telamon/vim-color-github'
-Plugin 'terryma/vim-multiple-cursors'
-Plugin 'thinca/vim-visualstar'
-" Plugin 'tomtom/tlib_vim'
-" Plugin 'tpope/vim-dispatch'
-Plugin 'tpope/vim-endwise'
-Plugin 'tpope/vim-eunuch'
-Plugin 'tpope/vim-fugitive'
-" Plugin 'tpope/vim-pathogen'
-" Plugin 'tpope/vim-rails'
-Plugin 'tpope/vim-repeat'
-Plugin 'tpope/vim-surround'
-Plugin 'tpope/vim-unimpaired'
-" Plugin 'tpope/vim-vividchalk'
-" Plugin 'twerth/ir_black'
-" Plugin 'vim-scripts/Colour-Sampler-Pack'
-" Plugin 'vim-scripts/molokai'
-" Plugin 'vim-scripts/pyte'
-" Plugin 'vim-scripts/vimwiki'
-" Plugin 'vim-syntastic/syntastic'
+" Plug 'Lokaltog/vim-easymotion'
+" Plug 'MarcWeber/vim-addon-mw-utils'
+" Plug 'TechnoGate/janus-colors'
+Plug 'airblade/vim-gitgutter'
+" Plug 'altercation/vim-colors-solarized'
+" Plug 'ap/vim-css-color'
+" Plug 'blueshirts/darcula'
+" Plug 'bronson/vim-trailing-whitespace'
+" Plug 'chrisbra/NrrwRgn'
+" Plug 'chrisbra/csv.vim'
+" Plug 'chriskempson/base16-vim'
+" Plug 'chriskempson/vim-tomorrow-theme'
+Plug 'ctrlpvim/ctrlp.vim'
+" Plug 'depuracao/vim-rdoc'
+" Plug 'ervandew/supertab'
+" Plug 'garbas/vim-snipmate'
+Plug 'honza/vim-snippets'
+Plug 'jeetsukumaran/vim-buffergator'
+" Plug 'larssmit/vim-getafe'
+Plug 'majutsushi/tagbar'
+" Plug 'mattn/gist-vim'
+" Plug 'mattn/webapi-vim'
+Plug 'michaeljsmith/vim-indent-object'
+Plug 'mileszs/ack.vim'
+Plug 'mmalecki/vim-node.js'
+Plug 'rgarver/Kwbd.vim'
+Plug 'scrooloose/nerdcommenter'
+Plug 'scrooloose/nerdtree'
+" Plug 'sh-dude/ZoomWin'
+Plug 'sheerun/vim-polyglot'
+" Plug 'sjl/gundo.vim'
+" Plug 'skalnik/vim-vroom'
+" Plug 'sunaku/vim-ruby-minitest'
+" Plug 'telamon/vim-color-github'
+Plug 'terryma/vim-multiple-cursors'
+Plug 'thinca/vim-visualstar'
+" Plug 'tomtom/tlib_vim'
+" Plug 'tpope/vim-dispatch'
+" Plug 'tpope/vim-endwise'
+Plug 'tpope/vim-eunuch'
+Plug 'tpope/vim-fugitive'
+" Plug 'tpope/vim-pathogen'
+" Plug 'tpope/vim-rails'
+Plug 'tpope/vim-repeat'
+Plug 'tpope/vim-surround'
+Plug 'tpope/vim-unimpaired'
+" Plug 'tpope/vim-vividchalk'
+" Plug 'twerth/ir_black'
+" Plug 'vim-scripts/Colour-Sampler-Pack'
+" Plug 'vim-scripts/molokai'
+" Plug 'vim-scripts/pyte'
+" Plug 'vim-scripts/vimwiki'
+" Plug 'vim-syntastic/syntastic'
 
 """ Custom plugins from ~/.janus
-Plugin 'bronson/vim-crosshairs'
-Plugin 'dense-analysis/ale'
-Plugin 'godlygeek/tabular'
-" Plugin 'hashivim/vim-terraform'
-Plugin 'ivanov/vim-ipython'
-Plugin 'jeetsukumaran/vim-indentwise'
-" Plugin 'juliosueiras/terraform-lsp'
-" Plugin 'keith/swift'
-Plugin 'liuchengxu/space-vim-dark'
-Plugin 'ntpeters/vim-better-whitespace'
-Plugin 'nvie/vim-flake8'
-Plugin 'pearofducks/ansible-vim'
-Plugin 'rstacruz/vim-closer'
-Plugin 'vim-airline/vim-airline'
-Plugin 'vim-airline/vim-airline-themes'
-Plugin 'willthames/ansible-lint'
-Plugin 'Yggdroot/indentLine'
-Plugin 'ycm-core/YouCompleteMe'
-Plugin 'Raimondi/delimitMate'
-Plugin 'SirVer/ultisnips'
+Plug 'bronson/vim-crosshairs'
+Plug 'dense-analysis/ale'
+" Plug 'godlygeek/tabular'
+" Plug 'hashivim/vim-terraform'
+Plug 'ivanov/vim-ipython'
+Plug 'jeetsukumaran/vim-indentwise'
+" Plug 'juliosueiras/terraform-lsp'
+" Plug 'keith/swift'
+Plug 'liuchengxu/space-vim-dark'
+Plug 'ntpeters/vim-better-whitespace'
+Plug 'nvie/vim-flake8'
+Plug 'pearofducks/ansible-vim'
+" Plug 'rstacruz/vim-closer'
+Plug 'vim-airline/vim-airline'
+Plug 'vim-airline/vim-airline-themes'
+Plug 'willthames/ansible-lint'
+Plug 'Yggdroot/indentLine'
+Plug 'neoclide/coc.nvim', {'branch': 'release'}
+Plug 'Raimondi/delimitMate'
+Plug 'SirVer/ultisnips'
+Plug 'neoclide/jsonc.vim'
+Plug 'aymericbeaumet/vim-symlink' " needed for vim-fugitive to follow symlinks
 
-" All of your Plugins must be added before the following line
-call vundle#end()            " required
-filetype plugin indent on    " required
-" To ignore plugin indent changes, instead use:
-"filetype plugin on
-"
-" Brief help
-" :PluginList       - lists configured plugins
-" :PluginInstall    - installs plugins; append `!` to update or just :PluginUpdate
-" :PluginSearch foo - searches for foo; append `!` to refresh local cache
-" :PluginClean      - confirms removal of unused plugins; append `!` to auto-approve removal
-"
-" see :h vundle for more details or wiki for FAQ
-" Put your non-Plugin stuff after this line
+" Initialize plugin system
+call plug#end()
+
+" vim.coc
+" Set internal encoding of vim, not needed on neovim, since coc.nvim using some
+" unicode characters in the file autoload/float.vim
+set encoding=utf-8
+
+" TextEdit might fail if hidden is not set.
+set hidden
+
+" Some servers have issues with backup files, see #649.
+set nobackup
+set nowritebackup
+
+" Give more space for displaying messages.
+set cmdheight=2
+
+" Having longer updatetime (default is 4000 ms = 4 s) leads to noticeable
+" delays and poor user experience.
+set updatetime=300
+
+" Don't pass messages to |ins-completion-menu|.
+set shortmess+=c
+
+" Always show the signcolumn, otherwise it would shift the text each time
+" diagnostics appear/become resolved.
+" if has("patch-8.1.1564")
+"   " Recently vim can merge signcolumn and number column into one
+"   set signcolumn=number
+" else
+  set signcolumn=yes
+" endif
+
+" Use tab for trigger completion with characters ahead and navigate.
+" NOTE: Use command ':verbose imap <tab>' to make sure tab is not mapped by
+" other plugin before putting this into your config.
+inoremap <silent><expr> <TAB>
+      \ pumvisible() ? "\<C-n>" :
+      \ <SID>check_back_space() ? "\<TAB>" :
+      \ coc#refresh()
+inoremap <expr><S-TAB> pumvisible() ? "\<C-p>" : "\<C-h>"
+
+function! s:check_back_space() abort
+  let col = col('.') - 1
+  return !col || getline('.')[col - 1]  =~# '\s'
+endfunction
+
+" Use <c-space> to trigger completion.
+if has('nvim')
+  inoremap <silent><expr> <c-space> coc#refresh()
+else
+  inoremap <silent><expr> <c-@> coc#refresh()
+endif
+
+" Make <CR> auto-select the first completion item and notify coc.nvim to
+" format on enter, <cr> could be remapped by other vim plugin
+" inoremap <silent><expr> <cr> pumvisible() ? coc#_select_confirm()
+"                               \: "\<C-g>u\<CR>\<c-r>=coc#on_enter()\<CR>"
+
+" Use `[g` and `]g` to navigate diagnostics
+" Use `:CocDiagnostics` to get all diagnostics of current buffer in location list.
+nmap <silent> [g <Plug>(coc-diagnostic-prev)
+nmap <silent> ]g <Plug>(coc-diagnostic-next)
+
+" GoTo code navigation.
+nmap <silent> gd <Plug>(coc-definition)
+nmap <silent> gy <Plug>(coc-type-definition)
+nmap <silent> gi <Plug>(coc-implementation)
+nmap <silent> gr <Plug>(coc-references)
+
+" Use K to show documentation in preview window.
+nnoremap <silent> K :call <SID>show_documentation()<CR>
+
+function! s:show_documentation()
+  if (index(['vim','help'], &filetype) >= 0)
+    execute 'h '.expand('<cword>')
+  elseif (coc#rpc#ready())
+    call CocActionAsync('doHover')
+  else
+    execute '!' . &keywordprg . " " . expand('<cword>')
+  endif
+endfunction
+
+" Highlight the symbol and its references when holding the cursor.
+autocmd CursorHold * silent call CocActionAsync('highlight')
+
+" Symbol renaming.
+nmap <leader>rn <Plug>(coc-rename)
+
+" Formatting selected code.
+xmap <leader>f  <Plug>(coc-format-selected)
+nmap <leader>f  <Plug>(coc-format-selected)
+
+augroup mygroup
+  autocmd!
+  " Setup formatexpr specified filetype(s).
+  autocmd FileType typescript,json setl formatexpr=CocAction('formatSelected')
+  " Update signature help on jump placeholder.
+  autocmd User CocJumpPlaceholder call CocActionAsync('showSignatureHelp')
+augroup end
+
+" Applying codeAction to the selected region.
+" Example: `<leader>aap` for current paragraph
+xmap <leader>a  <Plug>(coc-codeaction-selected)
+nmap <leader>a  <Plug>(coc-codeaction-selected)
+
+" Remap keys for applying codeAction to the current buffer.
+nmap <leader>ac  <Plug>(coc-codeaction)
+" Apply AutoFix to problem on the current line.
+nmap <leader>qf  <Plug>(coc-fix-current)
+
+" Map function and class text objects
+" NOTE: Requires 'textDocument.documentSymbol' support from the language server.
+xmap if <Plug>(coc-funcobj-i)
+omap if <Plug>(coc-funcobj-i)
+xmap af <Plug>(coc-funcobj-a)
+omap af <Plug>(coc-funcobj-a)
+xmap ic <Plug>(coc-classobj-i)
+omap ic <Plug>(coc-classobj-i)
+xmap ac <Plug>(coc-classobj-a)
+omap ac <Plug>(coc-classobj-a)
+
+" Remap <C-f> and <C-b> for scroll float windows/popups.
+if has('nvim-0.4.0') || has('patch-8.2.0750')
+  nnoremap <silent><nowait><expr> <C-f> coc#float#has_scroll() ? coc#float#scroll(1) : "\<C-f>"
+  nnoremap <silent><nowait><expr> <C-b> coc#float#has_scroll() ? coc#float#scroll(0) : "\<C-b>"
+  inoremap <silent><nowait><expr> <C-f> coc#float#has_scroll() ? "\<c-r>=coc#float#scroll(1)\<cr>" : "\<Right>"
+  inoremap <silent><nowait><expr> <C-b> coc#float#has_scroll() ? "\<c-r>=coc#float#scroll(0)\<cr>" : "\<Left>"
+  vnoremap <silent><nowait><expr> <C-f> coc#float#has_scroll() ? coc#float#scroll(1) : "\<C-f>"
+  vnoremap <silent><nowait><expr> <C-b> coc#float#has_scroll() ? coc#float#scroll(0) : "\<C-b>"
+endif
+
+" Use CTRL-S for selections ranges.
+" Requires 'textDocument/selectionRange' support of language server.
+nmap <silent> <C-s> <Plug>(coc-range-select)
+xmap <silent> <C-s> <Plug>(coc-range-select)
+
+" Add `:Format` command to format current buffer.
+command! -nargs=0 Format :call CocAction('format')
+
+" Add `:Fold` command to fold current buffer.
+command! -nargs=? Fold :call     CocAction('fold', <f-args>)
+
+" Add `:OR` command for organize imports of the current buffer.
+command! -nargs=0 OR   :call     CocAction('runCommand', 'editor.action.organizeImport')
+
+" Add (Neo)Vim's native statusline support.
+" NOTE: Please see `:h coc-status` for integrations with external plugins that
+" provide custom statusline: lightline.vim, vim-airline.
+set statusline^=%{coc#status()}%{get(b:,'coc_current_function','')}
+
+" Mappings for CoCList
+" Show all diagnostics.
+nnoremap <silent><nowait> <space>a  :<C-u>CocList diagnostics<cr>
+" Manage extensions.
+nnoremap <silent><nowait> <space>e  :<C-u>CocList extensions<cr>
+" Show commands.
+nnoremap <silent><nowait> <space>c  :<C-u>CocList commands<cr>
+" Find symbol of current document.
+nnoremap <silent><nowait> <space>o  :<C-u>CocList outline<cr>
+" Search workspace symbols.
+nnoremap <silent><nowait> <space>s  :<C-u>CocList -I symbols<cr>
+" Do default action for next item.
+nnoremap <silent><nowait> <space>j  :<C-u>CocNext<CR>
+" Do default action for previous item.
+nnoremap <silent><nowait> <space>k  :<C-u>CocPrev<CR>
+" Resume latest coc list.
+nnoremap <silent><nowait> <space>p  :<C-u>CocListResume<CR>
 
 """ from ~/.vim/janus/vim/core/before/plugin/mappings.vim
 ""
@@ -411,7 +544,7 @@ nmap <space>a \cA
 nmap <space>d :Gdiff<CR>
 nmap <space>f :StripWhitespace<CR>
 nmap <space>r \c<space>
-nmap <space>b :Gblame<CR>
+nmap <space>b :Git blame<CR>
 nmap <space>q :q<CR>
 nmap <space>Q :q!<CR>
 nmap <space>w :w<CR>
@@ -444,6 +577,15 @@ vnoremap I <C-v>$I
 nmap <silent> <space>c :call MessageToClipboard()<CR>
 nmap f zA| " toggle open/close folding
 nmap F :call FoldAllToggle()<cr>| " equiv to toggle for zM/zR
+vmap ' S'
+vmap " S"
+vmap [ S[
+vmap ] S]
+vmap } S}
+vmap { S{
+vmap ( S(
+vmap ) S)
+vmap ` S`
 
 " set nonumber
 " set nolist " list disables linebreak
@@ -588,8 +730,8 @@ nmap ;q :q<CR>
 nmap ;Q :q!<CR>
 nmap v ve
 nnoremap <bs> i<bs><esc>w
-nnoremap <tab> >>
-nnoremap <S-tab> <<
+" nnoremap <tab> >>
+" nnoremap <S-tab> <<
 
 " don't add newline character if the file didn't already have one
 set nofixeol
@@ -645,6 +787,7 @@ au FileType zsh setlocal tabstop=4 shiftwidth=4 softtabstop=4 expandtab " confor
 " au BufEnter * if &filetype == "" | setlocal ft=sh | endif
 " au BufNewFile,BufRead *.yaml set filetype=ansible.yaml
 " au BufNewFile,BufRead *.yml set filetype=ansible.yaml
+au BufRead,BufNewFile */*.bats set filetype=bash
 au BufRead,BufNewFile */playbooks/*.y*ml set filetype=ansible.yaml
 au BufRead,BufNewFile *.hcl set filetype=terraform
 au BufNewFile,BufRead *.yaml setlocal indentkeys=0{,0},:,0#,!^F,o,0,e
@@ -715,6 +858,7 @@ nmap <silent> <F3> :set invwrap<CR>:set wrap?<CR>
 nmap <silent> <F7> :set invlbr<CR>:set lbr?<CR>
 nmap <silent> <F8> :set invautoindent<CR>:set autoindent?<CR>
 au FileType gitcommit set tw=99
+au FileType json syntax match Comment +\/\/.\+$+
 au FileType json nnoremap <silent> <F6> :%!python -m json.tool<CR>
 " au FileType json nnoremap <silent> <F9> :call ConcealLevelToggle()<CR>
 " au FileType python map <buffer> <F9> :call Flake8()<CR>
@@ -763,7 +907,7 @@ function! ConvertJsonYaml()
 endfunction
 
 " search hyphenated words
-set iskeyword+=-
+" set iskeyword+=-
 
 " vim folding
 set nofoldenable
@@ -783,10 +927,10 @@ endif
 
 " YCM
 " let g:ycm_auto_hover = 'CursorHold'
-let g:ycm_auto_hover = ''
-" let g:ycm_key_detailed_diagnostics = '<leader>d'
-let g:ycm_key_detailed_diagnostics = ''
-nmap <space>d <plug>(YCMHover)
+" let g:ycm_auto_hover = ''
+" " let g:ycm_key_detailed_diagnostics = '<leader>d'
+" let g:ycm_key_detailed_diagnostics = ''
+" nmap <space>d <plug>(YCMHover)
 " let g:ycm_key_list_select_completion = ['<TAB>', '<Down>', '<Enter>']
 " let g:ycm_key_invoke_completion = ['<C-space>', '<Enter>']
 " let g:ycm_key_list_stop_completion = ['<C-y>', '<space>']
