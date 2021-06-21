@@ -53,4 +53,4 @@
 [init]
     defaultBranch = master
 [pull]
-	rebase = preserve
+    rebase = merges
