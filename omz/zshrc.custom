@@ -73,8 +73,6 @@ if [ "$UNAME_SYSTEM" = Linux ]; then
     CURRENT_USER=$(id -un)
     if [ $CURRENT_USER != "root" ]; then
         alias apt='sudo apt'
-        alias docker='sudo docker'
-        alias docker-compose='sudo docker-compose'
     fi
     alias apts='apt search'
     alias ls='ls --color=always'
