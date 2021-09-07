@@ -8,7 +8,7 @@ source $PROFILE_PATH/_vim/colorscheme.vim
 " remaining profile plugins
 source $PROFILE_PATH/_vim/plugins.vim
 " coc.nvim plugin and config
-source $PROFILE_PATH/_vim/coc-custom.vim
+" source $PROFILE_PATH/_vim/coc-custom.vim
 
 " Initialize plugin system
 call plug#end()

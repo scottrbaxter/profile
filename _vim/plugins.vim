@@ -71,8 +71,7 @@ Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
 Plug 'willthames/ansible-lint'
 Plug 'Yggdroot/indentLine'
-Plug 'neoclide/coc.nvim', {'branch': 'release'}
 Plug 'Raimondi/delimitMate'
-Plug 'SirVer/ultisnips'
+" Plug 'SirVer/ultisnips'
 Plug 'neoclide/jsonc.vim'
 Plug 'aymericbeaumet/vim-symlink' " needed for vim-fugitive to follow symlinks

@@ -267,6 +267,7 @@ alias rrd='rsync -avhP --delete'
 alias scr='screen -dR'
 alias vi='vim'
 alias vv='vim ~/.vimrc'
+alias vp="vim $PROFILE_PATH/_vim/plugins.vim"
 alias zedit='vim $ZSH_CUSTOM/themes/crunch_custom.zsh-theme'
 alias vg='vagrant global-status'
 alias vs='vagrant status'
