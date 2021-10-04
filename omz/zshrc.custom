@@ -213,7 +213,14 @@ reloadZsh(){
     source "$PROFILE_PATH/omz/zshrc.custom"
 }
 
+
 # aliases
+if [ -x "$(command -v nvim)" ]; then
+    VISUAL="nvim"; export VISUAL
+    EDITOR="$VISUAL"; export EDITOR
+    alias vim=nvim
+fi
+
 alias D='cd ~/development'
 alias N='cd ~/notes'
 alias P='cd $PROFILE_PATH'

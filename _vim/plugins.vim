@@ -75,3 +75,9 @@ Plug 'Raimondi/delimitMate'
 " Plug 'SirVer/ultisnips'
 " Plug 'neoclide/jsonc.vim'
 Plug 'aymericbeaumet/vim-symlink' " needed for vim-fugitive to follow symlinks
+
+" deoplete
+if has('nvim')
+  Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
+  let g:deoplete#enable_at_startup = 1
+endif

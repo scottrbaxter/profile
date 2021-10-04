@@ -387,11 +387,15 @@ se mouse+=a " mouse copy turns into visual mode
 " set balloonevalterm
 let g:ale_set_balloons = 1
 
-if !has('nvim')
+if has('nvim')
+  set clipboard=unnamedplus
+else
   set clipboard=autoselect " yank to osx clipboard, but doesn't put vim's change/delete stuff in clipboard
-" set clipboard=unnamedplus,unnamed,autoselect " yank to osx clipboard
-"set clipboard=unnamed,autoselect " yank to osx clipboard including change/delete in vim
+  " set clipboard=unnamedplus,unnamed,autoselect " yank to osx clipboard
+  " set clipboard=unnamed,autoselect " yank to osx clipboard including change/delete in vim
 endif
+
+set startofline
 
 " move to 1st character on line when changing lines
 nmap <Up> <Up>^
@@ -633,8 +637,10 @@ nmap <silent> <F11> :call ColorColumnToggle()<CR>
 hi CursorColumn cterm=NONE ctermbg=darkgrey ctermfg=grey guibg=darkred guifg=white
 
 if has('persistent_undo')      "check if your vim version supports it
-    set undofile                 "turn on the feature
+  set undofile                 "turn on the feature
+  if !has('nvim-0.5')
     set undodir=$HOME/.vim/_temp  "directory where the undo files will be stored
+  endif
 endif
 
 " signs to use for w0rp/ale linters
