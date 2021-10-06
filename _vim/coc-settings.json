@@ -1,4 +1,5 @@
 {
     // https://github.com/fannheyward/coc-pyright
+    "python.linting.enabled": true,
     "python.linting.flake8Enabled": true,
 }

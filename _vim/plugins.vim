@@ -55,7 +55,6 @@ Plug 'tpope/vim-unimpaired'
 
 """ Custom plugins from ~/.janus
 Plug 'bronson/vim-crosshairs'
-Plug 'dense-analysis/ale'
 " Plug 'godlygeek/tabular'
 " Plug 'hashivim/vim-terraform'
 Plug 'ivanov/vim-ipython'
@@ -72,6 +71,38 @@ Plug 'vim-airline/vim-airline-themes'
 Plug 'willthames/ansible-lint'
 Plug 'Yggdroot/indentLine'
 Plug 'Raimondi/delimitMate'
-" Plug 'SirVer/ultisnips'
 " Plug 'neoclide/jsonc.vim'
 Plug 'aymericbeaumet/vim-symlink' " needed for vim-fugitive to follow symlinks
+
+" ale
+Plug 'dense-analysis/ale'
+" This setting must be set before ALE is loaded.
+let g:ale_completion_enabled = 1
+
+let g:airline#extensions#ale#enabled = 1
+let g:ale_completion_autoimport = 1
+let g:ale_set_balloons = 1
+
+" signs to use for w0rp/ale linters
+let g:ale_sign_error = '>>'
+let g:ale_sign_warning = '--'
+
+" Disable warnings about trailing whitespace in Python files
+" let g:ale_warn_about_trailing_whitespace = 0
+
+" required by ale for global eslint support
+let g:ale_javascript_eslint_use_global = 1
+let g:ale_javascript_eslint_executable = 'yarn'
+let g:ale_javascript_eslint_options = 'run eslint'
+
+" deoplete
+" if has('nvim')
+"   Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
+"   let g:deoplete#enable_at_startup = 1
+" endif
+
+" Ultisnips
+" Plug 'SirVer/ultisnips'
+" let g:UltiSnipsExpandTrigger       = '<c-t>'
+" let g:UltiSnipsJumpForwardTrigger  = '<c-e>'
+" let g:UltiSnipsJumpBackwardTrigger = '<c-a>'

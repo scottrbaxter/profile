@@ -1,5 +1,6 @@
 " vim.coc
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
+let g:coc_config_home = '$PROFILE_PATH/_vim/coc-settings.json'
 " Set internal encoding of vim, not needed on neovim, since coc.nvim using some
 " unicode characters in the file autoload/float.vim
 set encoding=utf-8

@@ -1,6 +1,19 @@
 """ Specify a directory for plugins
 " - For Neovim: stdpath('data') . '/plugged'
 " - Avoid using standard Vim directory names like 'plugin'
+
+" https://github.com/junegunn/vim-plug/wiki/tips
+" Install vim-plug if not found
+if empty(glob('~/.vim/autoload/plug.vim'))
+  silent !curl -fLo ~/.vim/autoload/plug.vim --create-dirs
+    \ https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
+endif
+" Run PlugInstall if there are missing plugins
+autocmd VimEnter * if len(filter(values(g:plugs), '!isdirectory(v:val.dir)'))
+  \| PlugInstall --sync | source $MYVIMRC
+\| endif
+" automatic install
+
 call plug#begin('~/.vim/plugged')
 
 " colorscheme/theme
@@ -8,7 +21,9 @@ source $PROFILE_PATH/_vim/colorscheme.vim
 " remaining profile plugins
 source $PROFILE_PATH/_vim/plugins.vim
 " coc.nvim plugin and config
-" source $PROFILE_PATH/_vim/coc-custom.vim
+if has('nvim')
+  source $PROFILE_PATH/_vim/coc.vim
+endif
 
 " Initialize plugin system
 call plug#end()
@@ -286,12 +301,6 @@ endif
 let g:airline_symbols.space = "\ua0"
 set encoding=utf-8
 
-" This setting must be set before ALE is loaded.
-let g:ale_completion_enabled = 1
-
-let g:airline#extensions#ale#enabled = 1
-let g:ale_completion_autoimport = 1
-
 """ From vim-janus ~/.vimrc.after
 
 " personal custom shortcuts
@@ -385,13 +394,16 @@ se mouse+=a " mouse copy turns into visual mode
 " set balloondelay=250
 " set ballooneval
 " set balloonevalterm
-let g:ale_set_balloons = 1
 
-if !has('nvim')
+if has('nvim')
+  set clipboard=unnamedplus
+else
   set clipboard=autoselect " yank to osx clipboard, but doesn't put vim's change/delete stuff in clipboard
-" set clipboard=unnamedplus,unnamed,autoselect " yank to osx clipboard
-"set clipboard=unnamed,autoselect " yank to osx clipboard including change/delete in vim
+  " set clipboard=unnamedplus,unnamed,autoselect " yank to osx clipboard
+  " set clipboard=unnamed,autoselect " yank to osx clipboard including change/delete in vim
 endif
+
+set startofline
 
 " move to 1st character on line when changing lines
 nmap <Up> <Up>^
@@ -633,23 +645,11 @@ nmap <silent> <F11> :call ColorColumnToggle()<CR>
 hi CursorColumn cterm=NONE ctermbg=darkgrey ctermfg=grey guibg=darkred guifg=white
 
 if has('persistent_undo')      "check if your vim version supports it
-    set undofile                 "turn on the feature
+  set undofile                 "turn on the feature
+  if !has('nvim-0.5')
     set undodir=$HOME/.vim/_temp  "directory where the undo files will be stored
+  endif
 endif
-
-" signs to use for w0rp/ale linters
-let g:ale_sign_error = '>>'
-let g:ale_sign_warning = '--'
-
-" Check Python files with flake8 and pylint.
-let g:ale_linters = {
-\  'python': ['pylint', 'flake8'],
-\}
-let g:ale_fixers = {
-\  'python': ['autopep8', 'yapf'],
-\}
-" Disable warnings about trailing whitespace
-let g:ale_warn_about_trailing_whitespace = 1
 
 " vim-markdown-preview https://github.com/JamshedVesuna/vim-markdown-preview#mac-os-x
 let vim_markdown_preview_github=1
@@ -714,3 +714,9 @@ endif
 
 " UltiSnips
 let g:UltiSnipsExpandTrigger="<s-tab>"
+
+" use up/down arrow keys for bottom (cmdline/gutter) vertical menu (vim: wildmenu)
+if has('nvim')
+  cnoremap <Up> <C-p>
+  cnoremap <Down> <C-n>
+endif
