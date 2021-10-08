@@ -396,8 +396,10 @@ se mouse+=a " mouse copy turns into visual mode
 " set balloonevalterm
 
 if has('nvim')
-  " set clipboard=unnamedplus
-  set clipboard=autoselect
+  set clipboard=unnamedplus
+  set mouse=a
+  vmap <LeftRelease> "*ygv
+  " set clipboard=autoselect
 else
   set clipboard=autoselect " yank to osx clipboard, but doesn't put vim's change/delete stuff in clipboard
   " set clipboard=unnamedplus,unnamed,autoselect " yank to osx clipboard
