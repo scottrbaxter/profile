@@ -51,11 +51,9 @@ export PATH_PREVIOUS="$PATH" # needed for reloadZsh
 [ -d /opt/homebrew/bin ] && export PATH="/opt/homebrew/bin:$PATH"
 [ -d /opt/homebrew/sbin ] && export PATH="/opt/homebrew/sbin:$PATH"
 [ -d $HOME/.local ] && export PATH="$PATH:$HOME/.local/bin" # needs to append for pyenv, because pip install --user
-[ -d /usr/local/sbin ] && export PATH="$PATH:/usr/local/sbin"
 [ -d /usr/libexec ] && export PATH="$PATH:/usr/libexec"
 [ -d $HOME/scripts ] && export PATH="$PATH:$HOME/scripts"
 [ -d $PROFILE_PATH/scripts ] && export PATH="$PATH:$PROFILE_PATH/scripts"
-[ -d /snap/bin ] && export PATH="/snap/bin:$PATH"
 [ -d /usr/syno ] && export PATH="/usr/local/bin:$PATH:/usr/syno/bin:/usr/syno/sbin" # dsm
 
 source $ZSH/oh-my-zsh.sh
@@ -80,6 +78,7 @@ if [ "$UNAME_SYSTEM" = Linux ]; then
 
 # mac specific
 elif [ "$UNAME_SYSTEM" = Darwin ]; then
+    [ -d /usr/local/sbin ] && export PATH="$PATH:/usr/local/sbin"
     alias fixaudio='sudo launchctl stop com.apple.audio.coreaudiod'
     alias fixAppStoreApps='killall -KILL storeaccountd'
     alias iCloudStatus='brctl log --wait --shorten'
