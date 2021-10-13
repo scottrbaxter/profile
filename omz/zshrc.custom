@@ -43,7 +43,7 @@ plugins=(aws docker docker-compose nvm ripgrep zsh-autosuggestions)
 
 
 # custom dir function path
-fpath=($fpath /usr/local/share/zsh-completions)
+fpath=($fpath /usr/local/share/zsh-completions /opt/homebrew/share/zsh/site-functions)
 
 # custom PATH stuff
 export PATH_PREVIOUS="$PATH" # needed for reloadZsh
