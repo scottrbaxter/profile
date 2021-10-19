@@ -384,10 +384,6 @@ map Q <Nop>
 set path+=** " '**' recursively searches through subdirectories
 set wildmenu " Display all matching files when we tab-complete
 
-" se mouse=c "
-" se mouse=a " mouse copy turns into visual mode and provides smooth scroll all nice like, i prefer this one
-se mouse+=a " mouse copy turns into visual mode
-" se mouse=nicr " mouse scroll is nicer, and click puts you where the mouse is, but click select doesn't enable visual mode
 " let g:wheel#scroll_on_wrap = 1      " 0=disable, 1=enable (default)
 
 " set ttymouse=sgr
@@ -396,11 +392,16 @@ se mouse+=a " mouse copy turns into visual mode
 " set balloonevalterm
 
 if has('nvim')
-  set clipboard=unnamedplus
-  set mouse=a
-  vmap <LeftRelease> "*ygv
+  " set clipboard=unnamedplus
+  " set mouse=a
+  se mouse+=a " mouse copy turns into visual mode
+  " vmap <LeftRelease> "*ygv
   " set clipboard=autoselect
 else
+  " se mouse=c "
+  " se mouse=a " mouse copy turns into visual mode and provides smooth scroll all nice like, i prefer this one
+  se mouse+=a " mouse copy turns into visual mode
+  " se mouse=nicr " mouse scroll is nicer, and click puts you where the mouse is, but click select doesn't enable visual mode
   set clipboard=autoselect " yank to osx clipboard, but doesn't put vim's change/delete stuff in clipboard
   " set clipboard=unnamedplus,unnamed,autoselect " yank to osx clipboard
   " set clipboard=unnamed,autoselect " yank to osx clipboard including change/delete in vim
