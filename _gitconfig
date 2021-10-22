@@ -5,7 +5,7 @@
     delete               = branch -d
     delete-without-merge = branch -D
     diffw                = diff --word-diff
-    graph                = log --graph --all --decorate --stat --date = iso
+    graph                = log --graph --all --decorate --stat --date=iso
     head-branch          = !git remote show origin | grep HEAD | awk '{print $3}'
     local                = log --oneline --no-merges
     newbranch            = checkout -b
