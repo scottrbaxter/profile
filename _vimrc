@@ -392,7 +392,7 @@ set wildmenu " Display all matching files when we tab-complete
 " set balloonevalterm
 
 if has('nvim')
-  " set clipboard=unnamedplus
+  set clipboard=unnamedplus
   " set mouse=a
   se mouse+=a " mouse copy turns into visual mode
   " vmap <LeftRelease> "*ygv
