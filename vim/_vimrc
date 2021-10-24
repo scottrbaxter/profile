@@ -17,12 +17,12 @@ autocmd VimEnter * if len(filter(values(g:plugs), '!isdirectory(v:val.dir)'))
 call plug#begin('~/.vim/plugged')
 
 " colorscheme/theme
-source $PROFILE_PATH/_vim/colorscheme.vim
+source $PROFILE_PATH/vim/colorscheme.vim
 " remaining profile plugins
-source $PROFILE_PATH/_vim/plugins.vim
+source $PROFILE_PATH/vim/plugins.vim
 " coc.nvim plugin and config
 if has('nvim')
-  source $PROFILE_PATH/_vim/coc.vim
+  source $PROFILE_PATH/vim/coc.vim
 endif
 
 " Initialize plugin system
