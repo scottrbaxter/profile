@@ -17,12 +17,12 @@ autocmd VimEnter * if len(filter(values(g:plugs), '!isdirectory(v:val.dir)'))
 call plug#begin('~/.vim/plugged')
 
 " colorscheme/theme
-source $PROFILE_PATH/_vim/colorscheme.vim
+source $PROFILE_PATH/vim/colorscheme.vim
 " remaining profile plugins
-source $PROFILE_PATH/_vim/plugins.vim
+source $PROFILE_PATH/vim/plugins.vim
 " coc.nvim plugin and config
 if has('nvim')
-  source $PROFILE_PATH/_vim/coc.vim
+  source $PROFILE_PATH/vim/coc.vim
 endif
 
 " Initialize plugin system
@@ -513,14 +513,38 @@ nnoremap <bs> i<bs><esc>w
 " don't add newline character if the file didn't already have one
 set nofixeol
 
+""" colorscheme settings
 " colorscheme default " reverts colorscheme
+""" spacevim colorscheme
 let g:space_vim_dark_background = 234 " (233 = darkest, 235 = default, 238 = lightest)
-" set termguicolors " sets term to use gui colors
 colorscheme space-vim-dark " submodule in profile repo
+" set termguicolors " sets term to use gui colors
+
+let g:airline_powerline_fonts = 1
+" autocmd Filetype yaml call SetYamlOptions()
+" function SetYamlOptions()
+"   set notermguicolors " for space-vim-dark theme, sets term to use gui colors
+"   " colorscheme one
+"   " colorscheme material
+"   " colorscheme nord
+"   " let g:material_style = 'deep ocean'
+"   " let g:material_style = 'darker'
+"   " colorscheme material
+" endfunction
+
+""" material.nvim colorscheme
+" let g:material_style = 'deep ocean'
+" let g:material_style = 'darker'
+" colorscheme material
+
+""" nord.nvim colorscheme
+" let g:nord_contrast = v:true
+" let g:nord_disable_background = v:true
+" colorscheme nord
+
 " autocmd FileType yaml colorscheme material-monokai " makes vim colors (expecially highlight) tolerant
 " autocmd FileType yaml colorscheme asu1dark " makes vim colors (expecially highlight) tolerant
 " autocmd FileType yaml colorscheme getafe " makes vim colors (expecially highlight) tolerant
-" colorscheme getafe " makes vim colors (expecially highlight) tolerant
 
 " highlighting (colors)
 " You can see all the groups currently active with this command: >
