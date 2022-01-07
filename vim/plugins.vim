@@ -61,7 +61,6 @@ Plug 'ivanov/vim-ipython'
 Plug 'jeetsukumaran/vim-indentwise'
 " Plug 'juliosueiras/terraform-lsp'
 " Plug 'keith/swift'
-Plug 'liuchengxu/space-vim-dark'
 Plug 'ntpeters/vim-better-whitespace'
 Plug 'nvie/vim-flake8'
 Plug 'pearofducks/ansible-vim'
@@ -73,6 +72,12 @@ Plug 'Yggdroot/indentLine'
 Plug 'Raimondi/delimitMate'
 " Plug 'neoclide/jsonc.vim'
 Plug 'aymericbeaumet/vim-symlink' " needed for vim-fugitive to follow symlinks
+
+" Theme (colorscheme)
+Plug 'liuchengxu/space-vim-dark'
+" Plug 'rakr/vim-one'
+" Plug 'marko-cerovac/material.nvim'
+" Plug 'shaunsingh/nord.nvim'
 
 " ale
 Plug 'dense-analysis/ale'

@@ -212,6 +212,13 @@ reloadZsh(){
     source "$PROFILE_PATH/omz/zshrc.custom"
 }
 
+shellcheck_lookup(){
+    # https://github.com/koalaman/shellcheck/issues/2413#issuecomment-995208807
+    [[ -z "$1" ]] && echo "No Issue provided" && return 1
+    [[ ! "$1" =~ ^SC[0-9]{4}$ ]] && echo "Not a valid Issue" && return 1
+
+    curl --url  "https://raw.githubusercontent.com/wiki/koalaman/shellcheck/$1.md" # Pipe this into your favourite md viewer
+}
 
 # aliases
 if [ -x "$(command -v nvim)" ]; then
@@ -263,6 +270,7 @@ alias rgtw='rgw --word-regexp --glob' # specify <fileype> then explicit <match>
 alias rr='rsync -avhP'
 alias rrd='rsync -avhP --delete'
 alias scr='screen -dR'
+alias sudo='sudo -E'
 alias vi='vim'
 alias vv='vim $PROFILE_PATH/vim/_vimrc'
 alias vp="vim $PROFILE_PATH/vim/plugins.vim"
@@ -328,6 +336,9 @@ alias tg='terragrunt'
 # fix https://github.com/zsh-users/zsh-autosuggestions/issues/351#issuecomment-515415202
 ZSH_AUTOSUGGEST_CLEAR_WIDGETS_PREVIOUS="$ZSH_AUTOSUGGEST_CLEAR_WIDGETS" # needed for reloadZsh
 ZSH_AUTOSUGGEST_CLEAR_WIDGETS+=(bracketed-paste accept-line)
+
+# https://github.com/ohmyzsh/ohmyzsh/issues/9471
+# unsetopt sharehistory
 
 # additional stuff
 for k in ~/.keyfile-*(N); do source $k; done
