@@ -2,12 +2,15 @@
 
 set -e
 
-# git change to master and pull from remote
+# git change to default branch and pull from remote
 
 PURPLE="\033[0;35m"
 WHITE="\033[0m"
 currentbranch=$(git rev-parse --abbrev-ref HEAD)
 
+check_default_branch(){
+    git remote show origin | awk '/^  HEAD branch:/ {print $NF}'
+}
 
 check_submodule_list(){
     SUBMODULE_LIST=$(git submodule)
@@ -21,12 +24,13 @@ gitColor(){
     git -c color."${1}"=always "${@}"
 }
 
-masterpull(){
-    if [ "${currentbranch}" != master ]; then
-        header "Swithing to Master Branch"
-        gitColor checkout master
+pull_default_branch(){
+    default_branch="$(check_default_branch)"
+    if [ "${currentbranch}" != "${default_branch}" ]; then
+        header "Switching to ${default_branch} branch"
+        gitColor checkout "${default_branch}"
     fi
-    header "Git Pull"
+    header "Pulling ${default_branch}"
     gitColor pull --rebase --prune
     check_submodule_list
     if [ "$SUBMODULE_LIST" ]; then
@@ -37,4 +41,4 @@ masterpull(){
 }
 
 
-masterpull
+pull_default_branch
