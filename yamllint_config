@@ -16,9 +16,7 @@ rules:
   indentation:
     indent-sequences: whatever
   comments-indentation: disable
-  line-length:
-    level: warning
-    max: 120
+  line-length: disable
   truthy: disable
   new-line-at-end-of-file: disable
 
