@@ -22,6 +22,9 @@ tests/local.bats
 # terragrunt
 *.terragrunt-cache
 
+# vscode
+.vscode
+
 # submodules
 # **/doc/tags
 **/submodules
