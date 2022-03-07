@@ -1,8 +1,11 @@
 FROM ubuntu:20.04
 
 ### Base system packages
-RUN apt-get update \
-  && DEBIAN_FRONTEND=noninteractive apt-get -qy install --no-install-recommends \
+RUN apt-get update; \
+  DEBIAN_FRONTEND=noninteractive apt-get -qy install --no-install-recommends \
+    software-properties-common; \
+    add-apt-repository --yes ppa:neovim-ppa/stable; \
+  DEBIAN_FRONTEND=noninteractive apt-get -qy install --no-install-recommends \
     build-essential \
     curl \
     dirmngr \
@@ -20,19 +23,19 @@ RUN apt-get update \
     llvm \
     locales \
     make \
+    neovim \
     python3-pip \
     ripgrep \
     tk-dev \
     unzip \
-    vim \
     wget \
     xz-utils \
     zlib1g-dev \
     zsh \
-  && apt-get autoremove -y \
-  && apt-get clean \
-  && rm -rf /var/lib/apt/lists/* \
-  && LC_ALL="en_US.UTF-8" locale-gen en_US.UTF-8
+  && apt-get autoremove -y; \
+  apt-get clean; \
+  rm -rf /var/lib/apt/lists/*; \
+  LC_ALL="en_US.UTF-8" locale-gen en_US.UTF-8
 
 ### Install AWS CLI version 2
 WORKDIR /tmp
@@ -72,16 +75,16 @@ RUN pip install --no-cache-dir --upgrade pip \
 ### Make directories
 RUN mkdir -p \
   ~/.config/coc \
+  ~/.config/nvim \
   ~/.config/yamllint \
   ~/development \
   ~/.vim/_temp \
   ~/.vim/bundle
 
-### copy profile repo
-COPY . /root/development/profile
+### clone repo
 WORKDIR /root/development/profile
-RUN git submodule sync \
-  && git submodule update --init --recursive --depth 1
+RUN git clone https://github.com/scottrbaxter/profile.git /root/development/profile; \
+  git submodule sync && git submodule update --init --recursive --depth 1
 
 ### install oh-my-zsh
 RUN wget -P /tmp https://raw.github.com/robbyrussell/oh-my-zsh/master/tools/install.sh \
@@ -101,26 +104,27 @@ WORKDIR $PROFILE_PATH/omz/custom/themes/powerlevel10k/gitstatus
 RUN ./install
 
 ### create symlinks
-RUN ln -s $PROFILE_PATH/omz/_zshrc ~/.zshrc \
-  && ln -s $PROFILE_PATH/_ansible.cfg ~/.ansible.cfg \
-  && ln -s $PROFILE_PATH/_flake8 ~/.config/flake8 \
-  && ln -s $PROFILE_PATH/_gitconfig ~/.gitconfig \
-  && ln -s $PROFILE_PATH/_gitignore_global ~/.gitignore_global \
-  && ln -s $PROFILE_PATH/_shellcheckrc ~/.shellcheckrc \
-  && ln -s $PROFILE_PATH/yamllint_config ~/.config/yamllint/config \
-  && ln -s $PROFILE_PATH/hadolint.yaml ~/.config/hadolint.yaml \
-  && ln -s $PROFILE_PATH/_vimrc ~/.vimrc \
-  && ln -s $PROFILE_PATH/_vim/coc-settings.json ~/.vim/coc-settings.json
+RUN ln -s $PROFILE_PATH/omz/_zshrc ~/.zshrc; \
+  ln -s $PROFILE_PATH/_ansible.cfg ~/.ansible.cfg; \
+  ln -s $PROFILE_PATH/_flake8 ~/.config/flake8; \
+  ln -s $PROFILE_PATH/_gitconfig ~/.gitconfig; \
+  ln -s $PROFILE_PATH/_gitignore_global ~/.gitignore_global; \
+  ln -s $PROFILE_PATH/_shellcheckrc ~/.shellcheckrc; \
+  ln -s $PROFILE_PATH/yamllint_config ~/.config/yamllint/config; \
+  ln -s $PROFILE_PATH/hadolint.yaml ~/.config/hadolint.yaml; \
+  ln -s $PROFILE_PATH/vim/_vimrc ~/.vimrc; \
+  ln -s $PROFILE_PATH/vim/_vimrc ~/.config/nvim/init.vim; \
+  ln -s $PROFILE_PATH/vim/_vim/coc-settings.json ~/.vim/coc-settings.json
 
 ### install vim-plug
-RUN wget -P /root/.vim/autoload \
-  https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
+RUN curl -fLo "${XDG_DATA_HOME:-$HOME/.local/share}"/nvim/site/autoload/plug.vim \
+  --create-dirs https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
 # using '|| :' cuz 'colorscheme space-vim-dark' is not yet installed
-RUN vim -E -s -c "source $HOME/.vimrc" -c PlugInstall -c qall || :
+RUN nvim -E -s -c "source $HOME/.vimrc" -c PlugInstall -c qall || :
 
 ### Coc
-RUN vim +'CocInstall -sync coc-json coc-pyright coc-tsserver' +qall \
-  && vim +CocUpdateSync +qall
+RUN nvim +'CocInstall -sync coc-json coc-pyright coc-tsserver' +qall \
+  && nvim +CocUpdateSync +qall
 
 WORKDIR /root
 CMD ["zsh"]
