@@ -40,11 +40,11 @@
   typeset -g POWERLEVEL9K_LEFT_PROMPT_ELEMENTS=(
     # =========================[ Line #1 ]=========================
     time                    # current time
-    # os_icon               # os identifier
+    os_icon               # os identifier
     hist                    # running count of commands executed in current shell
     load                    # CPU load
     command_execution_time  # duration of the last command
-    background_jobs         # presence of background jobs
+    # background_jobs         # presence of background jobs
     status                  # exit code of the last command
     sts                     # check aws sts
     context                 # user@hostname

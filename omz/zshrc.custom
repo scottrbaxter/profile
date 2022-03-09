@@ -116,6 +116,12 @@ if [ -e "$BREW_PREFIX/bin/go" ] || [ -e "/usr/bin/go" ]; then
     PATH="$GOPATH/bin:$PATH"
 fi
 
+# node.js environment
+if [ -s "$HOME/.nvm/nvm.sh" ]; then
+    export NVM_DIR="$HOME/.nvm"
+    \. "$NVM_DIR/nvm.sh"
+fi
+
 # handles special characters from links/urls
 DISABLE_MAGIC_FUNCTIONS=true
 ZSH_AUTOSUGGEST_MANUAL_REBIND=1
@@ -221,11 +227,13 @@ shellcheck_lookup(){
 }
 
 # aliases
-if [ -x "$(command -v nvim)" ]; then
-    VISUAL="nvim"; export VISUAL
-    EDITOR="$VISUAL"; export EDITOR
-    alias vim=nvim
+if [ -x "$(command -v lvim)" ]; then
+    EDITOR="lvim"; export EDITOR
+elif [ -x "$(command -v nvim)" ]; then
+    EDITOR="nvim"; export EDITOR
 fi
+alias vim=$EDITOR
+VISUAL="$EDITOR"; export VISUAL
 
 alias D='cd ~/development'
 alias N='cd ~/notes'
