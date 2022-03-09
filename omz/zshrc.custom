@@ -260,7 +260,6 @@ alias pep8="pep8 -v"
 alias bep8="bashate"
 alias publicip='dig +short myip.opendns.com @resolver1.opendns.com'
 alias p=python
-alias rar='unrar'
 alias rgl='rg --files-with-matches' # print filenames with contents that match
 alias rgg='rg --files | rg' # match part of filename
 alias rggw='rg --files | rg --word-regexp' # match filenames explicit words
