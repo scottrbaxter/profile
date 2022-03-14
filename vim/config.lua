@@ -10,9 +10,14 @@ an executable
 
 -- general
 lvim.log.level = "warn"
-lvim.format_on_save = true
+lvim.format_on_save = false
+vim.cmd([[
+  set termguicolors
+  hi LineNr ctermbg=NONE guibg=NONE
+  let g:space_vim_dark_background = 234
+  hi Comment guifg=#5C6370 ctermfg=59
+]])
 lvim.colorscheme = "space-vim-dark"
-vim.g.space_vim_dark_background = 234
 
 -- lvim.colorscheme = "space-nvim"
 -- vim.g.space_nvim_transparent_bg = false
@@ -36,6 +41,9 @@ lvim.keys.normal_mode["<C-s>"] = ":w<cr>"
 -- edit a default keymapping
 -- lvim.keys.normal_mode["<C-q>"] = ":q<cr>"
 vim.cmd([[
+  " Map the arrow keys to be based on display lines, not physical lines
+  map <Down> gj
+  map <Up> gk
   map <S-u> <C-r>
   nmap v ve
   nmap <space>r gcc
@@ -51,8 +59,6 @@ vim.cmd([[
   nmap <S-C-Right> <C-W>l
   nmap <S-Up> V<Up>^
   nmap <S-Down> V<Down>^
-  nmap <space>' cs"'
-  nmap <space>" cs'"
   vmap <S-Up> <Up>
   vmap <S-Down> <Down>
   vmap <S-Left> <
@@ -60,6 +66,7 @@ vim.cmd([[
   vmap <S-Right> >
   nmap <S-Right> >>
   nmap <space>b :GitBlameToggle<CR>
+  nmap ` v~
   nnoremap <C-Up> :m .-2<CR>==
   nnoremap <C-k> :m .-2<CR>==
   nnoremap <C-Down> :m .+1<CR>==
@@ -79,13 +86,14 @@ vim.cmd([[
   vmap ( S(
   vmap ) S)
   vmap ` S`
+  vmap ` S`
   let g:gitblame_enabled = 0
   set list lcs=eol:¬,tab:▸\-
   let g:indentLine_color_term = 239
   let g:indentLine_char = '|'
   let g:indentLine_concealcursor = 'inc'
   let g:indentLine_conceallevel = 1
-  set nowrap                        " don't wrap lines
+  set wrap                          " wrap lines
   set tabstop=2                     " a tab is two spaces
   set shiftwidth=2                  " an autoindent (with <<) is two spaces
   set expandtab                     " use spaces, not tabs
@@ -99,6 +107,8 @@ vim.cmd([[
   set listchars+=precedes:<         " The character to show in the last column when wrap is
   " end of line has $, tab has ▸
   set list lcs=eol:¬,tab:▸\-
+  nmap <silent> <F3> :set invwrap<CR>:set wrap?<CR>
+  nmap W :set invwrap<CR>:set wrap?<CR>
 ]])
 
 -- Change Telescope navigation to use j and k for navigation and n and p for history in both input and normal mode.
@@ -223,7 +233,6 @@ lvim.plugins = {
   {"liuchengxu/space-vim-dark"},
   {"Th3Whit3Wolf/space-nvim"},
   {"arzg/vim-substrata"},
-  {"scrooloose/nerdcommenter"},
   {"norcalli/nvim-colorizer.lua"},
   {"rktjmp/lush.nvim"},
   {"sindrets/diffview.nvim", requires = "nvim-lua/plenary.nvim" },
