@@ -109,6 +109,7 @@ RUN  eval "$(pyenv init --path)"; \
     ansible \
     ansible-lint \
     autopep8 \
+    codespell \
     ipython \
     isort \
     flake8 \
