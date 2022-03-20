@@ -16,7 +16,7 @@ if v:version > 580
     endif
 endif
 
-let g:colors_name='space-vim-dark'
+let g:colors_name='space-vim-custom'
 
 " refer to http://www.calmar.ws/vim/256-xterm-24bit-rgb-color-chart.html
 let s:color256 = {
@@ -106,7 +106,7 @@ let s:bg4 = s:bg + 4
 
 " call s:hi(item, fg, bg, cterm, gui)
 
-call s:hi('Normal' , 249 , s:bg , 'None' , 'None')
+call s:hi('Normal' , 253 , s:bg , 'None' , 'None')
 call s:hi('Cursor' , 235 , 178  , 'bold' , 'bold')
 
 call s:hi('LineNr' , 239+s:bias , s:bg0 , 'None' , 'None')
@@ -170,8 +170,8 @@ call s:hi('Type'       , 68 , '' , 'None'      , 'None')
 call s:hi('Typedef'    , 68 , '' , 'None'      , 'None')
 call s:hi('Underlined' , ''  , '' , 'underline' , 'underline')
 
-call s:hi('Search'    , 16 , 76    , 'bold' , 'bold')
-call s:hi('IncSearch' , 16 , 167   , 'bold' , 'bold')
+call s:hi('Search'    , 16 , 167    , 'bold' , 'bold')
+call s:hi('IncSearch' , 7 , 125   , 'bold' , 'bold')
 call s:hi('MatchParen', 40 , s:bg0 , 'bold,underline', 'bold,underline')
 
 call s:hi('ModeMsg'  , 229 , '' , 'None' , 'None')
@@ -209,7 +209,7 @@ call s:hi('Tag'          , 161 , ''  , 'None' , 'None')
 call s:hi('Title'        , 176 , ''  , 'None' , 'None')
 call s:hi('StorageClass' , 178 , ''  , 'bold' , 'bold')
 
-call s:hi('Comment'   , 30 , ''    , 'None' , 'italic')
+call s:hi('Comment'   , 8 , ''    , 'None' , 'italic')
 call s:hi('Visual'    , '' , s:bg3 , 'None' , 'None')
 call s:hi('VisualNOS' , '' , s:bg3 , 'None' , 'None')
 

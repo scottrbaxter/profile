@@ -10,15 +10,12 @@ an executable
 
 -- general
 lvim.log.level = "warn"
-vim.cmd([[
-  set termguicolors
-  hi LineNr ctermbg=NONE guibg=NONE
-  let g:space_vim_dark_background = 234
-  hi Comment guifg=#5C6370 ctermfg=59
-]])
-lvim.colorscheme = "space-vim-dark"
+lvim.builtin.treesitter.highlight.enable = false
+lvim.transparent_window = true
+lvim.colorscheme = "space-vim-custom" -- custom: ~/.config/lvim/colors/space-vim-custom.vim
 
--- lvim.colorscheme = "space-nvim"
+-- vim.cmd "let g:space_vim_dark_background = 234"
+-- lvim.lsp.document_highlight = false
 -- vim.g.space_nvim_transparent_bg = false
 -- lvim.colorscheme = "substrata"
 -- lvim.colorscheme = "tokyonight"
@@ -29,6 +26,7 @@ lvim.colorscheme = "space-vim-dark"
 -- lvim.g.material_style = "deep ocean"
 -- lvim.g.material_style = "darker"
 
+vim.cmd "set iskeyword+=-"
 vim.cmd "set whichwrap=b,s" -- do not wrap cursor
 
 -- keymappings [view all the defaults by pressing <leader>Lk]
@@ -49,7 +47,7 @@ vim.cmd([[
   vmap <space>r gcc<esc>
   nmap <space>q :q<CR>
   nnoremap q :q<CR>
-  nmap <space>Q :q!<CR>
+  nnoremap <space>Q :q!<CR>
   nmap <space>w :w<CR>
   nmap <CR> o<Esc>
   nmap <Up> <Up>^
@@ -66,6 +64,7 @@ vim.cmd([[
   nmap <S-Right> >>
   nmap <space>b :GitBlameToggle<CR>
   nmap ` v~
+  nmap <space>f :StripWhitespace<CR>
   nnoremap <C-Up> :m .-2<CR>==
   nnoremap <C-k> :m .-2<CR>==
   nnoremap <C-Down> :m .+1<CR>==
@@ -92,7 +91,7 @@ vim.cmd([[
   let g:indentLine_char = '|'
   let g:indentLine_concealcursor = 'inc'
   let g:indentLine_conceallevel = 1
-  set wrap                          " wrap lines
+  set nowrap                          " wrap lines
   set tabstop=2                     " a tab is two spaces
   set shiftwidth=2                  " an autoindent (with <<) is two spaces
   set expandtab                     " use spaces, not tabs
@@ -131,11 +130,16 @@ vim.cmd([[
 -- Use which-key to add extra bindings with the leader-key prefix
 lvim.builtin.which_key.mappings["P"] = { "<cmd>Telescope projects<CR>", "Projects" }
 lvim.builtin.which_key.mappings["r"] = { "<cmd>lua require('Comment.api').toggle_current_linewise()<CR>", "Comment" }
+lvim.builtin.which_key.mappings["Q"] = { "<cmd>q!<CR>", "Quit!" }
+lvim.builtin.which_key.mappings["Th"] = { "<cmd>TSHighlightCapturesUnderCursor<CR>", "Highlight"}
+lvim.builtin.which_key.mappings["Tp"] = { "<cmd>TSPlaygroundToggle<CR>", "Playground"}
+lvim.builtin.which_key.mappings["/"] = nil
+lvim.builtin.which_key.mappings["F"] = { "<cmd>StripWhitespace<CR>", "Fix Whitespace"}
 lvim.builtin.which_key.mappings["t"] = {
   name = "+Trouble",
   r = { "<cmd>Trouble lsp_references<cr>", "References" },
   f = { "<cmd>Trouble lsp_definitions<cr>", "Definitions" },
-  d = { "<cmd>Trouble lsp_document_diagnostics<cr>", "Diagnostics" },
+  d = { "<cmd>Trouble document_diagnostics<cr>", "Diagnostics" },
   q = { "<cmd>Trouble quickfix<cr>", "QuickFix" },
   l = { "<cmd>Trouble loclist<cr>", "LocationList" },
   w = { "<cmd>Trouble lsp_workspace_diagnostics<cr>", "Diagnostics" },
@@ -143,7 +147,7 @@ lvim.builtin.which_key.mappings["t"] = {
 
 -- TODO: User Config for predefined plugins
 -- After changing plugin config exit and reopen LunarVim, Run :PackerInstall :PackerCompile
-lvim.builtin.dashboard.active = true
+lvim.builtin.alpha.active = true
 lvim.builtin.notify.active = true
 lvim.builtin.terminal.active = true
 lvim.builtin.nvimtree.setup.view.side = "left"
@@ -166,8 +170,8 @@ lvim.builtin.treesitter.ensure_installed = {
   "yaml",
 }
 
-lvim.builtin.treesitter.ignore_install = { "haskell" }
-lvim.builtin.treesitter.highlight.enabled = true
+-- lvim.builtin.treesitter.ignore_install = { "haskell" }
+-- lvim.builtin.treesitter.highlight.enabled = true
 
 -- generic LSP settings
 
@@ -192,21 +196,21 @@ lvim.builtin.treesitter.highlight.enabled = true
 --   buf_set_option("omnifunc", "v:lua.vim.lsp.omnifunc")
 -- end
 
--- -- set a formatter, this will override the language server formatting capabilities (if it exists)
--- local formatters = require "lvim.lsp.null-ls.formatters"
--- formatters.setup {
---   { command = "black", filetypes = { "python" } },
---   { command = "isort", filetypes = { "python" } },
---   {
---     -- each formatter accepts a list of options identical to https://github.com/jose-elias-alvarez/null-ls.nvim/blob/main/doc/BUILTINS.md#Configuration
---     command = "prettier",
---     ---@usage arguments to pass to the formatter
---     -- these cannot contain whitespaces, options such as `--line-width 80` become either `{'--line-width', '80'}` or `{'--line-width=80'}`
---     extra_args = { "--print-with", "100" },
---     ---@usage specify which filetypes to enable. By default a providers will attach to all the filetypes it supports.
---     filetypes = { "typescript", "typescriptreact" },
---   },
--- }
+-- set a formatter, this will override the language server formatting capabilities (if it exists)
+local formatters = require "lvim.lsp.null-ls.formatters"
+formatters.setup {
+  { command = "black", filetypes = { "python" } },
+  { command = "isort", filetypes = { "python" } },
+  {
+    -- each formatter accepts a list of options identical to https://github.com/jose-elias-alvarez/null-ls.nvim/blob/main/doc/BUILTINS.md#Configuration
+    command = "prettier",
+    ---@usage arguments to pass to the formatter
+    -- these cannot contain whitespaces, options such as `--line-width 80` become either `{'--line-width', '80'}` or `{'--line-width=80'}`
+    extra_args = { "--print-with", "100" },
+    ---@usage specify which filetypes to enable. By default a providers will attach to all the filetypes it supports.
+    filetypes = { "typescript", "typescriptreact" },
+  },
+}
 
 -- set additional linters
 local linters = require "lvim.lsp.null-ls.linters"
@@ -232,12 +236,6 @@ lvim.plugins = {
     "folke/trouble.nvim",
     cmd = "TroubleToggle"
   },
-  {"bluz71/vim-moonfly-colors"},
-  {"folke/tokyonight.nvim"},
-  {"marko-cerovac/material.nvim"},
-  {"liuchengxu/space-vim-dark"},
-  {"Th3Whit3Wolf/space-nvim"},
-  {"arzg/vim-substrata"},
   {"norcalli/nvim-colorizer.lua"},
   {"rktjmp/lush.nvim"},
   {"sindrets/diffview.nvim", requires = "nvim-lua/plenary.nvim" },
@@ -248,6 +246,13 @@ lvim.plugins = {
   {"Yggdroot/indentLine"},
   {"tpope/vim-surround"},
   {"ntpeters/vim-better-whitespace"},
+  {"Raimondi/delimitMate"},
+  {"luochen1990/rainbow"},
+  -- {"folke/tokyonight.nvim"},
+  -- {"marko-cerovac/material.nvim"},
+  -- {"arzg/vim-substrata"},
+  -- {"bluz71/vim-moonfly-colors"},
+  -- {"liuchengxu/space-vim-dark"},
 }
 
 -- Autocommands (https://neovim.io/doc/user/autocmd.html)
@@ -256,12 +261,69 @@ lvim.plugins = {
 -- }
 
 lvim.builtin.lualine.style = "default" -- or "none"
-lvim.builtin.lualine.options.theme = "iceberg_dark"
--- lvim.builtin.lualine.options.theme = "papercolor_dark"
+-- lvim.builtin.lualine.style = "none" -- or "none"
+-- lvim.builtin.lualine.options.theme = "iceberg_dark"
 -- lvim.builtin.lualine.options.theme = "auto"
+
+local colors = {
+  black = "#0f1419", -- black
+  light_black = "#14191f", -- lighter black
+  slight_black = "#303c4b", -- slightly lighter black
+  dark_grey = "#3e4b59", -- dark grey
+  dark_yellow = "#b8cc52", -- dark yellow
+  faint_yellow = "#e6e1cf", -- faint yellow
+  yellow = "#ffee99", -- yellow
+  light_blue = "#36a3d9", -- light blue
+  light_red = "#f07178", -- light red
+  d_black = "#000000", -- distinguished text black
+  d_grey = "#8a8a8a", -- distinguished normal grey
+  d_orange = "#c86627", -- distinguished normal orange
+  d_yellow = "#afaf69", -- distinguished insert yellow
+  d_red = "#a46361", -- distinguished visual red
+  d_blue = "#6886ab", -- distinguished replace blue
+}
+
+lvim.builtin.lualine.options.theme = {
+  normal = {
+    c = { fg = colors.d_grey, bg = colors.light_black },
+    -- a = { fg = colors.black, bg = colors.light_blue, gui = "bold" },
+    a = { fg = colors.d_black, bg = colors.d_grey, gui = "bold" },
+    b = { fg = colors.faint_yellow, bg = colors.light_black },
+  },
+  insert = {
+    -- a = { fg = colors.black, bg = colors.dark_yellow, gui = "bold" },
+    a = { fg = colors.black, bg = colors.d_yellow, gui = "bold" },
+    b = { fg = colors.faint_yellow, bg = colors.light_black },
+  },
+  visual = {
+    -- a = { fg = colors.black, bg = colors.yellow, gui = "bold" },
+    a = { fg = colors.black, bg = colors.d_red, gui = "bold" },
+    b = { fg = colors.faint_yellow, bg = colors.light_black },
+  },
+  replace = {
+    -- a = { fg = colors.black, bg = colors.light_red, gui = "bold" },
+    a = { fg = colors.black, bg = colors.d_blue, gui = "bold" },
+    b = { fg = colors.faint_yellow, bg = colors.light_black },
+  },
+  inactive = {
+    c = { fg = colors.faint_yellow, bg = colors.black },
+    a = { fg = colors.faint_yellow, bg = colors.light_black, gui = "bold" },
+    -- a = { fg = colors.faint_yellow, bg = colors.light_black, gui = "bold" },
+    b = { fg = colors.faint_yellow, bg = colors.light_black },
+  },
+}
 
 -- do not modify on write/save file
 lvim.format_on_save = false
 
 -- https://github.com/LunarVim/LunarVim/issues/1867
 lvim.builtin.treesitter.indent = { enable = true, disable = { "python" } }
+
+vim.opt.timeoutlen = 10
+
+-- vim.opt.swapfile = true
+-- vim.cmd "set backupdir^=~/.cache/nvim/backupdir//" -- where to put backup files.
+-- vim.cmd "set directory^=~/.caache/nvim/temp//"   -- where to put swap files.
+
+lvim.builtin.treesitter.playground.enable = true
+-- lvim.lsp.diagnostics.virtual_text = false -- line diagnostics will not auto display, use 'gl'

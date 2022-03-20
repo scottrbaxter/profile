@@ -39,6 +39,7 @@ RUN apt-get update; \
     neovim \
     python3-pip \
     ripgrep \
+    shellcheck \
     sudo \
     tk-dev \
     unzip \
@@ -121,9 +122,10 @@ RUN mkdir -p \
   ~/.config/coc \
   ~/.config/nvim \
   ~/.config/yamllint \
-  ~/development \
+  ~/.config/lvim/colors \
   ~/.vim/_temp \
-  ~/.vim/bundle
+  ~/.vim/bundle \
+  ~/development
 
 ### clone repo
 RUN git clone https://github.com/scottrbaxter/profile.git $PROFILE_PATH; \
@@ -147,11 +149,12 @@ WORKDIR /tmp
 RUN wget -q https://raw.githubusercontent.com/lunarvim/lunarvim/master/utils/installer/install.sh; \
   bash install.sh --no-install-dependencies; \
   rm install.sh
-WORKDIR /home/$USER/.local/share/lunarvim/site/pack/packer/start
-RUN git clone https://github.com/liuchengxu/space-vim-dark.git --depth 1 space-vim-dark
 WORKDIR /home/$USER/.config/lvim
 RUN mv config.lua config.lua.org; \
   lvim --headless +LvimUpdate +PackerSync +qa
+# RUN lvim --headless +LvimUpdate +PackerSync +qa
+# RUN nvim --headless +'autocmd User PackerComplete sleep 100m | qall' +PackerInstall
+# RUN nvim --headless +'autocmd User PackerComplete sleep 100m | qall' +PackerSync
 
 
 ### create symlinks
@@ -164,7 +167,8 @@ RUN \
   ln -s $PROFILE_PATH/_shellcheckrc ~/.shellcheckrc; \
   ln -s $PROFILE_PATH/yamllint_config ~/.config/yamllint/config; \
   ln -s $PROFILE_PATH/hadolint.yaml ~/.config/hadolint.yaml; \
-  ln -s $PROFILE_PATH/vim/config.lua ~/.config/lvim/config.lua;
+  ln -s $PROFILE_PATH/vim/config.lua ~/.config/lvim/config.lua; \
+  ln -s $PROFILE_PATH/vim/space-vim-custom.vim ~/.config/lvim/colors/space-vim-custom.vim
 
 WORKDIR $PROFILE_PATH
 CMD ["zsh"]
