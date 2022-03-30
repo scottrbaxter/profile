@@ -101,13 +101,9 @@ fi
 if [ -e "$BREW_PREFIX/bin/pyenv" ] || [ -e "$HOME/.pyenv/bin/pyenv" ]; then
     export PYENV_ROOT="$HOME/.pyenv"
     export PATH="$PYENV_ROOT/bin:$PATH"
-    export PYTHON_CONFIGURE_OPTS="--enable-shared" # for YouCompleteMe
     eval "$(pyenv init --path)"
+    eval "$(pyenv init -)"
     eval "$(pyenv virtualenv-init -)"
-    if whence aws 1>/dev/null; then
-        autoload bashcompinit && bashcompinit
-        complete -C "$(command -v aws_completer)" aws
-    fi
 fi
 
 # go environment
@@ -289,8 +285,6 @@ alias zz="vim $PROFILE_PATH/omz/zshrc.custom"
 
 # ansible
 # export ANSIBLE_CONFIG="$PROFILE_PATH/ansible.cfg"
-alias ap='ansible-playbook'
-alias galaxy='ansible-galaxy'
 # alias ansible-lint='ansible-lint -c $PROFILE_PATH/_ansible-lint'
 # export ANSIBLE_CALLBACK_WHITELIST="profile_tasks, timer"
 # export ANSIBLE_LOAD_CALLBACK_PLUGINS=True
@@ -333,12 +327,8 @@ alias kx='kubectx'
 # alias stern='stern --timestamps'
 
 # terraform
-export AWS_DEFAULT_REGION='us-east-1'
-export TF_PLUGIN_CACHE_DIR="$HOME/.terraform.d/plugin-cache"
-export TERRAGRUNT_DOWNLOAD="$HOME/.terraform.d/terragrunt-tmp"
-export TERRAGRUNT_SOURCE_UPDATE='true'
-alias t='terraform'
-alias tg='terragrunt'
+# export TF_PLUGIN_CACHE_DIR="$HOME/.terraform.d/plugin-cache"
+# export TERRAGRUNT_DOWNLOAD="$HOME/.terraform.d/terragrunt-tmp"
 
 # fix https://github.com/zsh-users/zsh-autosuggestions/issues/351#issuecomment-515415202
 ZSH_AUTOSUGGEST_CLEAR_WIDGETS_PREVIOUS="$ZSH_AUTOSUGGEST_CLEAR_WIDGETS" # needed for reloadZsh
