@@ -1,4 +1,5 @@
 FROM ubuntu:20.04
+LABEL description="profile"
 
 ARG USER=ubuntu
 ARG PROFILE_PATH=/home/$USER/development/profile
@@ -22,6 +23,8 @@ RUN apt-get update; \
     cargo \
     curl \
     dirmngr \
+    fd-find \
+    fzf \
     file \
     git \
     gpg \
@@ -45,7 +48,6 @@ RUN apt-get update; \
     unzip \
     wget \
     xz-utils \
-    yarn \
     zlib1g-dev \
     zsh; \
   apt-get autoremove -y; \
@@ -85,14 +87,14 @@ RUN wget -q -P /tmp https://iterm2.com/misc/install_shell_integration.sh; \
 
 ### Node
 ARG NVM_DIR="/home/$USER/.nvm"
-ARG NODE_VERSION="v17.7.1"
+ARG NODE_VERSION="v16.14.2"
 RUN ( git clone https://github.com/nvm-sh/nvm.git "$NVM_DIR"; \
   cd "$NVM_DIR"; \
   git checkout `git describe --abbrev=0 --tags --match "v[0-9]*" $(git rev-list --tags --max-count=1)` \
   ) && \. "$NVM_DIR/nvm.sh"; \
   nvm install ${NODE_VERSION}; \
   nvm alias default ${NODE_VERSION}; \
-  npm install -g aws-cdk
+  npm install -g aws-cdk neovim tree-sitter-cli
 
 ### Python
 ENV PYENV_ROOT="/home/$USER/.pyenv"
@@ -100,7 +102,6 @@ ENV PATH="$PYENV_ROOT/bin:$PATH:/home/$USER/.local/bin"
 RUN git clone https://github.com/pyenv/pyenv.git $PYENV_ROOT; \
   git clone https://github.com/pyenv/pyenv-virtualenv.git ${PYENV_ROOT}/plugins/pyenv-virtualenv;
 RUN  eval "$(pyenv init --path)"; \
-  eval "$(pyenv virtualenv-int -)"; \
   cd ~/.pyenv; \
   src/configure; \
   make -C src; \
@@ -114,6 +115,7 @@ RUN  eval "$(pyenv init --path)"; \
     ipython \
     isort \
     flake8 \
+    pynvim \
     yamllint \
     yapf
 
@@ -122,7 +124,6 @@ RUN mkdir -p \
   ~/.config/coc \
   ~/.config/nvim \
   ~/.config/yamllint \
-  ~/.config/lvim/colors \
   ~/.vim/_temp \
   ~/.vim/bundle \
   ~/development
@@ -145,16 +146,20 @@ WORKDIR $PROFILE_PATH/omz/custom/themes/powerlevel10k/gitstatus
 RUN ./install
 
 ### LunarVim
-WORKDIR /tmp
-RUN wget -q https://raw.githubusercontent.com/lunarvim/lunarvim/master/utils/installer/install.sh; \
-  bash install.sh --no-install-dependencies; \
-  rm install.sh
+ARG LV_BRANCH=rolling
+WORKDIR /
+RUN curl -LSs https://raw.githubusercontent.com/lunarvim/lunarvim/${LV_BRANCH}/utils/installer/install-neovim-from-release | bash && \
+  LV_BRANCH=${LV_BRANCH} curl -LSs https://raw.githubusercontent.com/lunarvim/lunarvim/${LV_BRANCH}/utils/installer/install.sh | bash -s -- --no-install-dependencies
+# RUN wget -q https://raw.githubusercontent.com/lunarvim/lunarvim/master/utils/installer/install.sh; \
+#   bash install.sh --no-install-dependencies \
+#   && rm install.sh
 WORKDIR /home/$USER/.config/lvim
-RUN mv config.lua config.lua.org; \
-  lvim --headless +LvimUpdate +PackerSync +qa
-# RUN lvim --headless +LvimUpdate +PackerSync +qa
-# RUN nvim --headless +'autocmd User PackerComplete sleep 100m | qall' +PackerInstall
-# RUN nvim --headless +'autocmd User PackerComplete sleep 100m | qall' +PackerSync
+RUN mv config.lua config.lua.org
+WORKDIR /home/$USER/.config/lvim
+RUN mkdir colors; \
+  ln -s $PROFILE_PATH/vim/config.lua ~/.config/lvim/config.lua; \
+  ln -s $PROFILE_PATH/vim/space-vim-custom.vim ~/.config/lvim/colors/space-vim-custom.vim; \
+  lvim --headless +'autocmd User PackerComplete sleep 100m | qall' +PackerSync
 
 
 ### create symlinks
@@ -166,9 +171,7 @@ RUN \
   ln -s $PROFILE_PATH/_gitignore_global ~/.gitignore_global; \
   ln -s $PROFILE_PATH/_shellcheckrc ~/.shellcheckrc; \
   ln -s $PROFILE_PATH/yamllint_config ~/.config/yamllint/config; \
-  ln -s $PROFILE_PATH/hadolint.yaml ~/.config/hadolint.yaml; \
-  ln -s $PROFILE_PATH/vim/config.lua ~/.config/lvim/config.lua; \
-  ln -s $PROFILE_PATH/vim/space-vim-custom.vim ~/.config/lvim/colors/space-vim-custom.vim
+  ln -s $PROFILE_PATH/hadolint.yaml ~/.config/hadolint.yaml
 
 WORKDIR $PROFILE_PATH
 CMD ["zsh"]

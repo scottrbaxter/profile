@@ -42,12 +42,14 @@ vim.cmd([[
   map <Down> gj
   map <Up> gk
   map <S-u> <C-r>
+  nmap gg gg^
   nmap v ve
   nmap <space>r gcc
   vmap <space>r gcc<esc>
   nmap <space>q :q<CR>
   nnoremap q :q<CR>
   nnoremap <space>Q :q!<CR>
+  nnoremap Q :q<CR>
   nmap <space>w :w<CR>
   nmap <CR> o<Esc>
   nmap <Up> <Up>^
@@ -156,17 +158,12 @@ lvim.builtin.nvimtree.show_icons.git = 0
 -- if you don't want all the parsers change this to a table of the ones you want
 lvim.builtin.treesitter.ensure_installed = {
   "bash",
-  "c",
   "dockerfile",
   "javascript",
   "json",
   "lua",
   "python",
   "typescript",
-  "tsx",
-  "css",
-  "rust",
-  "java",
   "yaml",
 }
 
@@ -326,4 +323,4 @@ vim.opt.timeoutlen = 10
 -- vim.cmd "set directory^=~/.caache/nvim/temp//"   -- where to put swap files.
 
 lvim.builtin.treesitter.playground.enable = true
--- lvim.lsp.diagnostics.virtual_text = false -- line diagnostics will not auto display, use 'gl'
+lvim.lsp.diagnostics.virtual_text = false -- line diagnostics will not auto display, use 'gl'
