@@ -64,7 +64,6 @@ vim.cmd([[
   nmap <S-Left> <<
   vmap <S-Right> >
   nmap <S-Right> >>
-  nmap <space>b :GitBlameToggle<CR>
   nmap ` v~
   nmap <space>f :StripWhitespace<CR>
   nnoremap <C-Up> :m .-2<CR>==
@@ -92,7 +91,7 @@ vim.cmd([[
   let g:indentLine_color_term = 239
   let g:indentLine_char = '|'
   let g:indentLine_concealcursor = 'inc'
-  let g:indentLine_conceallevel = 1
+  let g:indentLine_conceallevel = 0 " do not conceal/hide extmarks (e.g. quotes)
   set nowrap                          " wrap lines
   set tabstop=2                     " a tab is two spaces
   set shiftwidth=2                  " an autoindent (with <<) is two spaces
@@ -137,6 +136,7 @@ lvim.builtin.which_key.mappings["Th"] = { "<cmd>TSHighlightCapturesUnderCursor<C
 lvim.builtin.which_key.mappings["Tp"] = { "<cmd>TSPlaygroundToggle<CR>", "Playground"}
 lvim.builtin.which_key.mappings["/"] = nil
 lvim.builtin.which_key.mappings["F"] = { "<cmd>StripWhitespace<CR>", "Fix Whitespace"}
+lvim.builtin.which_key.mappings["B"] = { "<cmd>GitBlameToggle<CR>", "Git Blame Toggle"}
 lvim.builtin.which_key.mappings["t"] = {
   name = "+Trouble",
   r = { "<cmd>Trouble lsp_references<cr>", "References" },
