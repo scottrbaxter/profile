@@ -108,6 +108,8 @@ vim.cmd([[
   set list lcs=eol:¬,tab:▸\-
   nmap <silent> <F3> :set invwrap<CR>:set wrap?<CR>
   nmap W :set invwrap<CR>:set wrap?<CR>
+  " show current line diagnostics
+  nmap <silent> ; :lua require'lvim.lsp.handlers'.show_line_diagnostics()<CR>
 ]])
 
 -- Change Telescope navigation to use j and k for navigation and n and p for history in both input and normal mode.
@@ -324,3 +326,8 @@ vim.opt.timeoutlen = 10
 
 lvim.builtin.treesitter.playground.enable = true
 lvim.lsp.diagnostics.virtual_text = false -- line diagnostics will not auto display, use 'gl'
+
+-- present line diagnostics below current line only
+-- lvim.autocommands.custom_groups = {
+--   { "CursorHold", "*", "lua vim.diagnostic.open_float(0,{scope='line'})" },
+-- }
