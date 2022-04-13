@@ -1,4 +1,4 @@
-#!/usr/bin/env zsh
+# shellcheck disable=2034,2148
 # vim: ft=sh: set this file to sh if using shellcheck linter
 
 ### debug ###

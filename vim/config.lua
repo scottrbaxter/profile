@@ -10,7 +10,7 @@ an executable
 
 -- general
 lvim.log.level = "warn"
-lvim.builtin.treesitter.highlight.enable = false
+-- lvim.builtin.treesitter.highlight.enable = false
 lvim.transparent_window = true
 lvim.colorscheme = "space-vim-custom" -- custom: ~/.config/lvim/colors/space-vim-custom.vim
 
@@ -51,7 +51,6 @@ vim.cmd([[
   nnoremap <space>Q :q!<CR>
   nnoremap Q :q<CR>
   nmap <space>w :w<CR>
-  nmap <CR> o<Esc>
   nmap <Up> <Up>^
   nmap <Down> <Down>^
   nmap <S-C-Left> <C-W>h
@@ -74,8 +73,6 @@ vim.cmd([[
   vnoremap <C-Up> :m '<-2<CR>gv=gv
   vnoremap <C-j> :m '>+1<CR>gv=gv
   vnoremap <C-k> :m '<-2<CR>gv=gv
-  cnoremap <Up> <C-p>
-  cnoremap <Down> <C-n>
   vmap ' S'
   vmap " S"
   vmap [ S[
@@ -110,6 +107,7 @@ vim.cmd([[
   nmap W :set invwrap<CR>:set wrap?<CR>
   " show current line diagnostics
   nmap <silent> ; :lua require'lvim.lsp.handlers'.show_line_diagnostics()<CR>
+  nmap <silent> t :Trouble document_diagnostics<CR>
 ]])
 
 -- Change Telescope navigation to use j and k for navigation and n and p for history in both input and normal mode.
@@ -139,19 +137,22 @@ lvim.builtin.which_key.mappings["Tp"] = { "<cmd>TSPlaygroundToggle<CR>", "Playgr
 lvim.builtin.which_key.mappings["/"] = nil
 lvim.builtin.which_key.mappings["F"] = { "<cmd>StripWhitespace<CR>", "Fix Whitespace"}
 lvim.builtin.which_key.mappings["B"] = { "<cmd>GitBlameToggle<CR>", "Git Blame Toggle"}
+lvim.builtin.which_key.mappings["k"] = { "<cmd>lua vim.diagnostic.goto_prev()<CR>", "Goto Prev Diagnostic"}
+lvim.builtin.which_key.mappings["j"] = { "<cmd>lua vim.diagnostic.goto_next()<CR>", "Goto Next Diagnostic"}
 lvim.builtin.which_key.mappings["t"] = {
   name = "+Trouble",
-  r = { "<cmd>Trouble lsp_references<cr>", "References" },
-  f = { "<cmd>Trouble lsp_definitions<cr>", "Definitions" },
   d = { "<cmd>Trouble document_diagnostics<cr>", "Diagnostics" },
-  q = { "<cmd>Trouble quickfix<cr>", "QuickFix" },
+  f = { "<cmd>Trouble lsp_definitions<cr>", "Definitions" },
   l = { "<cmd>Trouble loclist<cr>", "LocationList" },
-  w = { "<cmd>Trouble lsp_workspace_diagnostics<cr>", "Diagnostics" },
+  q = { "<cmd>Trouble quickfix<cr>", "QuickFix" },
+  r = { "<cmd>Trouble lsp_references<cr>", "References" },
+  w = { "<cmd>Trouble workspace_diagnostics<cr>", "Diagnostics" },
 }
 
 -- TODO: User Config for predefined plugins
 -- After changing plugin config exit and reopen LunarVim, Run :PackerInstall :PackerCompile
 lvim.builtin.alpha.active = true
+lvim.builtin.alpha.mode = "dashboard"
 lvim.builtin.notify.active = true
 lvim.builtin.terminal.active = true
 lvim.builtin.nvimtree.setup.view.side = "left"
@@ -209,6 +210,7 @@ formatters.setup {
     ---@usage specify which filetypes to enable. By default a providers will attach to all the filetypes it supports.
     filetypes = { "typescript", "typescriptreact" },
   },
+  { command = "shfmt" },
 }
 
 -- set additional linters
@@ -222,11 +224,11 @@ linters.setup {
     -- these cannot contain whitespaces, options such as `--line-width 80` become either `{'--line-width', '80'}` or `{'--line-width=80'}`
     extra_args = { "--severity", "warning" },
   },
-  {
-    command = "codespell",
-    ---@usage specify which filetypes to enable. By default a providers will attach to all the filetypes it supports.
-    filetypes = { "javascript", "python" },
-  },
+  -- {
+  --   command = "codespell",
+  --   ---@usage specify which filetypes to enable. By default a providers will attach to all the filetypes it supports.
+  --   filetypes = { "javascript", "python" },
+  -- },
 }
 
 -- Additional Plugins
@@ -247,11 +249,6 @@ lvim.plugins = {
   {"ntpeters/vim-better-whitespace"},
   {"Raimondi/delimitMate"},
   {"luochen1990/rainbow"},
-  -- {"folke/tokyonight.nvim"},
-  -- {"marko-cerovac/material.nvim"},
-  -- {"arzg/vim-substrata"},
-  -- {"bluz71/vim-moonfly-colors"},
-  -- {"liuchengxu/space-vim-dark"},
 }
 
 -- Autocommands (https://neovim.io/doc/user/autocmd.html)
