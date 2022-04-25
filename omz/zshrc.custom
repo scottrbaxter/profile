@@ -34,7 +34,6 @@ export TERM="xterm-256color"
 
 # add plugins=(osx) for the tab command, to command-click a vim file in new tab
 # also need to add 'tab' in iterm2 profile/advanced semantic history
-# removed aws plugin - REALLY slow, and pyenv aws_zsh_completer.sh fails autoload/bashcompinit
 plugins=(aws docker-compose nvm ripgrep zsh-autosuggestions)
 
 # symlinks to ../Cellar, fixed this with 'compaudit | xargs chmod g-w,o-w'
@@ -231,7 +230,7 @@ if [ -x "$(command -v lvim)" ]; then
 elif [ -x "$(command -v nvim)" ]; then
     EDITOR="nvim"; export EDITOR
 fi
-alias vim=$EDITOR
+alias vim='$EDITOR'
 VISUAL="$EDITOR"; export VISUAL
 
 alias D='cd ~/development'
@@ -332,6 +331,11 @@ alias kx='kubectx'
 # terraform
 # export TF_PLUGIN_CACHE_DIR="$HOME/.terraform.d/plugin-cache"
 # export TERRAGRUNT_DOWNLOAD="$HOME/.terraform.d/terragrunt-tmp"
+# the following requires tfenv install <version>; tfenv use <version>
+if [ -x "$(command -v tfenv)" ] && [ -x "$(command -v terraform)" ]; then \
+  autoload -U =X bashcompinit && bashcompinit
+  complete -o nospace -C "$(brew --prefix)/Cellar/tfenv/$(tfenv --version | awk '{print $2}')/versions/$(tfenv version-name)/terraform" terraform
+fi
 
 # fix https://github.com/zsh-users/zsh-autosuggestions/issues/351#issuecomment-515415202
 ZSH_AUTOSUGGEST_CLEAR_WIDGETS_PREVIOUS="$ZSH_AUTOSUGGEST_CLEAR_WIDGETS" # needed for reloadZsh

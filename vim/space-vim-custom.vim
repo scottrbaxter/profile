@@ -170,7 +170,7 @@ call s:hi('Type'       , 68 , '' , 'None'      , 'None')
 call s:hi('Typedef'    , 68 , '' , 'None'      , 'None')
 call s:hi('Underlined' , ''  , '' , 'underline' , 'underline')
 
-call s:hi('Search'    , 16 , 167    , 'bold' , 'bold')
+call s:hi('Search'    , 16 , 168    , 'bold' , 'bold')
 call s:hi('IncSearch' , 7 , 125   , 'bold' , 'bold')
 call s:hi('MatchParen', 40 , s:bg0 , 'bold,underline', 'bold,underline')
 
