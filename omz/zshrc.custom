@@ -34,7 +34,7 @@ export TERM="xterm-256color"
 
 # add plugins=(osx) for the tab command, to command-click a vim file in new tab
 # also need to add 'tab' in iterm2 profile/advanced semantic history
-plugins=(aws docker-compose nvm ripgrep zsh-autosuggestions)
+plugins=(aws nvm ripgrep zsh-autosuggestions)
 
 # symlinks to ../Cellar, fixed this with 'compaudit | xargs chmod g-w,o-w'
 # fix https://github.com/robbyrussell/oh-my-zsh/issues/6835#issuecomment-390216875
@@ -42,10 +42,9 @@ plugins=(aws docker-compose nvm ripgrep zsh-autosuggestions)
 
 
 # custom dir function path
+# workaround to exclude aliases https://github.com/ohmyzsh/ohmyzsh/issues/7328#issuecomment-481196636
 # shellcheck disable=2206
-fpath=($fpath /usr/local/share/zsh-completions /opt/homebrew/share/zsh/site-functions)
-# shellcheck disable=2206
-fpath+=($ZSH/plugins/docker) # workaround to exclude aliases https://github.com/ohmyzsh/ohmyzsh/issues/7328#issuecomment-481196636
+fpath+=($ZSH/plugins/docker $ZSH/plugins/docker-compose)
 
 # custom PATH stuff
 export PATH_PREVIOUS="$PATH" # needed for reloadZsh
@@ -194,6 +193,8 @@ gitBlameSort(){
     fi
 }
 
+digs() { dig "$1" +short; }
+
 peruseHistory ()
 {
     if [ ! $1 ]; then
@@ -205,9 +206,7 @@ peruseHistory ()
     fi
 }
 
-python_http_server(){
-    python -m SimpleHTTPServer
-}
+python_http_server() { python -m SimpleHTTPServer; }
 
 reloadZsh(){
     unalias -a # remove all aliases
@@ -251,7 +250,6 @@ alias clr='clear'
 alias cp='cp -a'
 alias df='df -h'
 alias dud='du -d 1 -h'
-alias digs='dig $1 +short'
 alias grep='grep -i --color=auto' # (case insensitive, color output)
 alias h='helm'
 alias hist='peruseHistory'
@@ -278,12 +276,12 @@ alias scr='screen -dR'
 alias sudoenv='sudo -E'
 alias vi='vim'
 alias vv='vim $PROFILE_PATH/vim/config.lua'
-alias vp="vim $PROFILE_PATH/vim/plugins.vim"
+alias vp='vim $PROFILE_PATH/vim/plugins.vim'
 alias zedit='vim $ZSH_CUSTOM/themes/crunch_custom.zsh-theme'
 alias vg='vagrant global-status'
 alias vs='vagrant status'
 alias vup='vagrant up && vagrant ssh'
-alias zz="vim $PROFILE_PATH/omz/zshrc.custom"
+alias zz='vim $PROFILE_PATH/omz/zshrc.custom'
 
 # ansible
 # export ANSIBLE_CONFIG="$PROFILE_PATH/ansible.cfg"
@@ -324,7 +322,9 @@ alias kgs='k get services --output=wide'
 alias kgsc='k get storageclasses --output=wide'
 alias kns='kubens'
 alias kx='kubectx'
+# shellcheck disable=SC1090
 [ -x "$(command -v kubectl)" ] && source <(kubectl completion zsh) # completion
+# shellcheck disable=SC1090
 [ -x "$(command -v helm)" ] && source <(helm completion zsh) # completion
 # alias stern='stern --timestamps'
 
@@ -338,13 +338,14 @@ if [ -x "$(command -v tfenv)" ] && [ -x "$(command -v terraform)" ]; then \
 fi
 
 # fix https://github.com/zsh-users/zsh-autosuggestions/issues/351#issuecomment-515415202
-ZSH_AUTOSUGGEST_CLEAR_WIDGETS_PREVIOUS="$ZSH_AUTOSUGGEST_CLEAR_WIDGETS" # needed for reloadZsh
+ZSH_AUTOSUGGEST_CLEAR_WIDGETS_PREVIOUS="${ZSH_AUTOSUGGEST_CLEAR_WIDGETS[*]}" # needed for reloadZsh
 ZSH_AUTOSUGGEST_CLEAR_WIDGETS+=(bracketed-paste accept-line)
 
 # https://github.com/ohmyzsh/ohmyzsh/issues/9471
 # unsetopt sharehistory
 
 # additional stuff
+# shellcheck disable=SC1090
 for k in ~/.keyfile-*(N); do source $k; done
 
 # iterm2 shell integration

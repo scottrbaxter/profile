@@ -323,6 +323,7 @@ vim.opt.timeoutlen = 10
 
 lvim.builtin.treesitter.playground.enable = true
 lvim.lsp.diagnostics.virtual_text = false -- line diagnostics will not auto display, use 'gl'
+lvim.lsp.diagnostics.underline = false -- do not highlight diagnostics with underline
 
 -- present line diagnostics below current line only
 -- lvim.autocommands.custom_groups = {
