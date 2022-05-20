@@ -81,28 +81,18 @@ RUN wget -q -P /tmp https://iterm2.com/misc/install_shell_integration.sh; \
   /tmp/install_shell_integration.sh; \
   rm /tmp/install_shell_integration.sh
 
-### Node
-ARG NVM_DIR="/home/$USER/.nvm"
-ARG NODE_VERSION="v16.14.2"
-RUN ( git clone https://github.com/nvm-sh/nvm.git "$NVM_DIR"; \
-  cd "$NVM_DIR"; \
-  git checkout `git describe --abbrev=0 --tags --match "v[0-9]*" $(git rev-list --tags --max-count=1)` \
-  ) && \. "$NVM_DIR/nvm.sh"; \
-  nvm install ${NODE_VERSION}; \
-  nvm alias default ${NODE_VERSION}; \
-  npm install -g aws-cdk neovim tree-sitter-cli
-
-### Python
-ENV PYENV_ROOT="/home/$USER/.pyenv"
-ENV PATH="$PYENV_ROOT/bin:$PATH:/home/$USER/.local/bin"
-RUN git clone https://github.com/pyenv/pyenv.git $PYENV_ROOT; \
-  git clone https://github.com/pyenv/pyenv-virtualenv.git ${PYENV_ROOT}/plugins/pyenv-virtualenv;
-RUN  eval "$(pyenv init --path)"; \
-  cd ~/.pyenv; \
-  src/configure; \
-  make -C src; \
-  pyenv install 3.10.2; \
-  pyenv global 3.10.2; \
+### asdf
+RUN git clone https://github.com/asdf-vm/asdf.git ~/.asdf --branch v0.10.0; \
+  . $HOME/.asdf/asdf.sh; \
+  asdf plugin add nodejs https://github.com/asdf-vm/asdf-nodejs.git; \
+  asdf install nodejs 16.15.0; \
+  asdf global nodejs 16.15.0; \
+  asdf reshim nodejs; \
+  npm install -g aws-cdk neovim tree-sitter-cli; \
+  asdf plugin-add python; \
+  asdf install python 3.10.4; \
+  asdf global python 3.10.4; \
+  asdf reshim python; \
   pip install --no-cache-dir --upgrade pip \
     ansible \
     ansible-lint \
@@ -143,12 +133,10 @@ RUN ./install
 
 ### LunarVim
 ARG LV_BRANCH=rolling
+ENV PATH="$PATH:/home/$USER/.local/bin"
 WORKDIR /
-RUN curl -LSs https://raw.githubusercontent.com/lunarvim/lunarvim/${LV_BRANCH}/utils/installer/install-neovim-from-release | bash -x && \
-  LV_BRANCH=${LV_BRANCH} curl -LSs https://raw.githubusercontent.com/lunarvim/lunarvim/${LV_BRANCH}/utils/installer/install.sh | bash -s -- --no-install-dependencies
-# RUN wget -q https://raw.githubusercontent.com/lunarvim/lunarvim/master/utils/installer/install.sh; \
-#   bash install.sh --no-install-dependencies \
-#   && rm install.sh
+RUN curl -LSs https://raw.githubusercontent.com/lunarvim/lunarvim/${LV_BRANCH}/utils/installer/install-neovim-from-release | bash -x
+RUN curl -LSs https://raw.githubusercontent.com/lunarvim/lunarvim/${LV_BRANCH}/utils/installer/install.sh | bash -s -- --no-install-dependencies
 WORKDIR /home/$USER/.config/lvim
 RUN mv config.lua config.lua.org
 WORKDIR /home/$USER/.config/lvim
