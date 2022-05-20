@@ -241,7 +241,7 @@ lvim.plugins = {
   {"rktjmp/lush.nvim"},
   {"sindrets/diffview.nvim", requires = "nvim-lua/plenary.nvim" },
   {"f-person/git-blame.nvim"},
-  {"iamcco/markdown-preview.nvim"},
+  -- {"iamcco/markdown-preview.nvim"},
   {"karb94/neoscroll.nvim"},
   {"farmergreg/vim-lastplace"},
   {"Yggdroot/indentLine"},

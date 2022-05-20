@@ -16,9 +16,6 @@ ARG DEBIAN_FRONTEND=noninteractive
 ### Base system packages
 RUN apt-get update; \
   apt-get -qy install --no-install-recommends \
-    software-properties-common; \
-  add-apt-repository --yes ppa:neovim-ppa/stable; \
-  apt-get -qy install --no-install-recommends \
     build-essential \
     cargo \
     curl \
@@ -39,7 +36,6 @@ RUN apt-get update; \
     llvm \
     locales \
     make \
-    neovim \
     python3-pip \
     ripgrep \
     shellcheck \
@@ -148,7 +144,7 @@ RUN ./install
 ### LunarVim
 ARG LV_BRANCH=rolling
 WORKDIR /
-RUN curl -LSs https://raw.githubusercontent.com/lunarvim/lunarvim/${LV_BRANCH}/utils/installer/install-neovim-from-release | bash && \
+RUN curl -LSs https://raw.githubusercontent.com/lunarvim/lunarvim/${LV_BRANCH}/utils/installer/install-neovim-from-release | bash -x && \
   LV_BRANCH=${LV_BRANCH} curl -LSs https://raw.githubusercontent.com/lunarvim/lunarvim/${LV_BRANCH}/utils/installer/install.sh | bash -s -- --no-install-dependencies
 # RUN wget -q https://raw.githubusercontent.com/lunarvim/lunarvim/master/utils/installer/install.sh; \
 #   bash install.sh --no-install-dependencies \

@@ -319,8 +319,8 @@ nmap <space>w :w<CR>
 nmap <space><tab> :%s/\t/    /g<CR>
 nmap <space>' cs"'
 nmap <space>" cs'"
-nmap ' ysiw'
-nmap " ysiw"
+" nmap ' ysiw'
+" nmap " ysiw"
 nmap <space>[ ysiw]
 nmap <space>] ysiw}i$<Esc>
 nmap <space>} ysiw{
@@ -345,15 +345,15 @@ vnoremap I <C-v>$I
 nmap <silent> <space>c :call MessageToClipboard()<CR>
 nmap f zA| " toggle open/close folding
 nmap F :call FoldAllToggle()<cr>| " equiv to toggle for zM/zR
-vmap ' S'
-vmap " S"
-vmap [ S[
-vmap ] S]
-vmap } S}
-vmap { S{
-vmap ( S(
-vmap ) S)
-vmap ` S`
+" vmap ' S'
+" vmap " S"
+" vmap [ S[
+" vmap ] S]
+" vmap } S}
+" vmap { S{
+" vmap ( S(
+" vmap ) S)
+" vmap ` S`
 
 " set nonumber
 " set nolist " list disables linebreak
