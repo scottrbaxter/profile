@@ -314,7 +314,7 @@ lvim.format_on_save = false
 
 -- https://github.com/LunarVim/LunarVim/issues/1867
 -- https://github.com/LunarVim/LunarVim/issues/1125
-lvim.builtin.treesitter.indent = { enable = true, disable = { "python", "yaml" } }
+lvim.builtin.treesitter.indent = { enable = true, disable = { "lua", "python", "yaml" } }
 
 vim.opt.timeoutlen = 10
 
