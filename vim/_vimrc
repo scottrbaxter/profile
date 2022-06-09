@@ -146,17 +146,15 @@ else
   imap <A-]> <Esc>>>i
   imap <A-[> <Esc><<i
 
-  " Bubble single lines
-  nmap <C-Up> [e
-  nmap <C-Down> ]e
-  nmap <C-k> [e
-  nmap <C-j> ]e
-
-  " Bubble multiple lines
-  vmap <C-Up> [egv
-  vmap <C-Down> ]egv
-  vmap <C-k> [egv
-  vmap <C-j> ]egv
+  " Move line(s) up or down
+  nnoremap <C-Down> :m .+1<CR>==
+  nnoremap <C-Up> :m .-2<CR>==
+  nnoremap <C-j> :m .+1<CR>==
+  nnoremap <C-k> :m .-2<CR>==
+  vnoremap <C-Down> :m '>+1<CR>gv=gv
+  vnoremap <C-Up> :m '<-2<CR>gv=gv
+  vnoremap <C-j> :m '>+1<CR>gv=gv
+  vnoremap <C-k> :m '<-2<CR>gv=gv
 
   " Make shift-insert work like in Xterm
   map <S-Insert> <MiddleMouse>
@@ -321,8 +319,8 @@ nmap <space>w :w<CR>
 nmap <space><tab> :%s/\t/    /g<CR>
 nmap <space>' cs"'
 nmap <space>" cs'"
-nmap ' ysiw'
-nmap " ysiw"
+" nmap ' ysiw'
+" nmap " ysiw"
 nmap <space>[ ysiw]
 nmap <space>] ysiw}i$<Esc>
 nmap <space>} ysiw{
@@ -347,15 +345,15 @@ vnoremap I <C-v>$I
 nmap <silent> <space>c :call MessageToClipboard()<CR>
 nmap f zA| " toggle open/close folding
 nmap F :call FoldAllToggle()<cr>| " equiv to toggle for zM/zR
-vmap ' S'
-vmap " S"
-vmap [ S[
-vmap ] S]
-vmap } S}
-vmap { S{
-vmap ( S(
-vmap ) S)
-vmap ` S`
+" vmap ' S'
+" vmap " S"
+" vmap [ S[
+" vmap ] S]
+" vmap } S}
+" vmap { S{
+" vmap ( S(
+" vmap ) S)
+" vmap ` S`
 
 " set nonumber
 " set nolist " list disables linebreak

@@ -40,11 +40,11 @@
   typeset -g POWERLEVEL9K_LEFT_PROMPT_ELEMENTS=(
     # =========================[ Line #1 ]=========================
     time                    # current time
-    # os_icon               # os identifier
+    os_icon               # os identifier
     hist                    # running count of commands executed in current shell
     load                    # CPU load
     command_execution_time  # duration of the last command
-    background_jobs         # presence of background jobs
+    # background_jobs         # presence of background jobs
     status                  # exit code of the last command
     sts                     # check aws sts
     context                 # user@hostname
@@ -268,7 +268,8 @@
 
   ##################################[ dir: current directory ]##################################
   # Default current directory color.
-  typeset -g POWERLEVEL9K_DIR_FOREGROUND=31
+  # typeset -g POWERLEVEL9K_DIR_FOREGROUND=31
+  typeset -g POWERLEVEL9K_DIR_FOREGROUND=249 # custom grey path
   # If directory is too long, shorten some of its segments to the shortest possible unique
   # prefix. The shortened directory can be tab-completed to the original.
   typeset -g POWERLEVEL9K_SHORTEN_STRATEGY=truncate_to_unique
@@ -278,7 +279,8 @@
   typeset -g POWERLEVEL9K_DIR_SHORTENED_FOREGROUND=103
   # Color of the anchor directory segments. Anchor segments are never shortened. The first
   # segment is always an anchor.
-  typeset -g POWERLEVEL9K_DIR_ANCHOR_FOREGROUND=39
+  # typeset -g POWERLEVEL9K_DIR_ANCHOR_FOREGROUND=39
+  typeset -g POWERLEVEL9K_DIR_ANCHOR_FOREGROUND=250 # custom grey cwd
   # Display anchor directory segments in bold.
   typeset -g POWERLEVEL9K_DIR_ANCHOR_BOLD=true
   # Don't shorten directories that contain any of these files. They are anchors.
@@ -408,7 +410,9 @@
     if (( $1 )); then
       # Styling for up-to-date Git status.
       local       meta='%246F'  # grey foreground
-      local      clean='%76F'   # green foreground
+      # local      clean='%76F'   # green foreground
+      # local      clean='%33F'   # custom blue foreground
+      local      clean='%253F'   # grey foreground
       local   modified='%178F'  # yellow foreground
       local  untracked='%39F'   # blue foreground
       local conflicted='%196F'  # red foreground
