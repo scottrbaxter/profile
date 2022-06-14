@@ -336,7 +336,7 @@ alias kx='kubectx'
 
 # terraform
 export TF_PLUGIN_CACHE_DIR="$HOME/.terraform.d/TF_PLUGIN_CACHE_DIR"
-export TF_PLUGIN_DATA_DIR="$HOME/.terraform.d/TF_PLUGIN_DATA_DIR"
+# export TF_PLUGIN_DATA_DIR="$HOME/.terraform.d/TF_PLUGIN_DATA_DIR"
 # export TERRAGRUNT_DOWNLOAD="$HOME/.terraform.d/terragrunt-tmp"
 # the following requires tfenv install <version>; tfenv use <version>
 if [ -x "$(command -v tfenv)" ] && [ -x "$(command -v terraform)" ]; then \
