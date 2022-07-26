@@ -132,13 +132,13 @@ vim.cmd([[
 lvim.builtin.which_key.mappings["P"] = { "<cmd>Telescope projects<CR>", "Projects" }
 lvim.builtin.which_key.mappings["r"] = { "<cmd>lua require('Comment.api').toggle_current_linewise()<CR>", "Comment" }
 lvim.builtin.which_key.mappings["Q"] = { "<cmd>q!<CR>", "Quit!" }
-lvim.builtin.which_key.mappings["Th"] = { "<cmd>TSHighlightCapturesUnderCursor<CR>", "Highlight"}
-lvim.builtin.which_key.mappings["Tp"] = { "<cmd>TSPlaygroundToggle<CR>", "Playground"}
+lvim.builtin.which_key.mappings["Th"] = { "<cmd>TSHighlightCapturesUnderCursor<CR>", "Highlight" }
+lvim.builtin.which_key.mappings["Tp"] = { "<cmd>TSPlaygroundToggle<CR>", "Playground" }
 lvim.builtin.which_key.mappings["/"] = nil
-lvim.builtin.which_key.mappings["F"] = { "<cmd>StripWhitespace<CR>", "Fix Whitespace"}
-lvim.builtin.which_key.mappings["B"] = { "<cmd>GitBlameToggle<CR>", "Git Blame Toggle"}
-lvim.builtin.which_key.mappings["k"] = { "<cmd>lua vim.diagnostic.goto_prev()<CR>", "Goto Prev Diagnostic"}
-lvim.builtin.which_key.mappings["j"] = { "<cmd>lua vim.diagnostic.goto_next()<CR>", "Goto Next Diagnostic"}
+lvim.builtin.which_key.mappings["F"] = { "<cmd>StripWhitespace<CR>", "Fix Whitespace" }
+lvim.builtin.which_key.mappings["B"] = { "<cmd>GitBlameToggle<CR>", "Git Blame Toggle" }
+lvim.builtin.which_key.mappings["k"] = { "<cmd>lua vim.diagnostic.goto_prev()<CR>", "Goto Prev Diagnostic" }
+lvim.builtin.which_key.mappings["j"] = { "<cmd>lua vim.diagnostic.goto_next()<CR>", "Goto Next Diagnostic" }
 lvim.builtin.which_key.mappings["t"] = {
   name = "+Trouble",
   d = { "<cmd>Trouble document_diagnostics<cr>", "Diagnostics" },
@@ -237,18 +237,18 @@ lvim.plugins = {
     "folke/trouble.nvim",
     cmd = "TroubleToggle"
   },
-  {"norcalli/nvim-colorizer.lua"},
-  {"rktjmp/lush.nvim"},
-  {"sindrets/diffview.nvim", requires = "nvim-lua/plenary.nvim" },
-  {"f-person/git-blame.nvim"},
+  { "norcalli/nvim-colorizer.lua" },
+  { "rktjmp/lush.nvim" },
+  { "sindrets/diffview.nvim", requires = "nvim-lua/plenary.nvim" },
+  { "f-person/git-blame.nvim" },
   -- {"iamcco/markdown-preview.nvim"},
-  {"karb94/neoscroll.nvim"},
-  {"farmergreg/vim-lastplace"},
-  {"Yggdroot/indentLine"},
-  {"tpope/vim-surround"},
-  {"ntpeters/vim-better-whitespace"},
-  {"Raimondi/delimitMate"},
-  {"luochen1990/rainbow"},
+  { "karb94/neoscroll.nvim" },
+  { "farmergreg/vim-lastplace" },
+  { "Yggdroot/indentLine" },
+  { "tpope/vim-surround" },
+  { "ntpeters/vim-better-whitespace" },
+  { "Raimondi/delimitMate" },
+  { "luochen1990/rainbow" },
 }
 
 -- Autocommands (https://neovim.io/doc/user/autocmd.html)
