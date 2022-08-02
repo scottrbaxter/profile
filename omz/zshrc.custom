@@ -335,6 +335,8 @@ alias kx='kubectx'
 # alias stern='stern --timestamps'
 
 # terraform
+[ -d "$HOME/.terraform.d/TF_PLUGIN_CACHE_DIR" ] || \
+  mkdir -p "$HOME/.terraform.d/TF_PLUGIN_CACHE_DIR"
 export TF_PLUGIN_CACHE_DIR="$HOME/.terraform.d/TF_PLUGIN_CACHE_DIR"
 # export TF_PLUGIN_DATA_DIR="$HOME/.terraform.d/TF_PLUGIN_DATA_DIR"
 # export TERRAGRUNT_DOWNLOAD="$HOME/.terraform.d/terragrunt-tmp"
