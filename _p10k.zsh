@@ -50,6 +50,7 @@
     context                 # user@hostname
     dir                     # current directory
     vcs                     # git status
+    asdf                    # asdf version manager (https://github.com/asdf-vm/asdf)
     aws                     # aws profile (https://docs.aws.amazon.com/cli/latest/userguide/cli-configure-profiles.html)
     kubecontext             # current kubernetes context (https://kubernetes.io/)
     # =========================[ Line #2 ]=========================
@@ -628,6 +629,7 @@
   # Note: If this parameter is set to true, it won't hide tools.
   # Tip:  Override this parameter for ${TOOL} with POWERLEVEL9K_ASDF_${TOOL}_PROMPT_ALWAYS_SHOW.
   typeset -g POWERLEVEL9K_ASDF_PROMPT_ALWAYS_SHOW=false
+  # typeset -g POWERLEVEL9K_ASDF_PROMPT_ALWAYS_SHOW=true
 
   # If set to false, hide tool versions that are equal to "system".
   #
