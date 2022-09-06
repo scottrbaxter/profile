@@ -23,6 +23,7 @@ HYPHEN_INSENSITIVE="true"
 ZSH_CUSTOM="$PROFILE_PATH/omz/custom"
 ZSH_THEME="powerlevel10k/powerlevel10k"
 # ZSH_THEME="crunch_custom"
+zstyle ':omz:update' mode auto # https://github.com/ohmyzsh/ohmyzsh#getting-updates
 
 # skip_global_compinit=1
 export TERM="xterm-256color"
