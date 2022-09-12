@@ -330,3 +330,8 @@ lvim.lsp.diagnostics.underline = false -- do not highlight diagnostics with unde
 -- lvim.autocommands.custom_groups = {
 --   { "CursorHold", "*", "lua vim.diagnostic.open_float(0,{scope='line'})" },
 -- }
+
+
+-- temp fix https://github.com/LunarVim/LunarVim/issues/2993
+lvim.builtin.bufferline.options.indicator_icon = nil
+lvim.builtin.bufferline.options.indicator = { style = "icon", icon = "▎" }
