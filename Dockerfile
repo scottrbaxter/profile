@@ -2,6 +2,7 @@ FROM ubuntu:20.04
 LABEL description="profile"
 
 ARG USER=ubuntu
+ARG PROFILE_BRANCH=master
 ARG PROFILE_PATH=/home/$USER/development/profile
 ARG LC_ALL="en_US.UTF-8"
 ARG UUID=${UUID:-1000}
@@ -82,11 +83,11 @@ RUN wget -q -P /tmp https://iterm2.com/misc/install_shell_integration.sh; \
   rm /tmp/install_shell_integration.sh
 
 ### asdf
-RUN git clone https://github.com/asdf-vm/asdf.git ~/.asdf --branch v0.10.0; \
+RUN git clone https://github.com/asdf-vm/asdf.git ~/.asdf --branch v0.10.2; \
   . $HOME/.asdf/asdf.sh; \
   asdf plugin add nodejs https://github.com/asdf-vm/asdf-nodejs.git; \
-  asdf install nodejs 16.15.0; \
-  asdf global nodejs 16.15.0; \
+  asdf install nodejs 16.17.0; \
+  asdf global nodejs 16.17.0; \
   asdf reshim nodejs; \
   npm install -g aws-cdk neovim tree-sitter-cli; \
   asdf plugin-add python; \
@@ -117,15 +118,13 @@ RUN mkdir -p \
 ### clone repo
 RUN git clone https://github.com/scottrbaxter/profile.git $PROFILE_PATH; \
   cd $PROFILE_PATH || return; \
-  git checkout -b lunarvim origin/lunarvim; \
+  git branch | grep ${PROFILE_BRANCH} || \
+    git checkout -b ${PROFILE_BRANCH} origin/${PROFILE_BRANCH}; \
   git submodule sync && git submodule update --init --recursive --depth 1
 
 ### install oh-my-zsh
-RUN wget -q -P /tmp https://raw.github.com/robbyrussell/oh-my-zsh/master/tools/install.sh; \
-  chmod 0755 /tmp/install.sh; \
-  /tmp/install.sh; \
-  rm /tmp/install.sh; \
-  mv ~/.zshrc ~/.zshrc.org
+RUN sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)" "" --unattended \
+  && mv ~/.zshrc ~/.zshrc.bak
 
 ### Powerlevel10k
 WORKDIR $PROFILE_PATH/omz/custom/themes/powerlevel10k/gitstatus
@@ -142,8 +141,9 @@ RUN mv config.lua config.lua.org
 WORKDIR /home/$USER/.config/lvim
 RUN mkdir colors; \
   ln -s $PROFILE_PATH/vim/config.lua ~/.config/lvim/config.lua; \
-  ln -s $PROFILE_PATH/vim/space-vim-custom.vim ~/.config/lvim/colors/space-vim-custom.vim; \
-  lvim --headless +'autocmd User PackerComplete sleep 100m | qall' +PackerSync
+  ln -s $PROFILE_PATH/vim/space-vim-custom.vim ~/.config/lvim/colors/space-vim-custom.vim
+
+  # lvim --headless +'autocmd User PackerComplete sleep 100m | qall' +PackerSync
 
 
 ### create symlinks
