@@ -130,7 +130,7 @@ vim.cmd([[
 
 -- Use which-key to add extra bindings with the leader-key prefix
 lvim.builtin.which_key.mappings["P"] = { "<cmd>Telescope projects<CR>", "Projects" }
-lvim.builtin.which_key.mappings["r"] = { "<cmd>lua require('Comment.api').toggle_current_linewise()<CR>", "Comment" }
+lvim.builtin.which_key.mappings["r"] = { "<Plug>(comment_toggle_linewise_current)", "Comment toggle" }
 lvim.builtin.which_key.mappings["Q"] = { "<cmd>q!<CR>", "Quit!" }
 lvim.builtin.which_key.mappings["Th"] = { "<cmd>TSHighlightCapturesUnderCursor<CR>", "Highlight" }
 lvim.builtin.which_key.mappings["Tp"] = { "<cmd>TSPlaygroundToggle<CR>", "Playground" }
@@ -330,3 +330,8 @@ lvim.lsp.diagnostics.underline = false -- do not highlight diagnostics with unde
 -- lvim.autocommands.custom_groups = {
 --   { "CursorHold", "*", "lua vim.diagnostic.open_float(0,{scope='line'})" },
 -- }
+
+
+-- temp fix https://github.com/LunarVim/LunarVim/issues/2993
+lvim.builtin.bufferline.options.indicator_icon = nil
+lvim.builtin.bufferline.options.indicator = { style = "icon", icon = "▎" }
