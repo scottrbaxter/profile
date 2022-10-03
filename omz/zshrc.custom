@@ -240,6 +240,7 @@ fi
 alias vim='$EDITOR'
 VISUAL="$EDITOR"; export VISUAL
 
+alias C='cd ~/code'
 alias D='cd ~/development'
 alias N='cd ~/notes'
 alias P='cd $PROFILE_PATH'
