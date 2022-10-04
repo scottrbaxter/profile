@@ -174,7 +174,7 @@ export RIPGREP_CONFIG_PATH=$PROFILE_PATH/ripgreprc
 
 # hashicorp vault autocomplete
 autoload -U +X bashcompinit && bashcompinit
-complete -o nospace -C /usr/local/bin/vault vault
+complete -o nospace -C "$(command -v vault)" vault
 
 # Vagrant / VirtualBox
 # https://www.vagrantup.com/docs/other/environmental-variables.html
