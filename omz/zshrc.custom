@@ -93,39 +93,39 @@ elif [ "$UNAME_SYSTEM" = Darwin ]; then
 fi
 
 # asdf
-if [ -e "$HOME/.asdf/asdf.sh" ]; then
-    . $HOME/.asdf/asdf.sh
-    fpath+=("${ASDF_DIR}/completions")
-    autoload -Uz compinit && compinit
-fi
+# if [ -e "$HOME/.asdf/asdf.sh" ]; then
+#     . $HOME/.asdf/asdf.sh
+#     fpath+=("${ASDF_DIR}/completions")
+#     autoload -Uz compinit && compinit
+# fi
 
 # ruby environment
-# if [ -e "$BREW_PREFIX/bin/rbenv" ] || [ -e "$HOME/.rbenv/bin/rbenv" ]; then
-#     export RBENV_ROOT="$HOME/.rbenv"
-#     export PATH="$RBENV_ROOT/bin:$PATH"
-#     eval "$(rbenv init -)"
-# fi
+if [ -e "$BREW_PREFIX/bin/rbenv" ] || [ -e "$HOME/.rbenv/bin/rbenv" ]; then
+    export RBENV_ROOT="$HOME/.rbenv"
+    export PATH="$RBENV_ROOT/bin:$PATH"
+    eval "$(rbenv init -)"
+fi
 
 # python environment
-# if [ -e "$BREW_PREFIX/bin/pyenv" ] || [ -e "$HOME/.pyenv/bin/pyenv" ]; then
-#     export PYENV_ROOT="$HOME/.pyenv"
-#     export PATH="$PYENV_ROOT/bin:$PATH"
-#     eval "$(pyenv init --path)"
-#     eval "$(pyenv init -)"
-#     eval "$(pyenv virtualenv-init -)"
-# fi
+if [ -e "$BREW_PREFIX/bin/pyenv" ] || [ -e "$HOME/.pyenv/bin/pyenv" ]; then
+    export PYENV_ROOT="$HOME/.pyenv"
+    export PATH="$PYENV_ROOT/bin:$PATH"
+    eval "$(pyenv init --path)"
+    eval "$(pyenv init -)"
+    eval "$(pyenv virtualenv-init -)"
+fi
 
 # go environment
-# if [ -e "$BREW_PREFIX/bin/go" ] || [ -e "/usr/bin/go" ]; then
-#     export GOPATH="$HOME/go"
-#     PATH="$GOPATH/bin:$PATH"
-# fi
+if [ -e "$BREW_PREFIX/bin/go" ] || [ -e "/usr/bin/go" ]; then
+    export GOPATH="$HOME/go"
+    PATH="$GOPATH/bin:$PATH"
+fi
 
 # node.js environment
-# if [ -s "$HOME/.nvm/nvm.sh" ]; then
-#     export NVM_DIR="$HOME/.nvm"
-#     \. "$NVM_DIR/nvm.sh"
-# fi
+if [ -s "$HOME/.nvm/nvm.sh" ]; then
+    export NVM_DIR="$HOME/.nvm"
+    \. "$NVM_DIR/nvm.sh"
+fi
 
 # handles special characters from links/urls
 DISABLE_MAGIC_FUNCTIONS=true
