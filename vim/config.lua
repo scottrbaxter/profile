@@ -250,6 +250,18 @@ lvim.plugins = {
   { "luochen1990/rainbow" },
 }
 
+-- newline under comment does not add comment https://superuser.com/a/271024
+lvim.autocommands = {
+  {
+    { "BufWinEnter", "BufRead", "BufNewFile" },
+    {
+      group = "lvim_user",
+      pattern = "*",
+      command = "setlocal formatoptions-=c formatoptions-=r formatoptions-=o",
+    },
+  },
+}
+
 -- Autocommands (https://neovim.io/doc/user/autocmd.html)
 -- lvim.autocommands.custom_groups = {
 --   { "BufWinEnter", "*.lua", "setlocal ts=8 sw=8" },
