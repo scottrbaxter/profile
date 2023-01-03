@@ -21,6 +21,7 @@ tests/local.bats
 *.terraform.tfstate.lock.*
 # terragrunt
 *.terragrunt-cache
+*local-dev.tf
 
 # vscode
 .vscode
