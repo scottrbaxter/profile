@@ -15,6 +15,7 @@
 --glob=!.dev/*
 --glob=!.git/*
 --glob=!*.tfstate*
+--glob=!*.terraform*
 --glob=!**/submodules/*
 --glob=!**/tmp/*
 --glob=!**/cdk.out/*

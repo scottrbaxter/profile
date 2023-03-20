@@ -4,6 +4,7 @@
 **/temp
 **/tmp
 **/.dev
+**/.devcontainer
 **/docker.tst.*
 **/*.vagrant
 .dockerignore
