@@ -8,6 +8,7 @@
 **/docker.tst.*
 **/*.vagrant
 .dockerignore
+.env
 tests/local.bats
 
 # ansible
