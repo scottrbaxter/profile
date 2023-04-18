@@ -23,7 +23,7 @@ HYPHEN_INSENSITIVE="true"
 ZSH_CUSTOM="$PROFILE_PATH/omz/custom"
 ZSH_THEME="powerlevel10k/powerlevel10k"
 # ZSH_THEME="crunch_custom"
-zstyle ':omz:update' mode auto # https://github.com/ohmyzsh/ohmyzsh#getting-updates
+zstyle ':omz:update' mode reminder # https://github.com/ohmyzsh/ohmyzsh#getting-updates
 
 # skip_global_compinit=1
 export TERM="xterm-256color"
@@ -173,7 +173,6 @@ export QUOTING_STYLE=literal
 export RIPGREP_CONFIG_PATH=$PROFILE_PATH/ripgreprc
 
 # hashicorp vault autocomplete
-autoload -U +X bashcompinit && bashcompinit
 complete -o nospace -C "$(command -v vault)" vault
 
 # Vagrant / VirtualBox
@@ -344,9 +343,11 @@ export TF_DATA_DIR="$HOME/.terraform.d/TF_DATA_DIR${PWD}" # this dir needs to ex
 # export TERRAGRUNT_DOWNLOAD="$HOME/.terraform.d/terragrunt-tmp"
 # the following requires tfenv install <version>; tfenv use <version>
 if [ -x "$(command -v tfenv)" ] && [ -x "$(command -v terraform)" ]; then \
-  autoload -U +X bashcompinit && bashcompinit
   complete -o nospace -C "$(brew --prefix)/Cellar/tfenv/$(tfenv --version | awk '{print $2}')/versions/$(tfenv version-name)/terraform" terraform
 fi
+
+# needed for autocomplete (terraform and hashicorp vault)
+autoload -U +X bashcompinit && bashcompinit
 
 # fix https://github.com/zsh-users/zsh-autosuggestions/issues/351#issuecomment-515415202
 ZSH_AUTOSUGGEST_CLEAR_WIDGETS_PREVIOUS="${ZSH_AUTOSUGGEST_CLEAR_WIDGETS[*]}" # needed for reloadZsh
