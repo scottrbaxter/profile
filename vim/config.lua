@@ -85,10 +85,10 @@ vim.cmd([[
   vmap ` S`
   let g:gitblame_enabled = 0
   set list lcs=eol:¬,tab:▸\-
-  let g:indentLine_color_term = 239
-  let g:indentLine_char = '|'
-  let g:indentLine_concealcursor = 'inc'
-  let g:indentLine_conceallevel = 0 " do not conceal/hide extmarks (e.g. quotes)
+  " let g:indentLine_color_term = 239
+  " let g:indentLine_char = '|'
+  " let g:indentLine_concealcursor = 'inc'
+  " let g:indentLine_conceallevel = 0 " do not conceal/hide extmarks (e.g. quotes)
   set nowrap                          " wrap lines
   set tabstop=2                     " a tab is two spaces
   set shiftwidth=2                  " an autoindent (with <<) is two spaces
@@ -238,12 +238,12 @@ lvim.plugins = {
   },
   { "norcalli/nvim-colorizer.lua" },
   { "rktjmp/lush.nvim" },
-  { "sindrets/diffview.nvim", requires = "nvim-lua/plenary.nvim" },
+  { "sindrets/diffview.nvim", dependencies = "nvim-lua/plenary.nvim" },
   { "f-person/git-blame.nvim" },
   -- {"iamcco/markdown-preview.nvim"},
   { "karb94/neoscroll.nvim" },
   { "farmergreg/vim-lastplace" },
-  { "Yggdroot/indentLine" },
+  -- { "Yggdroot/indentLine" },
   { "tpope/vim-surround" },
   { "ntpeters/vim-better-whitespace" },
   { "Raimondi/delimitMate" },
