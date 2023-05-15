@@ -180,6 +180,11 @@ lvim.builtin.treesitter.ensure_installed = {
 -- ---@usage Select which servers should be configured manually. Requires `:LvimCacheRest` to take effect.
 -- See the full default list `:lua print(vim.inspect(lvim.lsp.override))`
 -- vim.list_extend(lvim.lsp.override, { "pyright" })
+-- vim.list_extend(lvim.lsp.automatic_configuration.skipped_servers, { "pyright" }) -- add `pyright` to `skipped_servers` list
+-- lvim.lsp.automatic_configuration.skipped_servers = vim.tbl_filter(function(server)  -- remove `jedi_language_server` from `skipped_servers` list
+--   return server ~= "pylsp"
+--   -- return server ~= "jedi_language_server"
+-- end, lvim.lsp.automatic_configuration.skipped_servers)
 
 -- ---@usage setup a server -- see: https://www.lunarvim.org/languages/#overriding-the-default-configuration
 -- local opts = {} -- check the lspconfig documentation for a list of all possible options
@@ -194,6 +199,24 @@ lvim.builtin.treesitter.ensure_installed = {
 --   --Enable completion triggered by <c-x><c-o>
 --   buf_set_option("omnifunc", "v:lua.vim.lsp.omnifunc")
 -- end
+
+-- Additional Plugins
+lvim.plugins = {
+  { "folke/trouble.nvim", cmd = "TroubleToggle" },
+  "norcalli/nvim-colorizer.lua",
+  "rktjmp/lush.nvim",
+  { "sindrets/diffview.nvim", dependencies = "nvim-lua/plenary.nvim" },
+  "f-person/git-blame.nvim",
+  "karb94/neoscroll.nvim",
+  "farmergreg/vim-lastplace",
+  "tpope/vim-surround",
+  "ntpeters/vim-better-whitespace",
+  "Raimondi/delimitMate",
+  "luochen1990/rainbow",
+  "mfussenegger/nvim-dap-python",
+  "nvim-neotest/neotest",
+  "nvim-neotest/neotest-python",
+}
 
 -- set a formatter, this will override the language server formatting capabilities (if it exists)
 local formatters = require "lvim.lsp.null-ls.formatters"
@@ -215,7 +238,11 @@ formatters.setup {
 -- set additional linters
 local linters = require "lvim.lsp.null-ls.linters"
 linters.setup {
-  { command = "flake8", filetypes = { "python" } },
+  {
+    command = "ruff",
+    extra_args = { "--config", "~/development/profile/_ruff.toml"},
+    filetypes = { "python" }
+  },
   {
     -- each linter accepts a list of options identical to https://github.com/jose-elias-alvarez/null-ls.nvim/blob/main/doc/BUILTINS.md#Configuration
     command = "shellcheck",
@@ -230,25 +257,39 @@ linters.setup {
   -- },
 }
 
--- Additional Plugins
-lvim.plugins = {
-  {
-    "folke/trouble.nvim",
-    cmd = "TroubleToggle"
-  },
-  { "norcalli/nvim-colorizer.lua" },
-  { "rktjmp/lush.nvim" },
-  { "sindrets/diffview.nvim", dependencies = "nvim-lua/plenary.nvim" },
-  { "f-person/git-blame.nvim" },
-  -- {"iamcco/markdown-preview.nvim"},
-  { "karb94/neoscroll.nvim" },
-  { "farmergreg/vim-lastplace" },
-  -- { "Yggdroot/indentLine" },
-  { "tpope/vim-surround" },
-  { "ntpeters/vim-better-whitespace" },
-  { "Raimondi/delimitMate" },
-  { "luochen1990/rainbow" },
-}
+-- setup debug adapter
+lvim.builtin.dap.active = true
+local mason_path = vim.fn.glob(vim.fn.stdpath "data" .. "/mason/")
+pcall(function()
+  require("dap-python").setup(mason_path .. "packages/debugpy/venv/bin/python")
+end)
+
+-- setup testing
+require("neotest").setup({
+  adapters = {
+    require("neotest-python")({
+      -- Extra arguments for nvim-dap configuration
+      -- See https://github.com/microsoft/debugpy/wiki/Debug-configuration-settings for values
+      dap = {
+        justMyCode = false,
+        console = "integratedTerminal",
+      },
+      args = { "--log-level", "DEBUG", "--quiet" },
+      runner = "pytest",
+    })
+  }
+})
+
+lvim.builtin.which_key.mappings["dm"] = { "<cmd>lua require('neotest').run.run()<cr>",
+  "Test Method" }
+lvim.builtin.which_key.mappings["dM"] = { "<cmd>lua require('neotest').run.run({strategy = 'dap'})<cr>",
+  "Test Method DAP" }
+lvim.builtin.which_key.mappings["df"] = {
+  "<cmd>lua require('neotest').run.run({vim.fn.expand('%')})<cr>", "Test Class" }
+lvim.builtin.which_key.mappings["dF"] = {
+  "<cmd>lua require('neotest').run.run({vim.fn.expand('%'), strategy = 'dap'})<cr>", "Test Class DAP" }
+lvim.builtin.which_key.mappings["dS"] = { "<cmd>lua require('neotest').summary.toggle()<cr>", "Test Summary" }
+
 
 -- newline under comment does not add comment https://superuser.com/a/271024
 lvim.autocommands = {
@@ -334,7 +375,7 @@ vim.opt.timeoutlen = 10
 -- vim.cmd "set directory^=~/.caache/nvim/temp//"   -- where to put swap files.
 
 lvim.builtin.treesitter.playground.enable = true
-lvim.lsp.diagnostics.virtual_text = false -- line diagnostics will not auto display, use 'gl'
+vim.diagnostic.config({ virtual_text = false }) -- line diagnostics will not auto display, use 'gl'
 lvim.builtin.illuminate.active = false -- do not highlight/underline words that match under cursor
 
 -- present line diagnostics below current line only
