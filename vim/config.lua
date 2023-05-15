@@ -338,7 +338,7 @@ vim.opt.timeoutlen = 10
 -- vim.cmd "set directory^=~/.caache/nvim/temp//"   -- where to put swap files.
 
 lvim.builtin.treesitter.playground.enable = true
-lvim.lsp.diagnostics.virtual_text = false -- line diagnostics will not auto display, use 'gl'
+vim.diagnostic.config({ virtual_text = false }) -- line diagnostics will not auto display, use 'gl'
 lvim.builtin.illuminate.active = false -- do not highlight/underline words that match under cursor
 
 -- present line diagnostics below current line only
