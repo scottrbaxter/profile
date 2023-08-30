@@ -108,12 +108,9 @@ vim.cmd([[
   " show current line diagnostics
   nmap <silent> ; :lua require'lvim.lsp.handlers'.show_line_diagnostics()<CR>
   nmap <silent> t :Trouble document_diagnostics<CR>
-  noremap c "_c
-  noremap d "_d
-  noremap x "_x
-  noremap C "_C
-  noremap D "_D
-  noremap X "_X`
+  " To get "sane" behavior you can remap p and P https://vi.stackexchange.com/a/25260
+  xnoremap <expr> p 'pgv"'.v:register.'y`>'
+  xnoremap <expr> P 'Pgv"'.v:register.'y`>'
 ]])
 
 -- Change Telescope navigation to use j and k for navigation and n and p for history in both input and normal mode.
