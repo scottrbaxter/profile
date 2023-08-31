@@ -93,11 +93,11 @@ elif [ "$UNAME_SYSTEM" = Darwin ]; then
 fi
 
 # asdf
-# if [ -e "$HOME/.asdf/asdf.sh" ]; then
-#     . $HOME/.asdf/asdf.sh
-#     fpath+=("${ASDF_DIR}/completions")
-#     autoload -Uz compinit && compinit
-# fi
+if [ -e "$HOME/.asdf/asdf.sh" ]; then
+    . $HOME/.asdf/asdf.sh
+    fpath+=("${ASDF_DIR}/completions")
+    autoload -Uz compinit && compinit
+fi
 
 # ruby environment
 if [ -e "$BREW_PREFIX/bin/rbenv" ] || [ -e "$HOME/.rbenv/bin/rbenv" ]; then
