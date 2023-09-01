@@ -124,9 +124,12 @@ fi
 # node.js environment
 if [ -s "$HOME/.nvm/nvm.sh" ]; then
     export NVM_DIR="$HOME/.nvm"
-    \. "$NVM_DIR/nvm.sh" # This loads nvm
-    [ -s "$NVM_DIR/bash_completion" ] \
-      && \. "$NVM_DIR/bash_completion" # Loads shell completion
+    nvm_cmds=(nvm node npm yarn)
+    for cmd in "${nvm_cmds[@]}" ; do
+      # shellcheck disable=SC2139,SC2128
+      alias $cmd="unalias $nvm_cmds && unset nvm_cmds && . $NVM_DIR/nvm.sh && $cmd"
+    done
+    . "$NVM_DIR/bash_completion" # Loads shell completion
 fi
 
 # handles special characters from links/urls
