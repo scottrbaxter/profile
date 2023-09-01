@@ -348,7 +348,9 @@ export TF_DATA_DIR="$HOME/.terraform.d/TF_DATA_DIR${PWD}" # this dir needs to ex
 # export TERRAGRUNT_DOWNLOAD="$HOME/.terraform.d/terragrunt-tmp"
 # the following requires tfenv install <version>; tfenv use <version>
 if [ -x "$(command -v tfenv)" ] && [ -x "$(command -v terraform)" ]; then \
-  complete -o nospace -C "$(brew --prefix)/Cellar/tfenv/$(tfenv --version | awk '{print $2}')/versions/$(tfenv version-name)/terraform" terraform
+  TFENV_COMPLETION_PATH="$(readlink -f "$(command -v tfenv)" | cut -d/ -f-6)"
+  TF_VERSION="$(cat $TFENV_COMPLETION_PATH/version)"
+  complete -o nospace -C "${TFENV_COMPLETION_PATH}/versions/${TF_VERSION}/terraform" terraform
 fi
 
 # needed for autocomplete (terraform and hashicorp vault)
