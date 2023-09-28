@@ -21,6 +21,7 @@ tests/local.bats
 *.tfstate
 *.tfstate.backup
 *.terraform.tfstate.lock.*
+*.terraform.lock.*
 # terragrunt
 *.terragrunt-cache
 *local-dev.tf

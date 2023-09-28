@@ -260,6 +260,13 @@ linters.setup {
   -- },
 }
 
+-- set terraform's tfvars files to use the terraform filetype (equiv to :set ft=terraform)
+vim.filetype.add({
+  extension = {
+    tfvars = "terraform",
+  },
+})
+
 -- setup debug adapter
 lvim.builtin.dap.active = true
 local mason_path = vim.fn.glob(vim.fn.stdpath "data" .. "/mason/")
