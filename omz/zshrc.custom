@@ -52,10 +52,10 @@ export PATH_PREVIOUS="$PATH" # needed for reloadZsh
 
 [ -d /opt/homebrew/bin ] && export PATH="/opt/homebrew/bin:$PATH"
 [ -d /opt/homebrew/sbin ] && export PATH="/opt/homebrew/sbin:$PATH"
-[ -d $HOME/.local ] && export PATH="$PATH:$HOME/.local/bin" # needs to append for pyenv, because pip install --user
+[ -d "${HOME}/.local" ] && export PATH="$PATH:$HOME/.local/bin" # needs to append for pyenv, because pip install --user
 [ -d /usr/libexec ] && export PATH="$PATH:/usr/libexec"
-[ -d $HOME/scripts ] && export PATH="$PATH:$HOME/scripts"
-[ -d $PROFILE_PATH/scripts ] && export PATH="$PATH:$PROFILE_PATH/scripts"
+[ -d "${HOME}/scripts" ] && export PATH="$PATH:$HOME/scripts"
+[ -d "${PROFILE_PATH}/scripts" ] && export PATH="$PROFILE_PATH/scripts:$PATH"
 [ -d /usr/syno ] && export PATH="/usr/local/bin:$PATH:/usr/syno/bin:/usr/syno/sbin" # dsm
 
 source $ZSH/oh-my-zsh.sh
@@ -123,13 +123,11 @@ fi
 
 # node.js environment
 if [ -s "$HOME/.nvm/nvm.sh" ]; then
-    export NVM_DIR="$HOME/.nvm"
-    nvm_cmds=(nvm node npm yarn)
-    for cmd in "${nvm_cmds[@]}" ; do
-      # shellcheck disable=SC2139,SC2128
-      alias $cmd="unalias $nvm_cmds && unset nvm_cmds && . $NVM_DIR/nvm.sh && $cmd"
-    done
-    . "$NVM_DIR/bash_completion" # Loads shell completion
+    export NVM_DIR="$([ -z "${XDG_CONFIG_HOME-}" ] \
+      && printf %s "${HOME}/.nvm" \
+      || printf %s "${XDG_CONFIG_HOME}/nvm")"
+    [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh" # This loads nvm
+    [[ -r $NVM_DIR/bash_completion ]] && . "$NVM_DIR/bash_completion" # Loads shell completion
 fi
 
 # handles special characters from links/urls
