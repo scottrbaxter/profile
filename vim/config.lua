@@ -111,6 +111,11 @@ vim.cmd([[
   " To get "sane" behavior you can remap p and P https://vi.stackexchange.com/a/25260
   xnoremap <expr> p 'pgv"'.v:register.'y`>'
   xnoremap <expr> P 'Pgv"'.v:register.'y`>'
+  " jump to next/previous fold
+  nmap <M-Up> zk
+  nmap <M-Down> zj
+  " toggle all folds on/off"
+  nmap F zi
 ]])
 
 -- Change Telescope navigation to use j and k for navigation and n and p for history in both input and normal mode.
@@ -397,3 +402,7 @@ lvim.builtin.illuminate.active = false -- do not highlight/underline words that 
 -- temp fix https://github.com/LunarVim/LunarVim/issues/2993
 lvim.builtin.bufferline.options.indicator_icon = nil
 lvim.builtin.bufferline.options.indicator = { style = "icon", icon = "▎" }
+
+vim.opt.foldmethod = "indent" -- enable folds
+vim.opt.foldenable = false -- unfold all by default
+lvim.builtin.which_key.setup.plugins.presets.z = true -- z to view which_key fold menu
