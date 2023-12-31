@@ -49,6 +49,7 @@ fpath+=($ZSH/plugins/docker $ZSH/plugins/docker-compose)
 
 # configure homebrew influx metrics
 export HOMEBREW_ANALYTICS_DEBUG=1
+export HOMEBREW_NO_ANALYTICS=1
 
 # custom PATH stuff
 export PATH_PREVIOUS="$PATH" # needed for reloadZsh
