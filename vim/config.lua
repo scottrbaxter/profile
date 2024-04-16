@@ -219,10 +219,8 @@ lvim.plugins = {
   "farmergreg/vim-lastplace",
   "tpope/vim-surround",
   "ntpeters/vim-better-whitespace",
-  "Raimondi/delimitMate",
-  "luochen1990/rainbow",
   "mfussenegger/nvim-dap-python",
-  "nvim-neotest/neotest",
+  { "nvim-neotest/neotest", dependencies = "nvim-neotest/nvim-nio" },
   "nvim-neotest/neotest-python",
 }
 
