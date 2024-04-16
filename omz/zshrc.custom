@@ -24,6 +24,7 @@ ZSH_CUSTOM="$PROFILE_PATH/omz/custom"
 ZSH_THEME="powerlevel10k/powerlevel10k"
 # ZSH_THEME="crunch_custom"
 zstyle ':omz:update' mode disabled # https://github.com/ohmyzsh/ohmyzsh#getting-updates
+zstyle ':omz:plugins:nvm' lazy yes # improve initial prompt speed
 
 # skip_global_compinit=1
 export TERM="xterm-256color"
