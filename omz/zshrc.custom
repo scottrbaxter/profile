@@ -1,13 +1,15 @@
-# shellcheck disable=2034,2148
+# shellcheck disable=2034,2148,1091
 # vim: ft=sh: set this file to sh if using shellcheck linter
 
 ### debug ###
 # zmodload zsh/zprof # https://carlosbecker.com/posts/speeding-up-zsh/
 typeset -F SECONDS # much smaller than seconds
 time_test(){
-    echo "[INFO] $SECONDS $1"
+  TOTAL_TIME="$(echo "${SECONDS}-${PREVIOUS_TIME:-0}" | bc)"
+  echo "[INFO] ${TOTAL_TIME} ${*}"
+  PREVIOUS_TIME=$SECONDS
 }
-# time_test "started $(basename $0)"
+# time_test "[$(basename $0)] loading"
 ### end debug ###
 
 # oh-my-zsh args
@@ -24,6 +26,7 @@ ZSH_CUSTOM="$PROFILE_PATH/omz/custom"
 ZSH_THEME="powerlevel10k/powerlevel10k"
 # ZSH_THEME="crunch_custom"
 zstyle ':omz:update' mode disabled # https://github.com/ohmyzsh/ohmyzsh#getting-updates
+zstyle ':omz:plugins:nvm' lazy yes # improve initial prompt speed
 
 # skip_global_compinit=1
 export TERM="xterm-256color"
@@ -50,6 +53,7 @@ fpath+=($ZSH/plugins/docker $ZSH/plugins/docker-compose)
 # configure homebrew influx metrics
 export HOMEBREW_ANALYTICS_DEBUG=1
 export HOMEBREW_NO_ANALYTICS=1
+export HOMEBREW_AUTO_UPDATE_SECS=43200
 
 # custom PATH stuff
 export PATH_PREVIOUS="$PATH" # needed for reloadZsh
@@ -62,7 +66,8 @@ export PATH_PREVIOUS="$PATH" # needed for reloadZsh
 [ -d "${PROFILE_PATH}/scripts" ] && export PATH="$PROFILE_PATH/scripts:$PATH"
 [ -d /usr/syno ] && export PATH="/usr/local/bin:$PATH:/usr/syno/bin:/usr/syno/sbin" # dsm
 
-source $ZSH/oh-my-zsh.sh
+# shellcheck source="$ZSH/oh-my-zsh.sh"
+source "$ZSH/oh-my-zsh.sh"
 
 ####################################
 
@@ -75,7 +80,7 @@ UNAME_SYSTEM=$(uname -s)
 # linux specific
 if [ "$UNAME_SYSTEM" = Linux ]; then
     CURRENT_USER=$(id -un)
-    if [ $CURRENT_USER != "root" ]; then
+    if [ "$CURRENT_USER" != "root" ]; then
         alias apt='sudo apt'
     fi
     alias apts='apt search'
@@ -98,7 +103,7 @@ fi
 
 # asdf
 if [ -e "$HOME/.asdf/asdf.sh" ]; then
-    . $HOME/.asdf/asdf.sh
+    . "$HOME"/.asdf/asdf.sh
     fpath+=("${ASDF_DIR}/completions")
     autoload -Uz compinit && compinit
 fi
@@ -111,13 +116,16 @@ if [ -e "$BREW_PREFIX/bin/rbenv" ] || [ -e "$HOME/.rbenv/bin/rbenv" ]; then
 fi
 
 # python environment
+# time_test "[$(basename $0)] start pyenv"
 if [ -e "$BREW_PREFIX/bin/pyenv" ] || [ -e "$HOME/.pyenv/bin/pyenv" ]; then
     export PYENV_ROOT="$HOME/.pyenv"
     export PATH="$PYENV_ROOT/bin:$PATH"
-    eval "$(pyenv init --path --no-reshash)"
-    eval "$(pyenv init --no-reshash -)"
+    # eval "$(pyenv init --path --no-reshash)"
+    # eval "$(pyenv init --no-reshash -)"
+    eval "$(pyenv init -)"
     eval "$(pyenv virtualenv-init -)"
 fi
+# time_test "[$(basename $0)] pyenv loaded"
 
 # go environment
 if [ -e "$BREW_PREFIX/bin/go" ] || [ -e "/usr/bin/go" ]; then
@@ -126,13 +134,16 @@ if [ -e "$BREW_PREFIX/bin/go" ] || [ -e "/usr/bin/go" ]; then
 fi
 
 # node.js environment
+# time_test "[$(basename $0)] start nvm"
 if [ -s "$HOME/.nvm/nvm.sh" ]; then
-    export NVM_DIR="$([ -z "${XDG_CONFIG_HOME-}" ] \
+    NVM_DIR="$([ -z "${XDG_CONFIG_HOME-}" ] \
       && printf %s "${HOME}/.nvm" \
       || printf %s "${XDG_CONFIG_HOME}/nvm")"
-    [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh" # This loads nvm
+    export NVM_DIR
+    [[ -s "$NVM_DIR/nvm.sh" ]] && \. "$NVM_DIR/nvm.sh" # This loads nvm
     [[ -r $NVM_DIR/bash_completion ]] && . "$NVM_DIR/bash_completion" # Loads shell completion
 fi
+# time_test "[$(basename $0)] nvm loaded"
 
 # handles special characters from links/urls
 DISABLE_MAGIC_FUNCTIONS=true
@@ -192,16 +203,16 @@ export VAGRANT_HOME="$HOME/.Vagrant" # (default location: ~/.vagrant.d)
 # functions
 awkp(){
     # search returns paragraph around line with search value
-    if [ $2 ]; then
-        awk -v RS= "/$1/" $2
+    if [ "$2" ]; then
+        awk -v RS= "/$1/" "$2"
     else
         echo "use: awkp <thing_to_search> </path/to/file>"
     fi
 }
 
 gitBlameSort(){
-    if [ ${1} ]; then
-        git blame ${1} | sort -rbk 3 | less
+    if [ "${1}" ]; then
+        git blame "${1}" | sort -rbk 3 | less
     else
         echo "e.g. $0 /path/to/file"
     fi
@@ -211,9 +222,9 @@ digs() { dig "$1" +short; }
 
 peruseHistory ()
 {
-    if [ ! $1 ]; then
+    if [ ! "$1" ]; then
         fc -il 1
-    elif [ $1 = '-l' ]; then
+    elif [ "$1" = '-l' ]; then
         fc -il 1 | grep "$2" | less
     else
         fc -il 1 | grep "$1"
@@ -351,7 +362,7 @@ export TF_DATA_DIR="$HOME/.terraform.d/TF_DATA_DIR${PWD}" # this dir needs to ex
 # the following requires tfenv install <version>; tfenv use <version>
 if [ -x "$(command -v tfenv)" ] && [ -x "$(command -v terraform)" ]; then \
   TFENV_COMPLETION_PATH="$(readlink -f "$(command -v tfenv)" | cut -d/ -f-6)"
-  TF_VERSION="$(cat $TFENV_COMPLETION_PATH/version)"
+  TF_VERSION="$(cat "$TFENV_COMPLETION_PATH"/version)"
   complete -o nospace -C "${TFENV_COMPLETION_PATH}/versions/${TF_VERSION}/terraform" terraform
 fi
 
@@ -367,13 +378,13 @@ ZSH_AUTOSUGGEST_CLEAR_WIDGETS+=(bracketed-paste accept-line)
 
 # additional stuff
 # shellcheck disable=SC1090
-for k in ~/.keyfile-*(N); do source $k; done
+for k in ~/.keyfile-*; do source "$k"; done
 
 # iterm2 shell integration
 test -e "${HOME}/.iterm2_shell_integration.zsh" && source "${HOME}/.iterm2_shell_integration.zsh"
 
 ### debug ###
-# time_test "finshed $(basename $0)"
+# time_test "[$(basename $0)] finished"
 
 # makes any child shell with TRACE_ZSH verbose/debug, and sends stderr to file specified
 [ "${TRACE_ZSH}" ] && set -x

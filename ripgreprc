@@ -4,8 +4,8 @@
 # sort by file path
 --sort=path
 
-# ignore version control files
---no-ignore-vcs
+# do not ignore version control files, such as .gitignore
+# --no-ignore-vcs
 
 # not case sensitive
 --ignore-case
