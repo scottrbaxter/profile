@@ -222,6 +222,7 @@ lvim.plugins = {
   "mfussenegger/nvim-dap-python",
   { "nvim-neotest/neotest", dependencies = "nvim-neotest/nvim-nio" },
   "nvim-neotest/neotest-python",
+  "hiphish/rainbow-delimiters.nvim",
 }
 
 -- set a formatter, this will override the language server formatting capabilities (if it exists)
