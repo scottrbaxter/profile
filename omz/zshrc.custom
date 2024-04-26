@@ -381,8 +381,12 @@ ZSH_AUTOSUGGEST_CLEAR_WIDGETS+=(bracketed-paste accept-line)
 # shellcheck disable=SC1090
 for k in ~/.keyfile-*; do source "$k"; done
 
-# use fzf
-eval "$(fzf --zsh)"
+# use fzf (ctrl-t)
+if [[ -x "$(command -v fzf)" ]] && echo "${SHELL}" | grep zsh >/dev/null 2>&1; then
+  eval "$(fzf --zsh)"
+elif [ -f "${HOME}/.fzf.zsh" ]; then
+  source "${HOME}/.fzf.zsh"
+fi
 
 # tabby
 export TABBY_DISABLE_USAGE_COLLECTION=1
