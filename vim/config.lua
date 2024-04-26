@@ -12,7 +12,7 @@ an executable
 lvim.log.level = "warn"
 -- lvim.builtin.treesitter.highlight.enable = false
 lvim.transparent_window = true
--- lvim.colorscheme = "space-vim-custom" -- custom: ~/.config/lvim/colors/space-vim-custom.vim
+lvim.colorscheme = "space-vim-custom" -- custom: ~/.config/lvim/colors/space-vim-custom.vim
 
 -- vim.cmd "let g:space_vim_dark_background = 234"
 -- lvim.lsp.document_highlight = false
