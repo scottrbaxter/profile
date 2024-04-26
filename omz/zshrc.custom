@@ -64,7 +64,8 @@ export PATH_PREVIOUS="$PATH" # needed for reloadZsh
 [ -d /usr/libexec ] && export PATH="$PATH:/usr/libexec"
 [ -d "${HOME}/scripts" ] && export PATH="$PATH:$HOME/scripts"
 [ -d "${PROFILE_PATH}/scripts" ] && export PATH="$PROFILE_PATH/scripts:$PATH"
-[ -d /usr/syno ] && export PATH="/usr/local/bin:$PATH:/usr/syno/bin:/usr/syno/sbin" # dsm
+[ -d /usr/syno ] && export PATH="${PATH}:/usr/syno/bin:/usr/syno/sbin" # dsm
+[ -d "${HOME}/.iterm2" ] && export PATH="$PATH:${HOME}/.iterm2"
 
 # shellcheck source="$ZSH/oh-my-zsh.sh"
 source "$ZSH/oh-my-zsh.sh"
@@ -379,6 +380,13 @@ ZSH_AUTOSUGGEST_CLEAR_WIDGETS+=(bracketed-paste accept-line)
 # additional stuff
 # shellcheck disable=SC1090
 for k in ~/.keyfile-*; do source "$k"; done
+
+# use fzf
+eval "$(fzf --zsh)"
+
+# tabby
+export TABBY_DISABLE_USAGE_COLLECTION=1
+export TABBY_MODEL_CACHE_ROOT=~/.tabby/models
 
 # iterm2 shell integration
 test -e "${HOME}/.iterm2_shell_integration.zsh" && source "${HOME}/.iterm2_shell_integration.zsh"
