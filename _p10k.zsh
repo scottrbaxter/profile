@@ -49,6 +49,8 @@
     sts                     # check aws sts
     context                 # user@hostname
     dir                     # current directory
+    pyenv                   # python environment (https://github.com/pyenv/pyenv)
+    node_version          # node.js version
     vcs                     # git status
     asdf                    # asdf version manager (https://github.com/asdf-vm/asdf)
     aws                     # aws profile (https://docs.aws.amazon.com/cli/latest/userguide/cli-configure-profiles.html)
