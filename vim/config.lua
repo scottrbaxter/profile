@@ -12,7 +12,8 @@ an executable
 lvim.log.level = "warn"
 -- lvim.builtin.treesitter.highlight.enable = false
 lvim.transparent_window = true
-lvim.colorscheme = "space-vim-custom" -- custom: ~/.config/lvim/colors/space-vim-custom.vim
+-- lvim.colorscheme = "space-vim-custom" -- custom: ~/.config/lvim/colors/space-vim-custom.vim
+lvim.colorscheme = "cyberdream"
 
 -- vim.cmd "let g:space_vim_dark_background = 234"
 -- lvim.lsp.document_highlight = false
@@ -226,6 +227,22 @@ lvim.plugins = {
   { "nvim-neotest/neotest", dependencies = "nvim-neotest/nvim-nio" },
   "nvim-neotest/neotest-python",
   -- "TabbyML/vim-tabby",
+  {
+    "scottmckendry/cyberdream.nvim",
+    lazy = false,
+    priority = 1000,
+    config = function()
+        require("cyberdream").setup({
+            -- Recommended - see "Configuring" below for more config options
+            transparent = true,
+            italic_comments = true,
+            hide_fillchars = true,
+            borderless_telescope = true,
+            terminal_colors = true,
+        })
+        vim.cmd("colorscheme cyberdream") -- set the colorscheme
+    end,
+  },
 }
 
 -- set a formatter, this will override the language server formatting capabilities (if it exists)
