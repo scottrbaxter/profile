@@ -54,6 +54,7 @@ fpath+=($ZSH/plugins/docker $ZSH/plugins/docker-compose)
 export HOMEBREW_ANALYTICS_DEBUG=1
 export HOMEBREW_NO_ANALYTICS=1
 export HOMEBREW_AUTO_UPDATE_SECS=43200
+export HOMEBREW_NO_INSTALL_UPGRADE=1
 
 # custom PATH stuff
 export PATH_PREVIOUS="$PATH" # needed for reloadZsh
