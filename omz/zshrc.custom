@@ -26,7 +26,7 @@ ZSH_CUSTOM="$PROFILE_PATH/omz/custom"
 ZSH_THEME="powerlevel10k/powerlevel10k"
 # ZSH_THEME="crunch_custom"
 zstyle ':omz:update' mode disabled # https://github.com/ohmyzsh/ohmyzsh#getting-updates
-zstyle ':omz:plugins:nvm' lazy yes # improve initial prompt speed
+# zstyle ':omz:plugins:nvm' lazy yes # improve initial prompt speed
 
 # skip_global_compinit=1
 export TERM="xterm-256color"
@@ -125,7 +125,7 @@ if [ -e "$BREW_PREFIX/bin/pyenv" ] || [ -e "$HOME/.pyenv/bin/pyenv" ]; then
     # eval "$(pyenv init --path --no-reshash)"
     # eval "$(pyenv init --no-reshash -)"
     eval "$(pyenv init -)"
-    eval "$(pyenv virtualenv-init -)"
+    # eval "$(pyenv virtualenv-init -)"
 fi
 # time_test "[$(basename $0)] pyenv loaded"
 
@@ -142,7 +142,7 @@ if [ -s "$HOME/.nvm/nvm.sh" ]; then
       && printf %s "${HOME}/.nvm" \
       || printf %s "${XDG_CONFIG_HOME}/nvm")"
     export NVM_DIR
-    [[ -s "$NVM_DIR/nvm.sh" ]] && \. "$NVM_DIR/nvm.sh" # This loads nvm
+    [[ -s "$NVM_DIR/nvm.sh" ]] && \. "$NVM_DIR/nvm.sh" --no-use # This loads nvm
     [[ -r $NVM_DIR/bash_completion ]] && . "$NVM_DIR/bash_completion" # Loads shell completion
 fi
 # time_test "[$(basename $0)] nvm loaded"
