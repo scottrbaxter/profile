@@ -3,13 +3,16 @@
 
 ### debug ###
 # zmodload zsh/zprof # https://carlosbecker.com/posts/speeding-up-zsh/
+# TIME_TEST=true # uncomment this to speedtest
 typeset -F SECONDS # much smaller than seconds
 time_test(){
-  TOTAL_TIME="$(echo "${SECONDS}-${PREVIOUS_TIME:-0}" | bc)"
-  echo "[INFO] ${TOTAL_TIME} ${*}"
-  PREVIOUS_TIME=$SECONDS
+  if [[ ${TIME_TEST} == true ]]; then
+    TOTAL_TIME="$(echo "${SECONDS}-${PREVIOUS_TIME:-0}" | bc)"
+    echo "[INFO] ${TOTAL_TIME} ${*}"
+    PREVIOUS_TIME=$SECONDS
+  fi
 }
-# time_test "[$(basename $0)] loading"
+time_test "[$(basename "$0")] loading"
 ### end debug ###
 
 # oh-my-zsh args
@@ -118,7 +121,7 @@ if [ -e "$BREW_PREFIX/bin/rbenv" ] || [ -e "$HOME/.rbenv/bin/rbenv" ]; then
 fi
 
 # python environment
-# time_test "[$(basename $0)] start pyenv"
+time_test "[$(basename "$0")] start pyenv"
 if [ -e "$BREW_PREFIX/bin/pyenv" ] || [ -e "$HOME/.pyenv/bin/pyenv" ]; then
     export PYENV_ROOT="$HOME/.pyenv"
     export PATH="$PYENV_ROOT/bin:$PATH"
@@ -127,7 +130,7 @@ if [ -e "$BREW_PREFIX/bin/pyenv" ] || [ -e "$HOME/.pyenv/bin/pyenv" ]; then
     eval "$(pyenv init -)"
     # eval "$(pyenv virtualenv-init -)"
 fi
-# time_test "[$(basename $0)] pyenv loaded"
+time_test "[$(basename "$0")] pyenv loaded"
 
 # go environment
 if [ -e "$BREW_PREFIX/bin/go" ] || [ -e "/usr/bin/go" ]; then
@@ -136,7 +139,7 @@ if [ -e "$BREW_PREFIX/bin/go" ] || [ -e "/usr/bin/go" ]; then
 fi
 
 # node.js environment
-# time_test "[$(basename $0)] start nvm"
+time_test "[$(basename "$0")] start nvm"
 if [ -s "$HOME/.nvm/nvm.sh" ]; then
     NVM_DIR="$([ -z "${XDG_CONFIG_HOME-}" ] \
       && printf %s "${HOME}/.nvm" \
@@ -145,7 +148,7 @@ if [ -s "$HOME/.nvm/nvm.sh" ]; then
     [[ -s "$NVM_DIR/nvm.sh" ]] && \. "$NVM_DIR/nvm.sh" --no-use # This loads nvm
     [[ -r $NVM_DIR/bash_completion ]] && . "$NVM_DIR/bash_completion" # Loads shell completion
 fi
-# time_test "[$(basename $0)] nvm loaded"
+time_test "[$(basename "$0")] nvm loaded"
 
 # handles special characters from links/urls
 DISABLE_MAGIC_FUNCTIONS=true
@@ -397,7 +400,7 @@ export TABBY_MODEL_CACHE_ROOT=~/.tabby/models
 test -e "${HOME}/.iterm2_shell_integration.zsh" && source "${HOME}/.iterm2_shell_integration.zsh"
 
 ### debug ###
-# time_test "[$(basename $0)] finished"
+time_test "[$(basename "$0")] finished"
 
 # makes any child shell with TRACE_ZSH verbose/debug, and sends stderr to file specified
 [ "${TRACE_ZSH}" ] && set -x
