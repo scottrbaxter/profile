@@ -1,4 +1,4 @@
-# shellcheck disable=2034,2148,1091
+# shellcheck disable=2148,1090,1091
 # vim: ft=sh: set this file to sh if using shellcheck linter
 
 ### debug ###
@@ -72,7 +72,6 @@ export PATH_PREVIOUS="$PATH" # needed for reloadZsh
 [ -d /usr/syno ] && export PATH="${PATH}:/usr/syno/bin:/usr/syno/sbin" # dsm
 [ -d "${HOME}/.iterm2" ] && export PATH="$PATH:${HOME}/.iterm2"
 
-# shellcheck source="$ZSH/oh-my-zsh.sh"
 source "$ZSH/oh-my-zsh.sh" \
   && time_test "[$(basename "$0")] loaded oh-my-zsh.sh"
 
@@ -356,11 +355,9 @@ alias kgsc='k get storageclasses --output=wide'
 alias kns='kubens'
 alias kx='kubectx'
 # alias stern='stern --timestamps'
-# shellcheck source=stdout
 [ -x "$(command -v kubectl)" ] \
   && source <(kubectl completion zsh) \
   && time_test "[$(basename "$0")] loaded kubectl completion"
-# shellcheck source=stdout
 [ -x "$(command -v helm)" ] \
   && source <(helm completion zsh) \
   && time_test "[$(basename "$0")] loaded helm completion"
@@ -385,12 +382,12 @@ autoload -U +X bashcompinit && bashcompinit
 # fix https://github.com/zsh-users/zsh-autosuggestions/issues/351#issuecomment-515415202
 ZSH_AUTOSUGGEST_CLEAR_WIDGETS_PREVIOUS="${ZSH_AUTOSUGGEST_CLEAR_WIDGETS[*]}" # needed for reloadZsh
 ZSH_AUTOSUGGEST_CLEAR_WIDGETS+=(bracketed-paste accept-line)
+source "${PROFILE_PATH}/omz/fix-autosuggest-paste-speed"
 
 # https://github.com/ohmyzsh/ohmyzsh/issues/9471
 # unsetopt sharehistory
 
 # additional stuff
-# shellcheck disable=SC1090
 for k in ~/.keyfile-*; do source "$k"; done
 
 # use fzf (ctrl-t)

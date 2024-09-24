@@ -1,0 +1,20 @@
+#!/usr/bin/env zsh
+
+# This speeds up pasting w/ autosuggest
+# other solution that does not escape urls
+# zstyle ':bracketed-paste-magic' active-widgets '.self-*'
+# https://github.com/zsh-users/zsh-autosuggestions/issues/238#issuecomment-389324292
+# I wonder if youd need .url-quote-magic?
+pasteinit(){
+  OLD_SELF_INSERT=${${(s.:.)widgets[self-insert]}[2,3]}
+  # OLD_SELF_INSERT_ARRAY="(s.:.)widgets[self-insert]"
+  # OLD_SELF_INSERT_ARRAY_2="${OLD_SELF_INSERT_ARRAY}[2,3]"
+  # OLD_SELF_INSERT=${OLD_SELF_INSERT_ARRAY_2}
+  zle -N self-insert url-quote-magic
+}
+
+pastefinish() {
+  zle -N self-insert "${OLD_SELF_INSERT}"
+}
+zstyle :bracketed-paste-magic paste-init pasteinit
+zstyle :bracketed-paste-magic paste-finish pastefinish
