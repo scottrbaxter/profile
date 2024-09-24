@@ -154,6 +154,7 @@ fi
 if [ -x "$(command -v fnm)" ]; then
     eval "$(fnm env --use-on-cd)" > /dev/null 2>&1
     source <(fnm completions --shell zsh)
+    export FNM_LOGLEVEL=quiet # disables "Using Node" when changing into dir
     time_test "[$(basename "$0")] loaded fnm"
 fi
 
