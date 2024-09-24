@@ -929,7 +929,8 @@
   # Pyenv color.
   typeset -g POWERLEVEL9K_PYENV_FOREGROUND=37
   # Hide python version if it doesn't come from one of these sources.
-  typeset -g POWERLEVEL9K_PYENV_SOURCES=(shell local global)
+  # typeset -g POWERLEVEL9K_PYENV_SOURCES=(shell local global)
+  typeset -g POWERLEVEL9K_PYENV_SOURCES=(shell local)
   # If set to false, hide python version if it's the same as global:
   # $(pyenv version-name) == $(pyenv global).
   typeset -g POWERLEVEL9K_PYENV_PROMPT_ALWAYS_SHOW=true
