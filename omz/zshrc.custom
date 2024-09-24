@@ -154,7 +154,7 @@ fi
 if [ -x "$(command -v fnm)" ]; then
     eval "$(fnm env --use-on-cd)" > /dev/null 2>&1
     source <(fnm completions --shell zsh)
-    # time_test "[$(basename "$0")] loaded fnm"
+    time_test "[$(basename "$0")] loaded fnm"
 fi
 
 # handles special characters from links/urls
