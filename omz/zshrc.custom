@@ -1,4 +1,4 @@
-# shellcheck disable=2148,1090,1091
+# shellcheck disable=1090,1091,2148,2034
 # vim: ft=sh: set this file to sh if using shellcheck linter
 
 ### debug ###
@@ -142,14 +142,19 @@ if [ -e "$BREW_PREFIX/bin/go" ] || [ -e "/usr/bin/go" ]; then
 fi
 
 # node.js environment
-if [ -s "$HOME/.nvm/nvm.sh" ]; then
-    NVM_DIR="$([ -z "${XDG_CONFIG_HOME-}" ] \
-      && printf %s "${HOME}/.nvm" \
-      || printf %s "${XDG_CONFIG_HOME}/nvm")"
-    export NVM_DIR
-    [[ -s "$NVM_DIR/nvm.sh" ]] && \. "$NVM_DIR/nvm.sh" # This loads nvm
-    [[ -r $NVM_DIR/bash_completion ]] && . "$NVM_DIR/bash_completion" # Loads shell completion
-    time_test "[$(basename "$0")] loaded nvm"
+# if [ -s "$HOME/.nvm/nvm.sh" ]; then
+#     NVM_DIR="$([ -z "${XDG_CONFIG_HOME-}" ] \
+#       && printf %s "${HOME}/.nvm" \
+#       || printf %s "${XDG_CONFIG_HOME}/nvm")"
+#     export NVM_DIR
+#     [[ -s "$NVM_DIR/nvm.sh" ]] && \. "$NVM_DIR/nvm.sh" # This loads nvm
+#     [[ -r $NVM_DIR/bash_completion ]] && . "$NVM_DIR/bash_completion" # Loads shell completion
+#     time_test "[$(basename "$0")] loaded nvm"
+# fi
+if [ -x "$(command -v fnm)" ]; then
+    eval "$(fnm env --use-on-cd)" > /dev/null 2>&1
+    source <(fnm completions --shell zsh)
+    # time_test "[$(basename "$0")] loaded fnm"
 fi
 
 # handles special characters from links/urls
