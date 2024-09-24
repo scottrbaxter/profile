@@ -3,7 +3,7 @@
 
 ### debug ###
 # zmodload zsh/zprof # https://carlosbecker.com/posts/speeding-up-zsh/
-# TIME_TEST=true # uncomment this to speedtest
+# TIME_TEST=true PREVIOUS_TIME=0 # uncomment this to speedtest
 typeset -F SECONDS # much smaller than seconds
 time_test(){
   if [[ ${TIME_TEST} == true ]]; then
