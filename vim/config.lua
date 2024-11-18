@@ -270,7 +270,7 @@ linters.setup {
 -- set terraform's tfvars files to use the terraform filetype (equiv to :set ft=terraform)
 vim.filetype.add({
   extension = {
-    tfvars = "terraform",
+    tfvars = "conf",
   },
 })
 
