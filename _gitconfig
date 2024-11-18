@@ -23,7 +23,6 @@
 [color "diff"]
     meta = cyan normal bold
 [core]
-    editor       = vim
     pager        = less
     excludesfile = ~/.gitignore_global
 [diff]
