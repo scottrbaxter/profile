@@ -70,7 +70,7 @@ export PATH_PREVIOUS="$PATH" # needed for reloadZsh
 [ -d "${HOME}/scripts" ] && export PATH="$PATH:$HOME/scripts"
 [ -d "${PROFILE_PATH}/scripts" ] && export PATH="$PROFILE_PATH/scripts:$PATH"
 [ -d /usr/syno ] && export PATH="${PATH}:/usr/syno/bin:/usr/syno/sbin" # dsm
-[ -d "${HOME}/.lmstudio" ] && export PATH="${PATH}:${HOME}/.cache/lmstudio/bin"
+[ -d "${HOME}/.cache/lmstudio" ] && export PATH="${PATH}:${HOME}/.cache/lmstudio/bin"
 [ -d "${HOME}/.iterm2" ] && export PATH="$PATH:${HOME}/.iterm2"
 
 source "$ZSH/oh-my-zsh.sh" \
