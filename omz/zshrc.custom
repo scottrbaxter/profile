@@ -70,6 +70,7 @@ export PATH_PREVIOUS="$PATH" # needed for reloadZsh
 [ -d "${HOME}/scripts" ] && export PATH="$PATH:$HOME/scripts"
 [ -d "${PROFILE_PATH}/scripts" ] && export PATH="$PROFILE_PATH/scripts:$PATH"
 [ -d /usr/syno ] && export PATH="${PATH}:/usr/syno/bin:/usr/syno/sbin" # dsm
+[ -d "${HOME}/.lmstudio" ] && export PATH="${PATH}:${HOME}/.lmstudio/bin"
 [ -d "${HOME}/.iterm2" ] && export PATH="$PATH:${HOME}/.iterm2"
 
 source "$ZSH/oh-my-zsh.sh" \
@@ -79,7 +80,7 @@ source "$ZSH/oh-my-zsh.sh" \
 
 # additional profile settings
 
-[ -x "$(command -v brew)" ] && BREW_PREFIX="$(brew --prefix)" \
+[ -x "$(command -v brew)" ] && BREW_PREFIX="$(brew --prefix)"
 
 # determine Mac or Linux OS
 UNAME_SYSTEM=$(uname -s)
@@ -394,13 +395,21 @@ source "${PROFILE_PATH}/omz/fix-autosuggest-paste-speed"
 # unsetopt sharehistory
 
 # additional stuff
+setopt nullglob # prevent errors for unmatched glob patterns
 for k in ~/.keyfile-*; do source "$k"; done
+setopt nomatch
 
 # use fzf (ctrl-t)
 if [[ -x "$(command -v fzf)" ]] && echo "${SHELL}" | grep zsh >/dev/null 2>&1; then
   eval "$(fzf --zsh)"
 elif [ -f "${HOME}/.fzf.zsh" ]; then
   source "${HOME}/.fzf.zsh"
+fi
+
+# vscodium
+# [ -x "$(command -v codium)" ] && alias code=codium
+if command -v codium &> /dev/null && ! command -v code &> /dev/null; then
+  alias code='codium'
 fi
 
 # tabby
