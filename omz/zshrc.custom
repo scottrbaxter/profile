@@ -63,15 +63,37 @@ export HOMEBREW_NO_INSTALL_UPGRADE=1
 # custom PATH stuff
 export PATH_PREVIOUS="$PATH" # needed for reloadZsh
 
-[ -d /opt/homebrew/bin ] && export PATH="/opt/homebrew/bin:$PATH"
-[ -d /opt/homebrew/sbin ] && export PATH="/opt/homebrew/sbin:$PATH"
-[ -d "${HOME}/.local" ] && export PATH="$PATH:$HOME/.local/bin" # needs to append for pyenv, because pip install --user
-[ -d /usr/libexec ] && export PATH="$PATH:/usr/libexec"
-[ -d "${HOME}/scripts" ] && export PATH="$PATH:$HOME/scripts"
-[ -d "${PROFILE_PATH}/scripts" ] && export PATH="$PROFILE_PATH/scripts:$PATH"
-[ -d /usr/syno ] && export PATH="${PATH}:/usr/syno/bin:/usr/syno/sbin" # dsm
-[ -d "${HOME}/.lmstudio" ] && export PATH="${PATH}:${HOME}/.lmstudio/bin"
-[ -d "${HOME}/.iterm2" ] && export PATH="$PATH:${HOME}/.iterm2"
+PRE_PATHS=( \
+  /opt/homebrew/bin
+  /opt/homebrew/sbin
+  /usr/local/bin \
+  /usr/local/sbin \
+)
+
+POST_PATHS=( \
+  "${HOME}/.local/bin" \
+  "${HOME}/scripts" \
+  "${PROFILE_PATH}/scripts" \
+  "${HOME}/.lmstudio/bin" \
+  "${HOME}/.iterm2" \
+  /usr/libexec \
+  /usr/syno/bin \
+  /usr/syno/sbin \
+)
+
+# add paths that need to take priority unless already added
+for folder in "${PRE_PATHS[@]}"; do
+  if [ -d "$folder" ]; then
+    grep -wq "${folder}" <<< "${PATH}" || export PATH="${folder}:${PATH}"
+  fi
+done
+
+# add paths with lower priority unless already added
+for folder in "${POST_PATHS[@]}"; do
+  if [ -d "$folder" ]; then
+    grep -wq "${folder}" <<< "${PATH}" || export PATH="$PATH:${folder}"
+  fi
+done
 
 source "$ZSH/oh-my-zsh.sh" \
   && time_test "[$(basename "$0")] loaded oh-my-zsh.sh"
@@ -96,7 +118,6 @@ if [ "$UNAME_SYSTEM" = Linux ]; then
 
 # mac specific
 elif [ "$UNAME_SYSTEM" = Darwin ]; then
-    [ -d /usr/local/sbin ] && export PATH="$PATH:/usr/local/sbin"
     alias fixaudio='sudo launchctl stop com.apple.audio.coreaudiod'
     alias fixAppStoreApps='killall -KILL storeaccountd'
     alias iCloudStatus='brctl log --wait --shorten'
