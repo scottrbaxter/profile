@@ -5,7 +5,7 @@
 --sort=path
 
 # do not ignore version control files, such as .gitignore
-# --no-ignore-vcs
+--no-ignore-vcs
 
 # not case sensitive
 --ignore-case
@@ -26,6 +26,10 @@
 
 # include hcl files with terraform type
 --type-add=tf:*.{tf,tfvars,hcl}
+
+# Don't let ripgrep vomit really long lines to my terminal, and show a preview.
+# --max-columns=150
+# --max-columns-preview
 
 # colorscheme
 --colors=path:fg:green

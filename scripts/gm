@@ -10,6 +10,7 @@ currentbranch=$(git rev-parse --abbrev-ref HEAD)
 
 check_default_branch(){
     git remote show origin | awk '/^  HEAD branch:/ {print $NF}'
+    # git symbolic-ref refs/remotes/origin/HEAD | sed 's@^refs/remotes/origin/@@'
 }
 
 check_submodule_list(){
