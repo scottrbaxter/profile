@@ -64,8 +64,6 @@ export HOMEBREW_NO_INSTALL_UPGRADE=1
 export PATH_PREVIOUS="$PATH" # needed for reloadZsh
 
 PRE_PATHS=( \
-  /opt/homebrew/bin
-  /opt/homebrew/sbin
   /usr/local/bin \
   /usr/local/sbin \
 )
@@ -76,6 +74,8 @@ POST_PATHS=( \
   "${PROFILE_PATH}/scripts" \
   "${HOME}/.lmstudio/bin" \
   "${HOME}/.iterm2" \
+  /opt/homebrew/bin
+  /opt/homebrew/sbin
   /usr/libexec \
   /usr/syno/bin \
   /usr/syno/sbin \
