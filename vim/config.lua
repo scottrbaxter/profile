@@ -106,7 +106,7 @@ vim.cmd([[
   nmap <silent> <F3> :set invwrap<CR>:set wrap?<CR>
   nmap W :set invwrap<CR>:set wrap?<CR>
   " show current line diagnostics
-  nmap <silent> ; :lua require'lvim.lsp.handlers'.show_line_diagnostics()<CR>
+  " nmap <silent> ; :lua require'lvim.lsp.handlers'.show_line_diagnostics()<CR>
   nmap <silent> t :Trouble document_diagnostics<CR>
   " To get "sane" behavior you can remap p and P https://vi.stackexchange.com/a/25260
   xnoremap <expr> p 'pgv"'.v:register.'y`>'
