@@ -245,6 +245,10 @@ awkp(){
     fi
 }
 
+dateNow(){ date +%Y%m%d_%H%M%S; }
+
+digs() { dig "$1" +short; }
+
 gitBlameSort(){
     if [ "${1}" ]; then
         git blame "${1}" | sort -rbk 3 | less
@@ -252,8 +256,6 @@ gitBlameSort(){
         echo "e.g. $0 /path/to/file"
     fi
 }
-
-digs() { dig "$1" +short; }
 
 peruseHistory ()
 {
