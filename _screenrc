@@ -1,2 +1,3 @@
 shell zsh
 termcapinfo xterm* ti@:te@
+setenv COLORTERM ""
