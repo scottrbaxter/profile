@@ -1,60 +1,61 @@
 ; vim: set ft=gitconfig:
 [alias]
-    addp                 = add --patch
-    amend                = commit -a --amend
-    delete               = branch -d
-    delete-without-merge = branch -D
-    diffw                = diff --word-diff
-    graph                = log --graph --all --decorate --stat --date=iso
-    head-branch          = !git remote show origin | grep HEAD | awk '{print $3}'
-    local                = log --oneline --no-merges
-    newbranch            = checkout -b
-    pf                   = push --force-with-lease
-    remove               = remote
-    removechanges        = checkout --
-    renamebranch         = branch -m
-    staged               = diff --staged
-    submodulelist        = "!f() { git config --file .gitmodules --get-regexp path | awk '{ print $2 }'; }; f"
-    sw                   = "!f() { git checkout $1 2>/dev/null || git checkout -b $1 origin/$1 2>/dev/null || git checkout -b $1; }; f"
-    undo                 = reset HEAD~1 --mixed
-    unstage              = "!f() { git reset HEAD "$@" && gs; }; f"
-    url                  = remote -v
-    wip                  = commit -am "WIP"
-    wipe                 = !git add -A && git commit -qm 'WIPE SAVEPOINT' && git reset HEAD~1 --hard
+  addp                 = add --patch
+  amend                = commit -a --amend
+  delete               = branch -d
+  delete-without-merge = branch -D
+  diffw                = diff --word-diff
+  graph                = log --graph --all --decorate --stat --date=iso
+  head-branch          = !git remote show origin | grep HEAD | awk '{print $3}'
+  local                = log --oneline --no-merges
+  newbranch            = checkout -b
+  pf                   = push --force-with-lease
+  remove               = remote
+  removechanges        = checkout --
+  renamebranch         = branch -m
+  staged               = diff --staged
+  submodulelist        = "!f() { git config --file .gitmodules --get-regexp path | awk '{ print $2 }'; }; f"
+  sw                   = "!f() { git checkout $1 2>/dev/null || git checkout -b $1 origin/$1 2>/dev/null || git checkout -b $1; }; f"
+  undo                 = reset HEAD~1 --mixed
+  unstage              = "!f() { git reset HEAD "$@" && gs; }; f"
+  url                  = remote -v
+  wip                  = commit -am "WIP"
+  wipe                 = !git add -A && git commit -qm 'WIPE SAVEPOINT' && git reset HEAD~1 --hard
 [color "diff"]
-    meta = cyan normal bold
+  meta = cyan normal bold
 [core]
-    pager        = less
-    excludesfile = ~/.gitignore_global
+  pager        = less
+  excludesfile = ~/.gitignore_global
 [diff]
-    ignoreSubmodules = dirty
+  ignoreSubmodules = dirty
+  wsErrorHighlight = all
 [github]
-    user = scottrbaxter
+  user = scottrbaxter
 [merge]
-    tool = opendiff
+  tool = opendiff
 [pager]
-    branch    = false
-    config    = false
-    diff      = false
-    show      = false
-    stash     = false
-    submodule = false
-    tag       = false
+  branch    = false
+  config    = false
+  diff      = false
+  show      = false
+  stash     = false
+  submodule = false
+  tag       = false
 [status]
-    ignoreSubmodules = dirty
-    submoduleSummary = true
+  ignoreSubmodules = dirty
+  submoduleSummary = true
 [credential]
-    helper = osxkeychain
+  helper = osxkeychain
 [diff "sopsdiffer"]
-    textconv = sops -d
+  textconv = sops -d
 [init]
-    defaultBranch = master
+  defaultBranch = master
 [pull]
-    rebase = merges
+  rebase = merges
 [include]
-    path = ~/.gitconfig-user
+  path = ~/.gitconfig-user
 [filter "lfs"]
-	clean = git-lfs clean -- %f
-	smudge = git-lfs smudge -- %f
-	process = git-lfs filter-process
-	required = true
+  clean = git-lfs clean -- %f
+  smudge = git-lfs smudge -- %f
+  process = git-lfs filter-process
+  required = true
