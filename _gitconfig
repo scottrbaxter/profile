@@ -10,6 +10,7 @@
     local                = log --oneline --no-merges
     newbranch            = checkout -b
     pf                   = push --force-with-lease
+    remove               = remote
     removechanges        = checkout --
     renamebranch         = branch -m
     staged               = diff --staged
