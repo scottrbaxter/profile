@@ -42,7 +42,7 @@ export TERM="xterm-256color"
 
 # add plugins=(osx) for the tab command, to command-click a vim file in new tab
 # also need to add 'tab' in iterm2 profile/advanced semantic history
-plugins=(aws zsh-autosuggestions)
+plugins=(aws docker zsh-autosuggestions)
 
 # symlinks to ../Cellar, fixed this with 'compaudit | xargs chmod g-w,o-w'
 # fix https://github.com/robbyrussell/oh-my-zsh/issues/6835#issuecomment-390216875
@@ -61,24 +61,24 @@ export HOMEBREW_AUTO_UPDATE_SECS=43200
 export HOMEBREW_NO_INSTALL_UPGRADE=1
 
 # custom PATH stuff
-export PATH_PREVIOUS="$PATH" # needed for reloadZsh
+export PREVIOUS_PATH="$PATH" # needed for reloadZsh
 
-PRE_PATHS=( \
-  /usr/local/bin \
-  /usr/local/sbin \
-)
-
-POST_PATHS=( \
-  "${HOME}/.local/bin" \
-  "${HOME}/scripts" \
-  "${PROFILE_PATH}/scripts" \
-  "${HOME}/.lmstudio/bin" \
-  "${HOME}/.iterm2" \
+PRE_PATHS=(
+  /usr/local/bin
+  /usr/local/sbin
   /opt/homebrew/bin
   /opt/homebrew/sbin
-  /usr/libexec \
-  /usr/syno/bin \
-  /usr/syno/sbin \
+)
+
+POST_PATHS=(
+  "${HOME}/.local/bin"
+  "${HOME}/scripts"
+  "${PROFILE_PATH}/scripts"
+  "${HOME}/.lmstudio/bin"
+  "${HOME}/.iterm2"
+  /usr/libexec
+  /usr/syno/bin
+  /usr/syno/sbin
 )
 
 # add paths that need to take priority unless already added
@@ -272,7 +272,7 @@ python_http_server() { python -m SimpleHTTPServer; }
 
 reloadZsh(){
     unalias -a # remove all aliases
-    PATH=$PATH_PREVIOUS
+    PATH=$PREVIOUS_PATH
     ZSH_AUTOSUGGEST_CLEAR_WIDGETS="$ZSH_AUTOSUGGEST_CLEAR_WIDGETS_PREVIOUS"
     source "$PROFILE_PATH/omz/zshrc.custom"
 }
