@@ -323,6 +323,7 @@ alias l.='ls -dh .*'
 alias ll.='ls -ldh .*'
 alias llt='ll -tr'
 alias man=betterman
+alias o=opencode
 alias pep8="pep8 -v"
 alias bep8="bashate"
 alias publicip='dig +short myip.opendns.com @resolver1.opendns.com'
@@ -441,6 +442,7 @@ export TABBY_MODEL_CACHE_ROOT=~/.tabby/models
 
 # continue.dev cn cli
 export CONTINUE_ALLOW_ANONYMOUS_TELEMETRY=0
+alias cn='cn --config ~/.continue/config.yaml'
 
 # iterm2 shell integration
 test -e "${HOME}/.iterm2_shell_integration.zsh" && source "${HOME}/.iterm2_shell_integration.zsh"
