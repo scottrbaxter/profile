@@ -271,6 +271,7 @@ linters.setup {
 vim.filetype.add({
   extension = {
     tfvars = "conf",
+    json = "jsonc",
   },
 })
 
