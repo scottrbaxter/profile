@@ -208,9 +208,6 @@ lvim.builtin.treesitter.ensure_installed = {
 --   buf_set_option("omnifunc", "v:lua.vim.lsp.omnifunc")
 -- end
 
--- vim.g.tabby_keybinding_accept = '<S-Enter>'
--- vim.g.tabby_keybinding_trigger_or_dismiss = '<C-\\>'
-
 -- Additional Plugins
 lvim.plugins = {
   { "folke/trouble.nvim", cmd = "TroubleToggle" },
@@ -225,7 +222,6 @@ lvim.plugins = {
   "mfussenegger/nvim-dap-python",
   { "nvim-neotest/neotest", dependencies = "nvim-neotest/nvim-nio" },
   "nvim-neotest/neotest-python",
-  -- "TabbyML/vim-tabby",
 }
 
 -- set a formatter, this will override the language server formatting capabilities (if it exists)
