@@ -42,7 +42,7 @@ export TERM="xterm-256color"
 
 # add plugins=(osx) for the tab command, to command-click a vim file in new tab
 # also need to add 'tab' in iterm2 profile/advanced semantic history
-plugins=(aws docker zsh-autosuggestions)
+plugins=(aws zsh-autosuggestions)
 
 # symlinks to ../Cellar, fixed this with 'compaudit | xargs chmod g-w,o-w'
 # fix https://github.com/robbyrussell/oh-my-zsh/issues/6835#issuecomment-390216875
@@ -310,6 +310,7 @@ alias acksg='acks -g' # filenames only, will search submodules
 alias ackw='ack -w' # words mode, pattern can't be in another word
 alias bz='bunzip2'
 alias clr='clear'
+alias compose='docker compose'
 alias cp='cp -a'
 alias df='df -h'
 alias dud='du -d 1 -h'
@@ -435,10 +436,6 @@ fi
 if command -v codium &> /dev/null && ! command -v code &> /dev/null; then
   alias code='codium'
 fi
-
-# tabby
-export TABBY_DISABLE_USAGE_COLLECTION=1
-export TABBY_MODEL_CACHE_ROOT=~/.tabby/models
 
 # continue.dev cn cli
 export CONTINUE_ALLOW_ANONYMOUS_TELEMETRY=0
