@@ -324,7 +324,7 @@ alias l.='ls -dh .*'
 alias ll.='ls -ldh .*'
 alias llt='ll -tr'
 alias man=betterman
-alias o=opencode
+alias opencode='opencode --continue' o='opencode'
 alias pep8="pep8 -v"
 alias bep8="bashate"
 alias publicip='dig +short myip.opendns.com @resolver1.opendns.com'
@@ -358,6 +358,9 @@ alias zz='vim $PROFILE_PATH/omz/zshrc.custom'
 # alias ansible-playbook-debug='ANSIBLE_STDOUT_CALLBACK=dense ansible-playbook'
 # alias ansible-playbook-dense='ANSIBLE_STDOUT_CALLBACK=dense ansible-playbook'
 # alias ansible-playbook-yaml='ANSIBLE_STDOUT_CALLBACK=yaml ansible-playbook'
+
+# docker
+export BUILDKIT_PROGRESS=plain
 
 # git
 alias gb='git rev-parse --abbrev-ref HEAD'
