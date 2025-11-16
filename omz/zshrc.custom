@@ -35,6 +35,7 @@ POST_PATHS=(
   "${PROFILE_PATH}/scripts"
   "${HOME}/.lmstudio/bin"
   "${HOME}/.iterm2"
+  "${HOME}/.local/share/fnm"
   /usr/libexec
   /usr/syno/bin
   /usr/syno/sbin
