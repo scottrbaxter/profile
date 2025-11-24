@@ -116,7 +116,20 @@ vim.cmd([[
   nmap <M-Down> zj
   " toggle all folds on/off"
   nmap F zi
+  " Yank to macOS clipboard via OSC52
+  vnoremap <leader>y :OSCYank<CR>
 ]])
+
+
+-- Yank to macOS clipboard via OSC52
+vim.api.nvim_create_autocmd("TextYankPost", {
+  callback = function()
+    if vim.v.event.operator == "y" and vim.v.event.regname == "" then
+      vim.cmd("OSCYankRegister")  -- use the last yank register
+    end
+  end,
+})
+
 
 -- Change Telescope navigation to use j and k for navigation and n and p for history in both input and normal mode.
 -- we use protected-mode (pcall) just in case the plugin wasn't loaded yet.
@@ -222,6 +235,7 @@ lvim.plugins = {
   "mfussenegger/nvim-dap-python",
   { "nvim-neotest/neotest", dependencies = "nvim-neotest/nvim-nio" },
   "nvim-neotest/neotest-python",
+  "ojroques/vim-oscyank",
 }
 
 -- set a formatter, this will override the language server formatting capabilities (if it exists)
