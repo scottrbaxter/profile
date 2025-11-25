@@ -130,6 +130,8 @@ vim.api.nvim_create_autocmd("TextYankPost", {
   end,
 })
 
+-- vim.g.oscyank_max_length = 0
+-- vim.g.oscyank_silent = 1
 
 -- Change Telescope navigation to use j and k for navigation and n and p for history in both input and normal mode.
 -- we use protected-mode (pcall) just in case the plugin wasn't loaded yet.
