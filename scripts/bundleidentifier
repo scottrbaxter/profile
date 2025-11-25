@@ -1,0 +1,8 @@
+#!/usr/bin/env bash
+
+set -euo pipefail
+IFS=$'\n\t'
+
+APP_NAME="${1}"
+
+printf "%s\n" "$(mdls -name kMDItemCFBundleIdentifier -raw "${APP_NAME}")"
