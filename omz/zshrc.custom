@@ -271,7 +271,8 @@ alias l.='ls -dh .*'
 alias ll.='ls -ldh .*'
 alias llt='ll -tr'
 alias man=betterman
-alias o='opencode --continue'
+alias o='opencode'
+alias oc='opencode --continue'
 alias publicip='dig +short myip.opendns.com @resolver1.opendns.com'
 alias rgl='rg --files-with-matches' # print filenames with contents that match
 alias rgg='rg --files | rg' # match part of filename
@@ -334,6 +335,27 @@ alias kx='kubectx'
 [ -x "$(command -v helm)" ] \
   && source <(helm completion zsh) \
   && time_test "[$(basename -- "${(%):-%x}")] loaded helm completion"
+
+# opencode
+# OPENCODE_DISABLE_AUTOUPDATE=true # https://github.com/anomalyco/opencode/issues/6984
+_opencode_yargs_completions()
+{
+  local reply
+  local si=$IFS
+  IFS=$'
+' reply=($(COMP_CWORD="$((CURRENT-1))" COMP_LINE="$BUFFER" COMP_POINT="$CURSOR" opencode --get-yargs-completions "${words[@]}"))
+  IFS=$si
+  if [[ ${#reply} -gt 0 ]]; then
+    _describe 'values' reply
+  else
+    _default
+  fi
+}
+if [[ "'${zsh_eval_context[-1]}" == "loadautofunc" ]]; then
+  _opencode_yargs_completions "$@"
+else
+  compdef _opencode_yargs_completions opencode
+fi
 
 # terraform
 [ -d "$HOME/.terraform.d/TF_PLUGIN_CACHE_DIR" ] || \
