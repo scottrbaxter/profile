@@ -366,7 +366,7 @@ export TF_PLUGIN_CACHE_DIR="$HOME/.terraform.d/TF_PLUGIN_CACHE_DIR"
 # the following requires tfenv install <version>; tfenv use <version>
 if [ -x "$(command -v tfenv)" ] && [ -x "$(command -v terraform)" ]; then \
   TFENV_COMPLETION_PATH="$(readlink -f "$(command -v tfenv)" | cut -d/ -f-6)"
-  TF_VERSION="$(cat "$TFENV_COMPLETION_PATH"/version)"
+  TF_VERSION="$(cat ~/.config/tfenv/version)"
   complete -o nospace -C "${TFENV_COMPLETION_PATH}/versions/${TF_VERSION}/terraform" terraform
   time_test "[$(basename -- "${(%):-%x}")] loaded terraform completion "
 fi
