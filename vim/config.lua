@@ -287,6 +287,18 @@ vim.filetype.add({
   },
 })
 
+-- linter automatically chooses underlying filetype for jinja2 templates
+vim.api.nvim_create_autocmd({ "BufNewFile", "BufRead" }, {
+  pattern = "*.j2",
+  callback = function()
+    local fname = vim.fn.expand("%:t")
+    local parts = vim.split(fname, '%.')
+    if parts[#parts] == "j2" and #parts >= 2 then
+      vim.bo.filetype = parts[#parts - 1]
+    end
+  end,
+})
+
 lvim.builtin.which_key.mappings["dm"] = { "<cmd>lua require('neotest').run.run()<cr>",
   "Test Method" }
 lvim.builtin.which_key.mappings["dM"] = { "<cmd>lua require('neotest').run.run({strategy = 'dap'})<cr>",
