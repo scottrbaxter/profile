@@ -398,3 +398,12 @@ lvim.builtin.bufferline.options.indicator = { style = "icon", icon = "▎" }
 vim.opt.foldmethod = "indent" -- enable folds
 vim.opt.foldenable = false -- unfold all by default
 lvim.builtin.which_key.setup.plugins.presets.z = true -- z to view which_key fold menu
+
+-- git commit message line truncating character textwidth (default 72)
+-- test: git init /tmp/testrepo && git -C /tmp/testrepo commit --allow-empty
+vim.api.nvim_create_autocmd("FileType", {
+  pattern = "gitcommit",
+  callback = function()
+    vim.opt_local.textwidth = 120 -- default is 72. disable entirely with 0
+  end,
+})
