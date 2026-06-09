@@ -9,8 +9,12 @@ WHITE="\033[0m"
 currentbranch=$(git rev-parse --abbrev-ref HEAD)
 
 check_default_branch(){
-    git remote show origin | awk '/^  HEAD branch:/ {print $NF}'
-    # git symbolic-ref refs/remotes/origin/HEAD | sed 's@^refs/remotes/origin/@@'
+    # Try to get remote HEAD; if ambiguous or empty, use git symbolic-ref as fallback
+    branch=$(git remote show origin | awk '/^ HEAD branch:/ {print $NF}' | grep -v "^$")
+    if [ -z "$branch" ]; then
+      branch=$(git symbolic-ref refs/remotes/origin/HEAD 2>/dev/null | sed 's@^refs/remotes/origin/@@' || echo "")
+    fi
+    echo "$branch"
 }
 
 check_submodule_list(){
@@ -27,6 +31,10 @@ gitColor(){
 
 pull_default_branch(){
     default_branch="$(check_default_branch)"
+    if [ -z "${default_branch}" ]; then
+      echo "Error: Could not determine default branch" >&2
+      return 1
+    fi
     if [ "${currentbranch}" != "${default_branch}" ]; then
         header "Switching to ${default_branch} branch"
         gitColor checkout "${default_branch}"
