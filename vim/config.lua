@@ -294,7 +294,10 @@ vim.api.nvim_create_autocmd({ "BufNewFile", "BufRead" }, {
     local fname = vim.fn.expand("%:t")
     local parts = vim.split(fname, '%.')
     if parts[#parts] == "j2" and #parts >= 2 then
-      vim.bo.filetype = parts[#parts - 1]
+      local ext = parts[#parts -1]
+      -- normalize common extensions to vim filetypes
+      local ft_map = { yml = "yaml", sh = "bash", tf = "terraform" }
+      vim.bo.filetype = ft_map[ext] or ext
     end
   end,
 })
