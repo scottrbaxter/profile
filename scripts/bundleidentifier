@@ -5,4 +5,11 @@ IFS=$'\n\t'
 
 APP_NAME="${1}"
 
-printf "%s\n" "$(mdls -name kMDItemCFBundleIdentifier -raw "${APP_NAME}")"
+# relies in spotlight indexing
+# printf "%s\n" "$(mdls -name kMDItemCFBundleIdentifier -raw "${APP_NAME}")"
+
+# works but requires full path
+defaults read "${APP_NAME}/Contents/Info.plist" CFBundleIdentifier
+
+# also works, and can be used with any path without requiring typing in full path
+# osascript -e "id of app \"$APP_NAME\""

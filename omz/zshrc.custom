@@ -339,7 +339,7 @@ alias kx='kubectx'
   && time_test "[$(basename -- "${(%):-%x}")] loaded helm completion"
 
 # opencode
-# OPENCODE_DISABLE_AUTOUPDATE=true # https://github.com/anomalyco/opencode/issues/6984
+OPENCODE_DISABLE_AUTOUPDATE=1 # https://github.com/anomalyco/opencode/issues/6984
 _opencode_yargs_completions()
 {
   local reply
