@@ -1,0 +1,8 @@
+#!/usr/bin/env bash
+
+set -euo pipefail
+IFS=$'\n\t'
+
+IFS=' ' APP_NAME="$*"
+
+osascript -e "version of application \"$APP_NAME\""
